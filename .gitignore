@@ -1,0 +1,21 @@
+node_modules/
+.env
+.env.local
+*.log
+.DS_Store
+dist/
+build/
+coverage/
+.claude_session_id
+
+# Dev/test artifacts
+.playwright-mcp/
+test-results/
+package.json
+package-lock.json
+
+# Internal planning files
+@fix_plan.md
+PROMPT.md
+CLAUDE.md
+docs/generated/

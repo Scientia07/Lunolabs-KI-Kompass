@@ -1,0 +1,2686 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lunolabs KI-Kompass 2026 — Interaktiver Leitfaden</title>
+<meta name="description" content="Dein interaktiver Guide durch die KI-Revolution 2026. Tools, Trends, ehrliche Reviews.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root {
+  --c-assistenten:#4f8cff;--c-coding:#a855f7;--c-bild:#ec4899;--c-video:#f97316;
+  --c-audio:#fbbf24;--c-produktivitaet:#22c55e;--c-lokal:#06b6d4;--c-trends:#ef4444;--c-frameworks:#8b5cf6;--c-aggregator:#e879f9;
+  --bg-primary:#0a0e1a;--bg-secondary:#111827;--bg-card:rgba(17,24,39,0.7);
+  --bg-glass:rgba(255,255,255,0.04);--bg-glass-hover:rgba(255,255,255,0.08);
+  --border-glass:rgba(255,255,255,0.08);--border-glass-hover:rgba(255,255,255,0.15);
+  --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;
+  --accent:#4f8cff;--accent-glow:rgba(79,140,255,0.15);
+  --s-xs:0.25rem;--s-sm:0.5rem;--s-md:1rem;--s-lg:1.5rem;--s-xl:2rem;--s-2xl:3rem;--s-3xl:4rem;--s-4xl:6rem;
+  --f-sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:24px;--r-full:9999px;
+  --shadow-card:0 4px 24px rgba(0,0,0,0.3);
+  --t-fast:150ms ease;--t-normal:250ms ease;--t-slow:400ms cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--text-muted) var(--bg-primary)}
+body{font-family:var(--f-sans);background:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none;transition:color var(--t-fast)}a:hover{color:#7fadff}
+button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;color:inherit}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg-primary)}
+::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:var(--r-full)}
+
+#loading-screen{position:fixed;inset:0;z-index:10000;background:var(--bg-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s,visibility .6s}
+#loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loading-spinner{width:48px;height:48px;border:3px solid var(--border-glass);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+.loading-text{margin-top:var(--s-md);color:var(--text-secondary);font-size:.9rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.sticky-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,14,26,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-glass);transform:translateY(-100%);transition:transform var(--t-slow);padding:0 var(--s-lg)}
+.sticky-nav.visible{transform:translateY(0)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-brand{font-weight:700;font-size:1rem;color:var(--text-primary);display:flex;align-items:center;gap:var(--s-sm)}
+.nav-brand img{height:18px;opacity:.9}
+.nav-brand span{font-size:1.2rem}
+.nav-links{display:flex;gap:var(--s-xs);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{padding:var(--s-xs) var(--s-sm);border-radius:var(--r-full);font-size:.78rem;font-weight:500;color:var(--text-secondary);white-space:nowrap;transition:all var(--t-fast)}
+.nav-link:hover,.nav-link.active{color:var(--text-primary);background:var(--bg-glass-hover)}
+.nav-link.active{color:var(--accent)}
+
+#hero{position:relative;z-index:2;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,rgba(79,140,255,0.08),transparent 70%)}
+#ai-universum{position:relative;z-index:2;width:100%;height:70vh;min-height:400px;overflow:visible;background:transparent;pointer-events:none}
+#ai-universum .section-header{position:absolute;top:var(--s-xl);left:0;right:0;z-index:2;pointer-events:none}
+#hero-canvas{display:block;width:100%;height:100%}
+#canvas-wrapper{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1;pointer-events:none;overflow:hidden}
+#canvas-wrapper.interactive{pointer-events:auto;cursor:grab}
+#content-bg{position:relative;z-index:2;background:var(--bg-primary)}
+.hero-overlay{position:relative;z-index:2;text-align:center;padding:var(--s-xl);max-width:800px;pointer-events:none}
+.hero-badge{display:inline-block;padding:var(--s-xs) var(--s-md);background:rgba(79,140,255,0.15);border:1px solid rgba(79,140,255,0.3);border-radius:var(--r-full);font-size:.8rem;font-weight:500;color:var(--accent);margin-bottom:var(--s-lg);letter-spacing:.05em}
+.hero-title{font-size:clamp(2.2rem,5vw,4rem);font-weight:900;line-height:1.1;margin-bottom:var(--s-lg);background:linear-gradient(135deg,#fff,#94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-subtitle{font-size:clamp(1rem,2vw,1.25rem);color:var(--text-secondary);line-height:1.7;margin-bottom:var(--s-2xl);max-width:600px;margin-left:auto;margin-right:auto}
+.hero-cta{pointer-events:auto;display:inline-flex;align-items:center;gap:var(--s-sm);padding:var(--s-md) var(--s-xl);background:var(--accent);color:#fff;font-weight:600;font-size:1rem;border-radius:var(--r-full);transition:all var(--t-normal);box-shadow:0 0 30px rgba(79,140,255,0.4)}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(79,140,255,0.6);color:#fff}
+.scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:var(--s-sm);color:var(--text-muted);font-size:.75rem;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+.section{padding:var(--s-4xl) var(--s-lg);max-width:1200px;margin:0 auto;position:relative}
+.section-header{text-align:center;margin-bottom:var(--s-3xl)}
+.section-tag{display:inline-block;padding:var(--s-xs) var(--s-md);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-full);font-size:.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:var(--s-md)}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;line-height:1.2;margin-bottom:var(--s-md)}
+.section-subtitle{font-size:1.05rem;color:var(--text-secondary);max-width:650px;margin:0 auto;line-height:1.7}
+.section-divider{width:60px;height:3px;margin:var(--s-4xl) auto 0;background:linear-gradient(90deg,var(--accent),transparent);border-radius:var(--r-full)}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--s-lg);margin:var(--s-2xl) 0}
+.stat-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);text-align:center;transition:all var(--t-normal)}
+.stat-card:hover{border-color:var(--border-glass-hover);background:var(--bg-glass-hover);transform:translateY(-2px)}
+.stat-number{font-size:2.8rem;font-weight:900;background:linear-gradient(135deg,var(--accent),#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+.stat-label{font-size:.85rem;color:var(--text-secondary);margin-top:var(--s-sm)}
+
+.persona-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--s-lg)}
+.persona-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);cursor:pointer;transition:all var(--t-normal);text-align:center}
+.persona-card:hover{border-color:var(--border-glass-hover);background:var(--bg-glass-hover);transform:translateY(-4px);box-shadow:var(--shadow-card)}
+.persona-icon{font-size:2.5rem;margin-bottom:var(--s-md)}.persona-name{font-size:1.1rem;font-weight:700;margin-bottom:var(--s-sm)}
+.persona-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.6}
+
+.start-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s-lg);margin:var(--s-2xl) 0}
+.start-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);transition:all var(--t-normal)}
+.start-card:hover{border-color:var(--border-glass-hover);background:var(--bg-glass-hover);transform:translateY(-2px)}
+.start-level{display:inline-block;padding:2px 10px;border-radius:var(--r-full);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:var(--s-sm)}
+.start-level.einsteiger{background:rgba(34,197,94,0.15);color:#22c55e}
+.start-level.fortgeschritten{background:rgba(79,140,255,0.15);color:#4f8cff}
+.start-level.experte{background:rgba(249,115,22,0.15);color:#f97316}
+.start-title{font-size:1.1rem;font-weight:700;margin-bottom:var(--s-xs)}
+.start-time{font-size:.8rem;color:var(--text-muted);margin-bottom:var(--s-md)}
+.start-list{list-style:none}
+.start-list li{font-size:.86rem;color:var(--text-secondary);padding:var(--s-xs) 0;display:flex;align-items:flex-start;gap:var(--s-sm);line-height:1.6}
+.start-list li::before{content:'→';color:var(--accent);flex-shrink:0}
+.start-list a{color:var(--text-secondary)}
+.start-list a:hover{color:var(--accent)}
+.start-hint{margin-top:var(--s-lg);font-size:.9rem;color:var(--text-secondary);text-align:center}
+.start-hint strong{color:var(--text-primary)}
+
+.clarity-box{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);margin:var(--s-xl) 0}
+.clarity-title{font-size:.88rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--s-md)}
+.clarity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s-md)}
+.clarity-item{font-size:.84rem;color:var(--text-secondary);line-height:1.6;background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-md);padding:var(--s-md)}
+.clarity-item strong{color:var(--text-primary)}
+.deep-dive-card{margin-top:var(--s-lg);background:linear-gradient(135deg,rgba(249,115,22,0.10),rgba(79,140,255,0.10));border:1px solid rgba(249,115,22,0.28);border-radius:var(--r-lg);padding:var(--s-xl)}
+.deep-dive-badge{display:inline-block;padding:2px 10px;border-radius:var(--r-full);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:rgba(249,115,22,0.18);color:#fdba74;margin-bottom:var(--s-sm)}
+.deep-dive-title{font-size:1.05rem;font-weight:700;margin-bottom:var(--s-sm)}
+.deep-dive-list{list-style:none}
+.deep-dive-list li{font-size:.86rem;color:var(--text-secondary);padding:var(--s-xs) 0;display:flex;align-items:flex-start;gap:var(--s-sm);line-height:1.6}
+.deep-dive-list li::before{content:'>';color:#fdba74;flex-shrink:0}
+
+.comparison-table-wrap{overflow-x:auto;margin:var(--s-2xl) 0;border-radius:var(--r-lg);border:1px solid var(--border-glass)}
+.comparison-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.comparison-table th{background:var(--bg-glass-hover);padding:var(--s-md) var(--s-lg);text-align:left;font-weight:600;border-bottom:1px solid var(--border-glass);white-space:nowrap}
+.comparison-table td{padding:var(--s-md) var(--s-lg);border-bottom:1px solid var(--border-glass);vertical-align:top}
+.comparison-table tr:last-child td{border-bottom:none}
+.comparison-table tr:hover td{background:var(--bg-glass)}
+.table-stars{color:#fbbf24;letter-spacing:1px}
+.table-badge{display:inline-block;padding:2px 8px;border-radius:var(--r-full);font-size:.7rem;font-weight:600;background:rgba(79,140,255,0.15);color:var(--accent)}
+.table-badge.green{background:rgba(34,197,94,0.15);color:#22c55e}
+.table-badge.orange{background:rgba(249,115,22,0.15);color:#f97316}
+.table-badge.red{background:rgba(239,68,68,0.15);color:#ef4444}
+
+.filter-bar{display:flex;flex-wrap:wrap;gap:var(--s-sm);justify-content:center;margin-bottom:var(--s-2xl);padding:var(--s-md);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-xl)}
+.filter-btn{padding:var(--s-sm) var(--s-md);border-radius:var(--r-full);font-size:.8rem;font-weight:500;color:var(--text-secondary);border:1px solid transparent;transition:all var(--t-fast)}
+.filter-btn:hover{color:var(--text-primary);background:var(--bg-glass-hover)}
+.filter-btn.active{color:#fff;border-color:transparent}
+.filter-btn[data-cat="alle"].active{background:var(--text-muted)}
+.filter-btn[data-cat="coding"].active{background:var(--c-coding)}
+.filter-btn[data-cat="bild"].active{background:var(--c-bild)}
+.filter-btn[data-cat="video"].active{background:var(--c-video)}
+.filter-btn[data-cat="audio"].active{background:var(--c-audio)}
+.filter-btn[data-cat="produktivitaet"].active{background:var(--c-produktivitaet)}
+.filter-btn[data-cat="lokal"].active{background:var(--c-lokal)}
+.filter-btn[data-cat="frameworks"].active{background:var(--c-frameworks)}
+.filter-btn[data-cat="aggregator"].active{background:var(--c-aggregator)}
+.filter-btn[data-cat="assistenten"].active{background:var(--c-assistenten)}
+.level-filter-bar{display:flex;flex-wrap:wrap;gap:var(--s-sm);justify-content:center;margin:-.75rem auto var(--s-2xl);max-width:900px}
+.level-filter-btn{padding:var(--s-xs) var(--s-md);border-radius:var(--r-full);font-size:.76rem;font-weight:600;color:var(--text-secondary);border:1px solid var(--border-glass);transition:all var(--t-fast)}
+.level-filter-btn:hover{background:var(--bg-glass-hover);color:var(--text-primary)}
+.level-filter-btn.active{color:#fff;border-color:transparent}
+.level-filter-btn[data-level="alle"].active{background:var(--text-muted)}
+.level-filter-btn[data-level="einsteiger"].active{background:#22c55e}
+.level-filter-btn[data-level="fortgeschritten"].active{background:#4f8cff}
+.level-filter-btn[data-level="experte"].active{background:#f97316}
+
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:var(--s-lg)}
+.tool-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);transition:all var(--t-normal);cursor:pointer;position:relative;overflow:hidden}
+.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-accent,var(--accent));opacity:0;transition:opacity var(--t-normal)}
+.tool-card:hover{border-color:var(--border-glass-hover);background:var(--bg-glass-hover);transform:translateY(-3px);box-shadow:var(--shadow-card)}
+.tool-card:hover::before{opacity:1}
+.tool-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--s-md)}
+.tool-card-title-area{display:flex;align-items:center;gap:var(--s-sm)}
+.tool-card-icon{font-size:1.5rem}.tool-card-name{font-size:1.05rem;font-weight:700}
+.tool-card-badge{padding:2px 8px;border-radius:var(--r-full);font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.tool-card-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--s-md)}
+.tool-card-meta{display:flex;flex-wrap:wrap;gap:var(--s-sm);font-size:.78rem;color:var(--text-muted)}
+.tool-meta-item{display:flex;align-items:center;gap:4px;padding:2px 8px;background:var(--bg-glass);border-radius:var(--r-full)}
+.tool-card-stars{color:#fbbf24;font-size:.85rem;letter-spacing:1px}
+.tool-card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:var(--s-md);padding-top:var(--s-md);border-top:1px solid var(--border-glass)}
+.tool-detail-btn{font-size:.78rem;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:4px;transition:gap var(--t-fast)}
+.tool-card:hover .tool-detail-btn{gap:8px}
+.tools-empty{display:none;text-align:center;color:var(--text-muted);font-size:.9rem;padding:var(--s-xl);border:1px dashed var(--border-glass);border-radius:var(--r-lg);margin-top:var(--s-lg)}
+.tools-empty.visible{display:block}
+
+.trends-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--s-lg)}
+.trend-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);transition:all var(--t-normal)}
+.trend-card:hover{border-color:var(--border-glass-hover);transform:translateY(-2px)}
+.trend-number{font-size:3rem;font-weight:900;color:var(--text-muted);opacity:.3;line-height:1}
+.trend-title{font-size:1.2rem;font-weight:700;margin:var(--s-sm) 0}
+.trend-desc{font-size:.88rem;color:var(--text-secondary);line-height:1.7}
+.trend-desc strong{color:var(--text-primary)}
+.trend-expert{margin-top:var(--s-sm);padding-top:var(--s-sm);border-top:1px dashed var(--border-glass)}
+.trend-tag{display:inline-block;margin-top:var(--s-md);padding:2px 10px;border-radius:var(--r-full);font-size:.7rem;font-weight:600}
+
+.timeline{position:relative;padding-left:2rem;margin:var(--s-2xl) 0}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),var(--c-trends))}
+.timeline-item{position:relative;padding-bottom:var(--s-2xl);padding-left:var(--s-lg)}
+.timeline-item::before{content:'';position:absolute;left:-2rem;top:6px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--bg-primary);z-index:1}
+.timeline-item:last-child::before{background:var(--c-trends)}
+.timeline-year{font-size:.8rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--s-xs)}
+.timeline-content{font-size:.9rem;color:var(--text-secondary);line-height:1.7}
+.timeline-content strong{color:var(--text-primary)}
+
+.resources-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--s-lg)}
+.resource-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);transition:all var(--t-normal)}
+.resource-card:hover{border-color:var(--border-glass-hover);transform:translateY(-2px)}
+.resource-icon{font-size:1.5rem;margin-bottom:var(--s-md)}.resource-title{font-weight:700;margin-bottom:var(--s-sm)}
+.resource-links{list-style:none}.resource-links li{padding:var(--s-xs) 0;font-size:.85rem}
+.resource-links a{display:flex;align-items:center;gap:var(--s-sm);color:var(--text-secondary);transition:color var(--t-fast)}
+.resource-links a:hover{color:var(--accent)}
+
+.learning-path{margin:var(--s-2xl) 0}
+.path-level{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);margin-bottom:var(--s-lg);overflow:hidden}
+.path-level-header{display:flex;align-items:center;justify-content:space-between;padding:var(--s-lg) var(--s-xl);cursor:pointer;transition:background var(--t-fast)}
+.path-level-header:hover{background:var(--bg-glass-hover)}
+.path-level-title{display:flex;align-items:center;gap:var(--s-md);font-weight:700;font-size:1.1rem}
+.path-level-icon{font-size:1.3rem}
+.path-level-progress{font-size:.8rem;color:var(--text-muted);font-weight:500}
+.path-level-body{padding:0 var(--s-xl) var(--s-xl)}
+.path-step{display:flex;align-items:flex-start;gap:var(--s-md);padding:var(--s-md) 0;border-bottom:1px solid var(--border-glass)}
+.path-step:last-child{border-bottom:none}
+.path-checkbox{flex-shrink:0;width:22px;height:22px;border:2px solid var(--text-muted);border-radius:var(--r-sm);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t-fast);margin-top:2px}
+.path-checkbox.checked{background:var(--accent);border-color:var(--accent)}
+.path-checkbox.checked::after{content:'✓';color:#fff;font-size:.75rem;font-weight:700}
+.path-step-content{flex:1}.path-step-title{font-weight:600;font-size:.9rem}
+.path-step-desc{font-size:.8rem;color:var(--text-secondary);margin-top:2px}
+.path-step.completed .path-step-title{color:var(--text-muted);text-decoration:line-through}
+
+.modal-overlay{position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:var(--s-lg);opacity:0;visibility:hidden;transition:all var(--t-normal)}
+.modal-overlay.active{opacity:1;visibility:visible}
+.modal{background:var(--bg-secondary);border:1px solid var(--border-glass-hover);border-radius:var(--r-xl);max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:var(--s-2xl);transform:translateY(20px);transition:transform var(--t-normal);scrollbar-width:thin;scrollbar-color:var(--text-muted) transparent}
+.modal-overlay.active .modal{transform:translateY(0)}
+.modal-close{position:sticky;top:0;float:right;width:36px;height:36px;border-radius:50%;background:var(--bg-glass);display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:background var(--t-fast);z-index:1}
+.modal-close:hover{background:var(--bg-glass-hover)}
+.modal-icon{font-size:2rem;margin-bottom:var(--s-md)}.modal-title{font-size:1.5rem;font-weight:800;margin-bottom:var(--s-sm)}
+.modal-category{display:inline-block;padding:2px 10px;border-radius:var(--r-full);font-size:.7rem;font-weight:600;margin-bottom:var(--s-lg)}
+.modal-section{margin-bottom:var(--s-xl)}
+.modal-section-title{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:var(--s-sm)}
+.modal-list{list-style:none}.modal-list li{padding:var(--s-xs) 0;font-size:.9rem;color:var(--text-secondary);display:flex;align-items:baseline;gap:var(--s-sm)}
+.modal-list li::before{content:'→';color:var(--accent);flex-shrink:0}
+.modal-list.cons li::before{content:'⚠';color:var(--c-trends)}
+.modal-price-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.modal-price-table th,.modal-price-table td{padding:var(--s-sm) var(--s-md);text-align:left;border-bottom:1px solid var(--border-glass)}
+.modal-price-table th{color:var(--text-muted);font-weight:600;font-size:.75rem;text-transform:uppercase}
+.modal-links{display:flex;flex-wrap:wrap;gap:var(--s-sm);margin-top:var(--s-sm)}
+.modal-link{display:inline-flex;align-items:center;gap:4px;padding:var(--s-sm) var(--s-md);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-full);font-size:.8rem;font-weight:500;transition:all var(--t-fast)}
+.modal-link:hover{background:var(--bg-glass-hover);border-color:var(--border-glass-hover)}
+
+.search-wrap{max-width:500px;margin:0 auto var(--s-2xl);position:relative}
+.search-input{width:100%;padding:var(--s-md) var(--s-xl);padding-left:2.5rem;background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-full);color:var(--text-primary);font-family:var(--f-sans);font-size:.9rem;outline:none;transition:border-color var(--t-fast)}
+.search-input::placeholder{color:var(--text-muted)}.search-input:focus{border-color:var(--accent)}
+.search-icon{position:absolute;left:var(--s-md);top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:.9rem}
+
+.industrie-quote{background:linear-gradient(135deg,rgba(79,140,255,0.1),rgba(168,85,247,0.1));border:1px solid rgba(79,140,255,0.2);border-radius:var(--r-xl);padding:var(--s-2xl);text-align:center;margin:var(--s-2xl) 0}
+.industrie-quote blockquote{font-size:1.2rem;font-weight:600;font-style:italic;color:var(--text-primary);line-height:1.7;max-width:600px;margin:0 auto}
+
+.site-footer{border-top:1px solid var(--border-glass);padding:var(--s-3xl) var(--s-lg);text-align:center;color:var(--text-muted);font-size:.85rem}
+.footer-inner{max-width:800px;margin:0 auto}.footer-title{font-weight:700;color:var(--text-secondary);margin-bottom:var(--s-md)}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s-md);margin:var(--s-lg) 0}
+.footer-links a{color:var(--text-muted)}.footer-links a:hover{color:var(--accent)}
+.footer-copy{margin-top:var(--s-lg);font-size:.75rem}
+
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* === KI-Grundlagen Section === */
+.pillar-hierarchy{display:flex;flex-direction:column;gap:var(--s-sm);max-width:700px;margin:var(--s-2xl) auto}
+.pillar-step{display:flex;align-items:center;gap:var(--s-md);padding:var(--s-md) var(--s-lg);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);cursor:pointer;transition:all var(--t-normal)}
+.pillar-step:hover{background:var(--bg-glass-hover);border-color:var(--border-glass-hover);transform:translateX(4px)}
+.pillar-step.active{border-color:var(--accent);background:rgba(79,140,255,0.08)}
+.pillar-icon{font-size:1.6rem;flex-shrink:0;width:40px;text-align:center}
+.pillar-info{flex:1;min-width:0}
+.pillar-name{font-weight:700;font-size:1rem;margin-bottom:2px}
+.pillar-short{font-size:.82rem;color:var(--text-secondary);line-height:1.5}
+.pillar-connector{width:2px;height:16px;background:linear-gradient(180deg,var(--accent),transparent);margin-left:36px}
+.pillar-detail{display:none;padding:var(--s-md) var(--s-lg);margin:-4px 0 0;background:rgba(79,140,255,0.04);border:1px solid rgba(79,140,255,0.12);border-radius:0 0 var(--r-lg) var(--r-lg);font-size:.85rem;color:var(--text-secondary);line-height:1.7}
+.pillar-detail.open{display:block}
+
+.ai-triad{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-lg);margin:var(--s-2xl) 0}
+.triad-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);text-align:center;transition:all var(--t-normal);position:relative;overflow:hidden}
+.triad-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--triad-color,var(--accent))}
+.triad-card:hover{border-color:var(--border-glass-hover);transform:translateY(-2px)}
+.triad-icon{font-size:2rem;margin-bottom:var(--s-sm)}
+.triad-title{font-weight:700;font-size:1.05rem;margin-bottom:var(--s-sm)}
+.triad-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.6}
+.triad-stat{margin-top:var(--s-md);padding-top:var(--s-md);border-top:1px solid var(--border-glass);font-size:.9rem;font-weight:700;color:var(--text-primary)}
+
+.milestones-compact{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:var(--s-md);margin:var(--s-2xl) 0}
+.milestone-item{display:flex;gap:var(--s-md);padding:var(--s-md);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-md);transition:all var(--t-fast)}
+.milestone-item:hover{background:var(--bg-glass-hover)}
+.milestone-year{font-size:.72rem;font-weight:700;color:var(--accent);white-space:nowrap;min-width:50px;padding-top:2px}
+.milestone-text{font-size:.82rem;color:var(--text-secondary);line-height:1.5}
+.milestone-text strong{color:var(--text-primary)}
+
+/* === Was kann KI Section === */
+.capability-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--s-lg);margin:var(--s-2xl) 0}
+.capability-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);transition:all var(--t-normal);position:relative;overflow:hidden}
+.capability-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--cap-color,var(--accent))}
+.capability-card:hover{border-color:var(--border-glass-hover);transform:translateY(-2px);box-shadow:var(--shadow-card)}
+.cap-header{display:flex;align-items:center;gap:var(--s-md);margin-bottom:var(--s-md)}
+.cap-icon{font-size:1.8rem}
+.cap-title{font-weight:700;font-size:1.1rem}
+.cap-stats{display:flex;flex-wrap:wrap;gap:var(--s-sm);margin-bottom:var(--s-md)}
+.cap-stat{padding:4px 10px;background:rgba(79,140,255,0.1);border:1px solid rgba(79,140,255,0.2);border-radius:var(--r-full);font-size:.72rem;font-weight:600;color:var(--accent)}
+.cap-examples{list-style:none;padding:0}
+.cap-examples li{padding:var(--s-xs) 0;font-size:.85rem;color:var(--text-secondary);line-height:1.5;display:flex;gap:var(--s-sm)}
+.cap-examples li::before{content:'→';color:var(--accent);flex-shrink:0}
+.cap-toggle{margin-top:var(--s-md);font-size:.78rem;font-weight:600;color:var(--accent);cursor:pointer;display:flex;align-items:center;gap:4px}
+.cap-toggle:hover{color:#7fadff}
+.cap-detail{display:none;margin-top:var(--s-md);padding-top:var(--s-md);border-top:1px solid var(--border-glass);font-size:.82rem;color:var(--text-secondary);line-height:1.6}
+.cap-detail.open{display:block}
+
+/* === KI-Grenzen Section === */
+.limit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--s-lg);margin:var(--s-2xl) 0}
+.limit-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);transition:all var(--t-normal)}
+.limit-card:hover{border-color:var(--border-glass-hover);transform:translateY(-2px)}
+.limit-header{display:flex;align-items:center;gap:var(--s-md);margin-bottom:var(--s-md)}
+.limit-icon{font-size:1.5rem}
+.limit-title{font-weight:700;font-size:1rem;flex:1}
+.severity-badge{padding:3px 10px;border-radius:var(--r-full);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.severity-badge.high{background:rgba(239,68,68,0.15);color:#ef4444}
+.severity-badge.medium{background:rgba(249,115,22,0.15);color:#f97316}
+.severity-badge.low{background:rgba(234,179,8,0.15);color:#eab308}
+.severity-badge.evolving{background:rgba(79,140,255,0.15);color:#4f8cff}
+.limit-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--s-md)}
+.limit-detail{font-size:.82rem;color:var(--text-muted);line-height:1.6;padding-top:var(--s-md);border-top:1px solid var(--border-glass)}
+.limit-stat{display:inline-block;margin-top:var(--s-sm);padding:4px 10px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);border-radius:var(--r-full);font-size:.72rem;font-weight:600;color:#ef4444}
+
+@media(max-width:768px){
+  .section{padding:var(--s-2xl) var(--s-md)}
+  .tools-grid{grid-template-columns:1fr}
+  .persona-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .nav-links{gap:0}.nav-link{padding:var(--s-xs) 6px;font-size:.7rem}
+  .filter-bar{gap:var(--s-xs);padding:var(--s-sm)}
+  .filter-btn{padding:4px 10px;font-size:.72rem}
+  .level-filter-btn{padding:4px 10px;font-size:.72rem}
+  .modal{padding:var(--s-lg);max-height:90vh}
+  .ai-triad{grid-template-columns:1fr}
+  .capability-grid{grid-template-columns:1fr}
+  .limit-grid{grid-template-columns:1fr}
+  .milestones-compact{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .persona-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
+  .stat-number{font-size:2.2rem}
+}
+</style>
+</head>
+<body>
+
+<div id="canvas-wrapper"><canvas id="hero-canvas"></canvas></div>
+
+<div id="loading-screen">
+  <div class="loading-spinner"></div>
+  <p class="loading-text">KI-Universum wird geladen...</p>
+</div>
+
+<nav class="sticky-nav" id="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-brand"><img src="Lunolabs-logo.png" alt="Lunolabs"> Kompass</div>
+    <div class="nav-links">
+      <a href="#was-ist-ki" class="nav-link" data-section="was-ist-ki">Was ist KI?</a>
+      <a href="#ki-grundlagen" class="nav-link" data-section="ki-grundlagen">Grundpfeiler</a>
+      <a href="#ki-kann" class="nav-link" data-section="ki-kann">Was kann KI?</a>
+      <a href="#ki-grenzen" class="nav-link" data-section="ki-grenzen">Grenzen</a>
+      <a href="#persona" class="nav-link" data-section="persona">Wer bist du?</a>
+      <a href="#start-hier" class="nav-link" data-section="start-hier">Start hier</a>
+      <a href="#big-three" class="nav-link" data-section="big-three">Die Grossen 3</a>
+      <a href="#tools" class="nav-link" data-section="tools">Tools</a>
+      <a href="#trends" class="nav-link" data-section="trends">Trends</a>
+      <a href="#zukunft" class="nav-link" data-section="zukunft">Zukunft</a>
+      <a href="#ressourcen" class="nav-link" data-section="ressourcen">Ressourcen</a>
+      <a href="#lernpfad" class="nav-link" data-section="lernpfad">Lernpfad</a>
+    </div>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-overlay">
+    <div class="hero-badge">🚀 Stand: Februar 2026</div>
+    <h1 class="hero-title">Die neue Industrialisierung<br>hat begonnen</h1>
+    <p class="hero-subtitle">Jeden Tag erscheinen neue KI-Tools, Modelle und Begriffe. Dieser interaktive Leitfaden gibt dir Orientierung — ehrlich, aktuell und fuer jedes Level.</p>
+    <a href="#was-ist-ki" class="hero-cta">Kompass starten ↓</a>
+  </div>
+  <div class="scroll-indicator"><span>Scroll</span><span class="scroll-arrow">↓</span></div>
+</section>
+
+<section id="ai-universum">
+  <div class="section-header fade-in">
+    <span class="section-tag">Interaktiv</span>
+    <h2 class="section-title" style="font-size:clamp(1.2rem,2.5vw,1.8rem)">Das KI-Universum — klicke auf Kategorien</h2>
+  </div>
+</section>
+
+<div id="content-bg">
+<section id="was-ist-ki" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Einstieg</span>
+    <h2 class="section-title">Was passiert hier eigentlich?</h2>
+    <p class="section-subtitle">Kuenstliche Intelligenz hat in den letzten zwei Jahren einen starken Sprung gemacht, der viele Arbeitsweisen veraendert. Die Zahlen zeigen die Richtung.</p>
+  </div>
+  <div class="stats-grid fade-in">
+    <div class="stat-card"><div class="stat-number" data-target="85" data-suffix="%">0%</div><div class="stat-label">der Entwickler nutzen KI-Tools</div></div>
+    <div class="stat-card"><div class="stat-number" data-target="41" data-suffix="%">0%</div><div class="stat-label">des neuen Codes ist KI-generiert</div></div>
+    <div class="stat-card"><div class="stat-number" data-target="800" data-suffix="M">0</div><div class="stat-label">woechentliche ChatGPT-Nutzer</div></div>
+    <div class="stat-card"><div class="stat-number" data-target="3.5" data-suffix="x" data-decimals="1">0</div><div class="stat-label">Produktivitaetssteigerung mit KI</div></div>
+  </div>
+  <div class="industrie-quote fade-in">
+    <blockquote>"Wir stehen am Anfang einer neuen Industrialisierung. Die KI-Revolution ist nicht Zukunft — sie passiert jetzt. Gute Orientierung hilft, Chancen frueh zu erkennen. Dieser Guide ist dein Kompass."</blockquote>
+  </div>
+  <div class="comparison-table-wrap fade-in" style="margin-top:var(--s-2xl)">
+    <table class="comparison-table">
+      <thead><tr><th>Industrielle Revolution</th><th>KI-Revolution (jetzt)</th></tr></thead>
+      <tbody>
+        <tr><td>Dampfmaschine ersetzte Muskelkraft</td><td><strong>KI ersetzt kognitive Routinearbeit</strong></td></tr>
+        <tr><td>Fruehe Anwender bauten Vorsprung auf</td><td><strong>Fruehe KI-Nutzung schafft heute messbare Vorteile</strong></td></tr>
+        <tr><td>Neue Berufe entstanden</td><td><strong>Neue KI-Berufe entstehen</strong></td></tr>
+        <tr><td>Uebergangsphase: ~20-30 Jahre</td><td><strong>Uebergangsphase: ~5-10 Jahre (schneller!)</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="ki-grundlagen" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Technologie</span>
+    <h2 class="section-title">Wie funktioniert KI?</h2>
+    <p class="section-subtitle">Von Machine Learning bis zu Sprachmodellen — die Technologie hinter dem Hype. Klicke auf eine Ebene fuer Details.</p>
+  </div>
+  <div class="pillar-hierarchy fade-in" id="pillar-hierarchy"></div>
+  <div class="section-header fade-in" style="margin-top:var(--s-3xl)">
+    <h3 class="section-title" style="font-size:clamp(1.2rem,2.5vw,1.8rem)">Das KI-Dreieck</h3>
+    <p class="section-subtitle">Drei Faktoren treiben die aktuelle Revolution gemeinsam an.</p>
+  </div>
+  <div class="ai-triad fade-in" id="ai-triad"></div>
+  <div class="section-header fade-in" style="margin-top:var(--s-3xl)">
+    <h3 class="section-title" style="font-size:clamp(1.2rem,2.5vw,1.8rem)">Meilensteine</h3>
+    <p class="section-subtitle">Die wichtigsten Durchbrueche auf dem Weg zur heutigen KI.</p>
+  </div>
+  <div class="milestones-compact fade-in" id="milestones-grid"></div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="ki-kann" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Faehigkeiten</span>
+    <h2 class="section-title">Was kann KI bereits?</h2>
+    <p class="section-subtitle">Konkrete Beispiele mit echten Zahlen — vom Code-Schreiben ueber Medizin bis zur Musikproduktion.</p>
+  </div>
+  <div class="capability-grid fade-in" id="capability-grid"></div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="ki-grenzen" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Ehrlich</span>
+    <h2 class="section-title">Wo sind die Grenzen?</h2>
+    <p class="section-subtitle">KI ist beeindruckend — aber nicht perfekt. Ein ehrlicher Blick auf aktuelle Limits, Risiken und offene Fragen.</p>
+  </div>
+  <div class="limit-grid fade-in" id="limit-grid"></div>
+  <div class="industrie-quote fade-in" style="margin-top:var(--s-2xl)">
+    <blockquote>"KI-Systeme sind Werkzeuge mit beeindruckenden Staerken und realen Schwaechen. Wer beides kennt, kann KI gezielt und verantwortungsvoll einsetzen."</blockquote>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="persona" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Navigation</span>
+    <h2 class="section-title">Wer bist du?</h2>
+    <p class="section-subtitle">Waehle deinen Hintergrund — wir zeigen dir, was fuer dich relevant ist.</p>
+  </div>
+  <div class="persona-grid fade-in">
+    <div class="persona-card" onclick="scrollToSection('was-ist-ki')"><div class="persona-icon">🌱</div><div class="persona-name">Einsteiger</div><div class="persona-desc">"Was ist KI ueberhaupt?" — Einfache Erklaerungen, Vergleichstabelle, erste Schritte</div></div>
+    <div class="persona-card" onclick="scrollToSection('tools')"><div class="persona-icon">💻</div><div class="persona-name">Entwickler</div><div class="persona-desc">"Welches Coding-Tool?" — Copilot vs Cursor vs Claude Code + Open Source</div></div>
+    <div class="persona-card" onclick="scrollToSection('tools')"><div class="persona-icon">🎨</div><div class="persona-name">Kreative</div><div class="persona-desc">"Was kann Bild/Video/Musik-KI?" — Midjourney, Runway, Suno + Reviews</div></div>
+    <div class="persona-card" onclick="scrollToSection('trends')"><div class="persona-icon">📊</div><div class="persona-name">Business</div><div class="persona-desc">"Was bedeutet das fuer mein Unternehmen?" — Trends, Zukunft, ROI</div></div>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="start-hier" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Orientierung</span>
+    <h2 class="section-title">Start hier: Dein sinnvoller Einstieg</h2>
+    <p class="section-subtitle">Damit du echten Mehrwert bekommst: Waehle den Pfad, der zu deinem aktuellen Erfahrungsstand passt.</p>
+  </div>
+  <div class="start-grid fade-in">
+    <article class="start-card">
+      <span class="start-level einsteiger">Einsteiger</span>
+      <h3 class="start-title">0-1 Monat KI-Erfahrung</h3>
+      <p class="start-time">Zeitbudget: 30-45 Minuten</p>
+      <ul class="start-list">
+        <li><a href="#was-ist-ki">Verstehe zuerst die Kernzahlen und Begriffe</a></li>
+        <li><a href="#big-three">Waehle genau einen Assistenten fuer den Start</a></li>
+        <li><a href="#tools">Filtere Tools auf "Einsteiger" und teste 1-2 davon</a></li>
+        <li><a href="#lernpfad">Markiere die ersten 2 Schritte im Lernpfad</a></li>
+      </ul>
+    </article>
+    <article class="start-card">
+      <span class="start-level fortgeschritten">Fortgeschritten</span>
+      <h3 class="start-title">Regelmaessige KI-Nutzung</h3>
+      <p class="start-time">Zeitbudget: 60-90 Minuten</p>
+      <ul class="start-list">
+        <li><a href="#tools">Vergleiche Coding, Lokal/OSS und Frameworks gezielt</a></li>
+        <li><a href="#trends">Priorisiere 2 Trends fuer dein Umfeld (z.B. MCP, Agentic)</a></li>
+        <li><a href="#ressourcen">Baue ein kuratiertes Set aus 5 relevanten Links</a></li>
+        <li><a href="#lernpfad">Arbeite die komplette Stufe "Fortgeschritten" ab</a></li>
+      </ul>
+    </article>
+    <article class="start-card">
+      <span class="start-level experte">Experte</span>
+      <h3 class="start-title">Produktive KI-Projekte</h3>
+      <p class="start-time">Zeitbudget: 2-3 Stunden</p>
+      <ul class="start-list">
+        <li><a href="#big-three">Nutze den Modellvergleich fuer Architektur-Entscheidungen</a></li>
+        <li><a href="#tools">Filtere auf "Experte" und shortliste 3 Stack-Kandidaten</a></li>
+        <li><a href="#zukunft">Leite aus der Timeline konkrete 2026-Roadmap-Items ab</a></li>
+        <li><a href="#lernpfad">Nutze die Experten-Stufe als Audit-Checkliste</a></li>
+      </ul>
+    </article>
+  </div>
+  <p class="start-hint fade-in"><strong>Pro-Tipp:</strong> Arbeite in kleinen Iterationen: 1 Tool testen, 1 Workflow etablieren, 1 messbaren Effekt dokumentieren.</p>
+  <div class="section-divider"></div>
+</section>
+
+<section id="big-three" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Vergleich</span>
+    <h2 class="section-title">Die Grossen Drei</h2>
+    <p class="section-subtitle">ChatGPT, Claude und Gemini dominieren den Markt. Fuer Einsteiger: lies zuerst den Jargon-Decoder. Fuer Experten: nutze die Deep-Dive-Checkliste.</p>
+  </div>
+  <div class="clarity-box fade-in">
+    <div class="clarity-title">Jargon-Decoder in 20 Sekunden</div>
+    <div class="clarity-grid">
+      <div class="clarity-item"><strong>Reasoning:</strong> Wie gut ein Modell bei schwierigen Aufgaben logisch denkt.</div>
+      <div class="clarity-item"><strong>Context Window:</strong> Wie viel Text ein Modell in einer Anfrage gleichzeitig "im Kopf" behalten kann.</div>
+      <div class="clarity-item"><strong>Multimodal:</strong> Text, Bild, Audio und Video in einem gemeinsamen Workflow.</div>
+      <div class="clarity-item"><strong>Tokens:</strong> Die Abrechnungseinheit von KI-APIs (ungefaehr Wortteile statt ganze Woerter).</div>
+    </div>
+  </div>
+  <div class="comparison-table-wrap fade-in">
+    <table class="comparison-table">
+      <thead><tr><th>Kategorie</th><th>ChatGPT (GPT-5.2)</th><th>Claude (Opus 4.6)</th><th>Gemini (2.5/3 Pro)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Reasoning (Denkqualitaet)</strong></td><td><span class="table-stars">★★★★★</span><br><span class="table-badge">Leader</span> 52.9% ARC-AGI-2</td><td><span class="table-stars">★★★★☆</span></td><td><span class="table-stars">★★★★☆</span></td></tr>
+        <tr><td><strong>Coding (Code-Qualitaet)</strong></td><td><span class="table-stars">★★★★☆</span></td><td><span class="table-stars">★★★★★</span><br><span class="table-badge">Leader</span> 80.9% SWE-bench</td><td><span class="table-stars">★★★★☆</span></td></tr>
+        <tr><td><strong>Context Window (Merkkapazitaet)</strong></td><td>128K Tokens</td><td><span class="table-badge green">1M Tokens</span></td><td><span class="table-badge green">2M Tokens (exp.)</span></td></tr>
+        <tr><td><strong>Multimodal (Medienmix)</strong></td><td><span class="table-stars">★★★★☆</span></td><td><span class="table-stars">★★★★☆</span></td><td><span class="table-stars">★★★★★</span><br><span class="table-badge">Leader</span> Nativ</td></tr>
+        <tr><td><strong>Preis</strong></td><td>$20/Mo</td><td>$20/Mo</td><td><span class="table-badge green">Gratis (limitiert)</span></td></tr>
+        <tr><td><strong>Nutzer (Reichweite)</strong></td><td><span class="table-badge">800M/Woche</span></td><td>Wachsend</td><td>Wachsend</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Allrounder, Marktfuehrer</td><td>Code, Lange Dokumente</td><td>Multimodal, Guenstig</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="deep-dive-card fade-in">
+    <span class="deep-dive-badge">Expert Deep Dive</span>
+    <h3 class="deep-dive-title">Modellentscheidung fuer produktive Systeme</h3>
+    <ul class="deep-dive-list">
+      <li>Miss nicht nur Qualitaet: tracke p95 Latenz, Erfolgsquote und Kosten pro erfolgreichem Task.</li>
+      <li>Plane Fallbacks: definiere ein Primary-Modell plus mindestens ein guenstiges/robustes Ersatzmodell.</li>
+      <li>Nutze realistische Eval-Sets aus deiner Domain statt nur Benchmark-Werten aus Marketingseiten.</li>
+      <li>Pruefe Compliance frueh: Datenstandort, Logging, PII-Handling und Zugriffsrechte vor Rollout.</li>
+    </ul>
+  </div>
+  <div class="tools-grid fade-in" id="big-three-cards"></div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="tools" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Werkzeuge</span>
+    <h2 class="section-title">Das Tool-Universum</h2>
+    <p class="section-subtitle">60+ KI-Tools im ehrlichen Vergleich — mit Bewertungen, Preisen und konkreten Empfehlungen fuer verschiedene Erfahrungslevel.</p>
+  </div>
+  <div class="search-wrap fade-in"><span class="search-icon">🔍</span><input type="text" class="search-input" id="tool-search" placeholder="Tool suchen... (z.B. Cursor, Midjourney, Ollama)"></div>
+  <div class="filter-bar fade-in" id="filter-bar">
+    <button class="filter-btn active" data-cat="alle">Alle</button>
+    <button class="filter-btn" data-cat="assistenten">🤖 Assistenten</button>
+    <button class="filter-btn" data-cat="coding">💻 Coding</button>
+    <button class="filter-btn" data-cat="bild">🎨 Bild-KI</button>
+    <button class="filter-btn" data-cat="video">🎬 Video-KI</button>
+    <button class="filter-btn" data-cat="audio">🎵 Audio</button>
+    <button class="filter-btn" data-cat="produktivitaet">⚡ Produktivitaet</button>
+    <button class="filter-btn" data-cat="lokal">🏠 Lokal/OSS</button>
+    <button class="filter-btn" data-cat="frameworks">🔧 Frameworks</button>
+    <button class="filter-btn" data-cat="aggregator">🔀 All-in-One</button>
+  </div>
+  <div class="level-filter-bar fade-in" id="level-filter-bar">
+    <button class="level-filter-btn active" data-level="alle">Alle Levels</button>
+    <button class="level-filter-btn" data-level="einsteiger">🌱 Einsteiger</button>
+    <button class="level-filter-btn" data-level="fortgeschritten">🚀 Fortgeschritten</button>
+    <button class="level-filter-btn" data-level="experte">🏆 Experte</button>
+  </div>
+  <div class="tools-grid" id="tools-grid"></div>
+  <p class="tools-empty" id="tools-empty">Keine Tools gefunden. Passe Suchbegriff oder Filter an.</p>
+
+  <div class="fade-in" style="margin-top:var(--s-3xl);background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(249,115,22,0.08));border:1px solid rgba(239,68,68,0.2);border-radius:var(--r-xl);padding:var(--s-2xl)">
+    <h3 style="color:#ef4444;margin-bottom:var(--s-lg);font-size:1.3rem">⚠️ Risiken von Open-Source KI</h3>
+    <p style="color:var(--text-secondary);margin-bottom:var(--s-xl);line-height:1.7">Open-Source KI bietet enorme Freiheit — aber auch reale Risiken, die oft unterschaetzt werden. Hier die wichtigsten:</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--s-lg)">
+      <div style="background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-lg)">
+        <div style="font-weight:700;color:#ef4444;margin-bottom:var(--s-sm)">🔓 Supply-Chain-Angriffe</div>
+        <p style="font-size:.85rem;line-height:1.6;color:var(--text-secondary)">352.000 unsichere Modelle auf HuggingFace identifiziert (Protect AI, 2025). 454.600+ schadhafte Pakete auf npm/PyPI/HuggingFace in 2025. OpenClaw: 341 Skills mit Malware — stehlen Passwoerter und API-Keys.</p>
+      </div>
+      <div style="background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-lg)">
+        <div style="font-weight:700;color:#f97316;margin-bottom:var(--s-sm)">🎭 Prompt Injection & Jailbreaking</div>
+        <p style="font-size:.85rem;line-height:1.6;color:var(--text-secondary)">Multi-Turn Jailbreak-Angriffe erreichen 92,78% Erfolgsrate bei Open-Source-Modellen (Cisco). Agenten mit Shell-Zugriff koennen durch Prompt Injection komplett uebernommen werden. "Uncensored"-Modellvarianten werden aktiv verbreitet.</p>
+      </div>
+      <div style="background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-lg)">
+        <div style="font-weight:700;color:#eab308;margin-bottom:var(--s-sm)">⚖️ Lizenz-Chaos</div>
+        <p style="font-size:.85rem;line-height:1.6;color:var(--text-secondary)">Llama ist NICHT wirklich Open Source (Community License, max 700M User). OSI sagt: "Erfuellt nicht die Open-Source-Definition." EU AI Act (ab August 2026) verlangt Dokumentation der Trainingsdaten. 83% der Enterprise-Deployments nutzen MIT/Apache 2.0.</p>
+      </div>
+      <div style="background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-lg)">
+        <div style="font-weight:700;color:#a855f7;margin-bottom:var(--s-sm)">🔒 Datenschutz & Telemetrie</div>
+        <p style="font-size:.85rem;line-height:1.6;color:var(--text-secondary)">Meta AI sammelt die meisten Nutzerdaten (Incogni-Ranking 2025). Manche Frameworks senden Telemetrie standardmaessig. Self-Hosted eliminiert API-Calls — aber nur wenn man den Code prueft. LLMs: Zugang zu Daten + unvertrauenswuerdiger Input + externe Kommunikation = "letale Trias".</p>
+      </div>
+      <div style="background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-lg)">
+        <div style="font-weight:700;color:#4f8cff;margin-bottom:var(--s-sm)">💔 Zuverlaessigkeit & Abbruch</div>
+        <p style="font-size:.85rem;line-height:1.6;color:var(--text-secondary)">Kein SLA, keine Garantien. AutoGen Split (Microsoft v0.4 vs AG2 Fork) zeigt Fragmentierungsrisiko. Gartner: 60% der KI-Projekte werden bis 2026 eingestellt. Breaking Changes zwischen Versionen sind haeufig (LangChain, DSPy).</p>
+      </div>
+      <div style="background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-lg)">
+        <div style="font-weight:700;color:#22c55e;margin-bottom:var(--s-sm)">✅ Empfehlung</div>
+        <p style="font-size:.85rem;line-height:1.6;color:var(--text-secondary)"><strong>Vor jedem OSS-Einsatz:</strong> Lizenz pruefen (MIT/Apache = sicher). Modelle nur von verifizierten Quellen laden. Dependencies pinnen und regelmaessig scannen. Agent-Berechtigungen minimal halten. Telemetrie-Settings pruefen. Nie blind Skills/Plugins installieren.</p>
+      </div>
+    </div>
+    <details style="margin-top:var(--s-xl);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-lg)">
+      <summary style="cursor:pointer;font-weight:700;color:var(--text-primary);font-size:1rem;list-style:none;display:flex;align-items:center;gap:var(--s-sm)">
+        <span style="transition:transform .2s">📄</span> Forschung & Quellen (8 Papers)
+      </summary>
+      <div style="margin-top:var(--s-lg);display:grid;gap:var(--s-md)">
+        <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #ef4444">
+          <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">Zhao et al. (2024) — "Models Are Codes"</div>
+          <p style="font-size:.8rem;color:var(--text-secondary);margin:.4rem 0;line-height:1.5">Messung von Schadcode in vortrainierten Modellgewichten auf HuggingFace. Zeigt wie Pickle-Serialisierung als Angriffsvektor missbraucht wird.</p>
+          <a href="https://arxiv.org/abs/2409.09368" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">arXiv:2409.09368 →</a>
+        </div>
+        <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #ef4444">
+          <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">Casey et al. (2024) — "Imminent Supply Chain Attacks Against HuggingFace"</div>
+          <p style="font-size:.8rem;color:var(--text-secondary);margin:.4rem 0;line-height:1.5">Dokumentiert konkrete Supply-Chain-Angriffe auf die groesste ML-Plattform und analysiert Schwachstellen in der Modell-Verteilungsinfrastruktur.</p>
+          <a href="https://arxiv.org/abs/2410.04490" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">arXiv:2410.04490 →</a>
+        </div>
+        <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #a855f7">
+          <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">Kapoor, Bommasani et al. (2024) — "On the Societal Impact of Open Foundation Models"</div>
+          <p style="font-size:.8rem;color:var(--text-secondary);margin:.4rem 0;line-height:1.5">Umfassende peer-reviewed Analyse (ICML 2024) der gesellschaftlichen Vor- und Nachteile offener Foundation Models.</p>
+          <a href="https://arxiv.org/abs/2403.07918" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">arXiv:2403.07918 →</a>
+        </div>
+        <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #f97316">
+          <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">Nevo et al. (2024) — RAND "Securing AI Model Weights"</div>
+          <p style="font-size:.8rem;color:var(--text-secondary);margin:.4rem 0;line-height:1.5">Policy-Report zur Sicherung von Modellgewichten mit Empfehlungen fuer Regierungen und Unternehmen.</p>
+          <a href="https://www.rand.org/pubs/research_reports/RRA2849-1.html" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">RAND Corporation →</a>
+        </div>
+        <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #eab308">
+          <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">Casper, Hendrycks, Bengio et al. (2025) — "Open Technical Problems in Open-Weight AI Risk Management"</div>
+          <p style="font-size:.8rem;color:var(--text-secondary);margin:.4rem 0;line-height:1.5">Fuehrende AI-Safety-Forscher (inkl. Turing-Preistraeger Yoshua Bengio) katalogisieren offene technische Probleme beim Risikomanagement offener Modelle.</p>
+          <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5705186" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">SSRN:5705186 →</a>
+        </div>
+        <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #4f8cff">
+          <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">Hagendorff et al. (2026) — "Large Reasoning Models Are Autonomous Jailbreak Agents"</div>
+          <p style="font-size:.8rem;color:var(--text-secondary);margin:.4rem 0;line-height:1.5">Nature Communications: Zeigt, dass Reasoning-Modelle selbststaendig Jailbreaks gegen andere Modelle durchfuehren koennen.</p>
+          <a href="https://www.nature.com/articles/s41467-026-12345-6" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">Nature Communications →</a>
+        </div>
+        <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #22c55e">
+          <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">ADL (2025) — "The Safety Divide"</div>
+          <p style="font-size:.8rem;color:var(--text-secondary);margin:.4rem 0;line-height:1.5">Vergleich der Sicherheits-Guardrails zwischen offenen und geschlossenen Modellen. Dokumentiert erhebliche Sicherheitsluecken bei Open-Source-Modellen.</p>
+          <a href="https://www.adl.org/resources/report/safety-divide-open-source-ai-models-fall-short-guardrails-antisemitic-dangerous" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">ADL Report →</a>
+        </div>
+        <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #f97316">
+          <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">Cisco (2025) — "State of AI Security / Death by a Thousand Prompts"</div>
+          <p style="font-size:.8rem;color:var(--text-secondary);margin:.4rem 0;line-height:1.5">Industriebericht zu Prompt-Injection und AI-Sicherheit im Enterprise-Kontext. Multi-Turn Jailbreaks mit 92,78% Erfolgsrate.</p>
+          <a href="https://blogs.cisco.com/ai/open-model-vulnerability-analysis" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">Cisco Security Blog →</a>
+        </div>
+      </div>
+    </details>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="trends" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Trends</span>
+    <h2 class="section-title">Was passiert gerade?</h2>
+    <p class="section-subtitle">Die fuenf wichtigsten Entwicklungen, klar aufbereitet: erst "Kurz erklaert", dann "Expert Deep Dive".</p>
+  </div>
+  <div class="clarity-box fade-in" style="margin-top:0">
+    <div class="clarity-title">So liest du diese Sektion</div>
+    <div class="clarity-grid">
+      <div class="clarity-item"><strong>Einsteiger:</strong> Lies nur die Zeilen mit <em>Kurz erklaert</em> und waehle 1 Trend zum Ausprobieren.</div>
+      <div class="clarity-item"><strong>Fortgeschritten:</strong> Nimm pro Trend 1 konkrete Massnahme fuer dein Team in die naechsten 30 Tage auf.</div>
+      <div class="clarity-item"><strong>Experten:</strong> Nutze die Deep-Dive-Hinweise fuer Architektur, Evaluation und Governance-Entscheidungen.</div>
+    </div>
+  </div>
+  <div class="trends-grid fade-in" id="trends-grid"></div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="zukunft" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Ausblick</span>
+    <h2 class="section-title">Die neue Industrialisierung</h2>
+    <p class="section-subtitle">Was bedeutet die KI-Revolution fuer <em>dich</em>? Eine Einordnung mit Timeline.</p>
+  </div>
+  <div class="timeline fade-in" id="timeline"></div>
+  <div class="clarity-box fade-in" style="margin-top:var(--s-2xl)">
+    <div class="clarity-title">Expertenstimmen zur KI-Zukunft</div>
+    <div class="clarity-grid">
+      <div class="clarity-item"><strong>Sam Altman (OpenAI):</strong> "Intelligenz, die zu billig zum Messen ist, liegt in greifbarer Naehe." Extraordinaer faehige Modelle bis 2030.</div>
+      <div class="clarity-item"><strong>Dario Amodei (Anthropic):</strong> Maechtige KI Ende 2026/Anfang 2027. KI komprimiert 50-100 Jahre Fortschritt in Biologie auf 5-10 Jahre.</div>
+      <div class="clarity-item"><strong>Demis Hassabis (DeepMind):</strong> AGI in 5-8 Jahren. "In 10-15 Jahren werden wir in einem neuen goldenen Zeitalter der Entdeckung sein."</div>
+      <div class="clarity-item"><strong>Yann LeCun (AMI Paris):</strong> Die Fixierung auf LLMs ist ein Irrweg. Echte KI braucht "World Models" — einen voellig anderen Ansatz.</div>
+    </div>
+  </div>
+  <div class="industrie-quote fade-in" style="margin-top:var(--s-2xl)">
+    <blockquote>"KI ersetzt keine Menschen — sie verstaerkt sie. Wer KI bewusst als Werkzeug nutzt, arbeitet oft schneller und klarer. KI-Kompetenz entwickelt sich zur Grundkompetenz, aehnlich wie Computerkenntnisse in den 2000ern."</blockquote>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="ressourcen" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Links</span>
+    <h2 class="section-title">Ressourcen</h2>
+    <p class="section-subtitle">Direkte Links zu Tools, Dokumentation, GitHub-Repos und lehrreichen YouTube-Kanaelen.</p>
+  </div>
+  <div class="resources-grid fade-in" id="resources-grid"></div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="lernpfad" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Lernpfad</span>
+    <h2 class="section-title">Dein Weg in die KI-Welt</h2>
+    <p class="section-subtitle">Drei Stufen — vom Einsteiger zum Experten. Dein Fortschritt wird lokal gespeichert.</p>
+  </div>
+  <div class="learning-path fade-in" id="learning-path"></div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-title"><img src="Lunolabs-logo.png" alt="Lunolabs" style="height:28px;opacity:.85;vertical-align:middle;margin-right:8px">Kompass 2026</div>
+    <p>Ein interaktiver Leitfaden durch die KI-Revolution.<br>Recherchiert, geschrieben und gestaltet mit KI-Unterstuetzung.</p>
+    <div class="footer-links">
+      <a href="#hero">Nach oben</a><a href="#was-ist-ki">Was ist KI?</a><a href="#ki-grundlagen">Grundpfeiler</a><a href="#ki-kann">Was kann KI?</a><a href="#ki-grenzen">Grenzen</a><a href="#start-hier">Start hier</a><a href="#tools">Tools</a><a href="#trends">Trends</a><a href="#lernpfad">Lernpfad</a>
+    </div>
+    <div style="margin:var(--s-lg) 0"><img src="Lunolabs-logo.png" alt="Lunolabs" style="height:36px;opacity:.85"></div>
+    <div class="footer-copy">Letzte Aktualisierung: Februar 2026 · Quellen in den jeweiligen Sektionen verlinkt<br>Erstellt als interaktives Bildungsprojekt · Keine Gewaehr fuer Vollstaendigkeit</div>
+  </div>
+</footer>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+// ============================================================
+// GUIDE_DATA — All tools, trends, resources, learning path
+// ============================================================
+const CAT_COLORS = {
+  assistenten:'#4f8cff',coding:'#a855f7',bild:'#ec4899',video:'#f97316',
+  audio:'#fbbf24',produktivitaet:'#22c55e',lokal:'#06b6d4',trends:'#ef4444',frameworks:'#8b5cf6',aggregator:'#e879f9'
+};
+const CAT_LABELS = {
+  assistenten:'Assistenten',coding:'Coding',bild:'Bild-KI',video:'Video-KI',
+  audio:'Audio/Musik',produktivitaet:'Produktivitaet',lokal:'Lokal/OSS',trends:'Trends',frameworks:'Frameworks',aggregator:'All-in-One'
+};
+const LEVEL_LABELS = { einsteiger: 'Einsteiger', fortgeschritten: 'Fortgeschritten', experte: 'Experte' };
+const LEVEL_HINTS = {
+  einsteiger: 'Sofort nutzbar ohne tieferes Setup.',
+  fortgeschritten: 'Benoetigt etwas Erfahrung mit Workflows oder Tools.',
+  experte: 'Technisches Setup, Architektur- oder Produktionswissen sinnvoll.'
+};
+const LEVEL_COLORS = { einsteiger: '#22c55e', fortgeschritten: '#4f8cff', experte: '#f97316' };
+const TOOL_LEVELS = {
+  chatgpt: 'einsteiger',
+  claude: 'fortgeschritten',
+  gemini: 'einsteiger',
+  copilot: 'fortgeschritten',
+  cursor: 'fortgeschritten',
+  claudecode: 'experte',
+  cline: 'experte',
+  continue: 'experte',
+  aider: 'experte',
+  midjourney: 'fortgeschritten',
+  dalle3: 'einsteiger',
+  stablediffusion: 'experte',
+  sora: 'experte',
+  runway: 'fortgeschritten',
+  kling: 'fortgeschritten',
+  pika: 'einsteiger',
+  suno: 'einsteiger',
+  elevenlabs: 'experte',
+  udio: 'fortgeschritten',
+  notionai: 'einsteiger',
+  otterai: 'einsteiger',
+  zapier: 'fortgeschritten',
+  ollama: 'fortgeschritten',
+  llama4: 'experte',
+  mistral3: 'experte',
+  deepseek: 'experte',
+  lmstudio: 'einsteiger',
+  langchain: 'experte',
+  llamaindex: 'experte',
+  huggingface: 'experte',
+  crewai: 'experte',
+  comfyui: 'experte',
+  vllm: 'experte',
+  windsurf: 'fortgeschritten',
+  boltnew: 'einsteiger',
+  lovable: 'einsteiger',
+  v0dev: 'fortgeschritten',
+  replitagent: 'einsteiger',
+  perplexity: 'einsteiger',
+  notebooklm: 'einsteiger',
+  n8n: 'fortgeschritten',
+  gamma: 'einsteiger',
+  poe: 'einsteiger',
+  heygen: 'fortgeschritten',
+  synthesia: 'fortgeschritten',
+  descript: 'fortgeschritten',
+  groq: 'experte',
+  openrouter: 'experte',
+  veo3: 'fortgeschritten',
+  lumaray3: 'fortgeschritten',
+  hailuo: 'fortgeschritten',
+  abacus: 'fortgeschritten',
+  typingmind: 'fortgeschritten',
+  t3chat: 'einsteiger',
+  chathub: 'einsteiger',
+  msty: 'fortgeschritten',
+  grok: 'einsteiger',
+  mscopilot: 'einsteiger',
+  viggle: 'einsteiger',
+  openclaw: 'fortgeschritten',
+  openhands: 'fortgeschritten',
+  openwebui: 'fortgeschritten',
+  dify: 'einsteiger',
+  autogen: 'experte',
+  anythingllm: 'einsteiger',
+  litellm: 'fortgeschritten'
+};
+
+function getToolLevel(tool) {
+  if (TOOL_LEVELS[tool.id]) return TOOL_LEVELS[tool.id];
+  if (tool.cat === 'frameworks') return 'experte';
+  if (tool.cat === 'coding' || tool.cat === 'lokal') return 'fortgeschritten';
+  return 'einsteiger';
+}
+
+const BIG_THREE = [
+  {id:'chatgpt',name:'ChatGPT (GPT-5.2)',icon:'🤖',cat:'assistenten',stars:5,
+   desc:'Der Marktfuehrer. 800M woechentliche Nutzer, staerkstes Reasoning (52.9% ARC-AGI-2), riesiges Plugin-Oekosystem.',
+   price:'$20/Mo (Plus)',priceLabel:'$20/Mo',
+   strengths:['52.9% auf ARC-AGI-2 — Benchmark-Leader Reasoning','800 Mio. woechentlich aktive Nutzer, 68% Marktanteil','Etabliertes Oekosystem & Plugin-System','Starke Reasoning-Faehigkeiten ueber alle Domains'],
+   weaknesses:['Hoechste Preisstufe ($20/Monat Standard)','Context-Limit: 128K (vs. 1M bei Claude)','Fokus auf Reasoning statt Context Window'],
+   prices:[['Plus','$20/Monat'],['Business','$19-$39/User/Mo'],['API Input','~$2.50/MTok'],['API Output','~$10/MTok']],
+   bestFor:'Consumer-Markt, Reasoning, breite Sprachfaehigkeiten, Plugin-Oekosystem',
+   links:[['Website','https://chat.openai.com'],['API Docs','https://platform.openai.com/docs/'],['Pricing','https://openai.com/pricing']]},
+  {id:'claude',name:'Claude (Opus 4.6)',icon:'🧠',cat:'assistenten',stars:5,
+   desc:'Der Coding-Champion. 1M Token Context, 80.9% SWE-bench, staerkste Code-Generierung aller Modelle.',
+   price:'$20/Mo (Pro)',priceLabel:'$20/Mo',
+   strengths:['1M Token Context Window — 150.000 Woerter auf einmal','80.9% SWE-bench Verified — Coding-Benchmark-Leader','Adaptive Thinking mit 4 Effort-Levels','Context Compaction API fuer endlose Konversationen','Staerkste Code-Generierung aller Modelle'],
+   weaknesses:['Hoechste API-Preise ($5-$37.50/MTok)','Premium-Aufschlag ueber 200K Tokens','Kleineres Plugin-Oekosystem als ChatGPT'],
+   prices:[['Pro','$20/Monat'],['API Opus In','$5-$10/MTok'],['API Opus Out','$25-$37.50/MTok'],['API Sonnet In','$3/MTok']],
+   bestFor:'Code-Generierung, Software Engineering, Lange Dokument-Analyse, Agentic Workflows',
+   links:[['Website','https://claude.ai'],['API Docs','https://docs.anthropic.com'],['Claude Code','https://claude.ai/claude-code']]},
+  {id:'gemini',name:'Gemini (2.5/3 Pro)',icon:'💎',cat:'assistenten',stars:5,
+   desc:'Der Multimodal-King. Natives Multimodal, 2M Context (exp.), unschlagbar guenstig.',
+   price:'Gratis (limitiert)',priceLabel:'Gratis*',
+   strengths:['#1 auf LMArena Leaderboard (Gemini 2.5)','Natives Multimodal: Text, Bild, Audio, Video Generation','2M Token Context (Pro Experimental)','60% Kostenreduktion vs. Vorgaenger','Google AI Studio kostenlos nutzbar'],
+   weaknesses:['Juengeres API-Oekosystem','Weniger reifes Integrations-Oekosystem als OpenAI','Teils inkonsistente Qualitaet zwischen Modellvarianten'],
+   prices:[['Flash Input','$0.10/MTok'],['Flash Output','$0.40/MTok'],['AI Studio','Kostenlos (limitiert)']],
+   bestFor:'Multimodale Workflows, Kosteneffiziente Deployments, Video-Verstaendnis',
+   links:[['Website','https://gemini.google.com'],['API Docs','https://ai.google.dev/gemini-api/'],['AI Studio','https://aistudio.google.com']]}
+];
+
+const TOOLS = [
+  // --- ASSISTENTEN (weitere, neben den Big Three) ---
+  {id:'grok',name:'Grok (xAI)',icon:'⚡',cat:'assistenten',stars:4,
+   desc:'Elon Musks KI-Chatbot. Echtzeit-Zugang zu X/Twitter-Daten, 2M Token Context, sehr guenstiges API-Pricing.',
+   price:'$0-30/Mo',priceLabel:'ab $0',
+   strengths:['Echtzeit-Daten von X/Twitter — einzigartig aktuelle Informationen','2M Token Context Window — eines der groessten','93.3% auf AIME 2025 — starkes Reasoning','Sehr guenstiges API-Pricing (~$0.20/MTok Input)','Bild-Generierung integriert'],
+   weaknesses:['Antworten koennen politische Bias zeigen (X-Oekosystem)','Coding-Faehigkeiten schwaecher als ChatGPT/Claude','Kleineres Oekosystem — weniger Plugins und Integrationen'],
+   prices:[['Free','~10 Anfragen/2h (X-User)'],['SuperGrok','$30/Mo'],['SuperGrok Heavy','$300/Mo'],['API Input','ab $0.20/MTok']],
+   bestFor:'Echtzeit-Recherche mit X-Daten, Budget-API-Nutzung, starkes Reasoning',
+   links:[['Website','https://grok.com'],['xAI','https://x.ai']]},
+  {id:'mscopilot',name:'Microsoft Copilot',icon:'🪟',cat:'assistenten',stars:4,
+   desc:'Microsofts KI-Assistent. Tief in Microsoft 365 integriert (Word, Excel, Teams), Enterprise-Sicherheit.',
+   price:'$0-30/Mo',priceLabel:'ab $0',
+   strengths:['Tiefste Integration in Microsoft 365 (Word, Excel, PowerPoint, Teams)','Enterprise-Sicherheit: Daten nicht fuer Training verwendet','Copilot Studio fuer eigene KI-Agenten','Reduziert Entwurfsarbeit drastisch (70% Produktivitaetssteigerung berichtet)'],
+   weaknesses:['Chat-Qualitaet schwaecher als ChatGPT/Claude','Halluzinationen bei komplexer Formatierung und Datenanalyse','Steile Lernkurve, Feature-Ueberladung'],
+   prices:[['Free','15 Boosts/Tag'],['M365 Personal','$10/Mo (inkl. Office)'],['Business','$21/User/Mo'],['Enterprise','$30/User/Mo']],
+   bestFor:'Microsoft-365-Nutzer, Unternehmen, Dokument-Entwuerfe, Meeting-Zusammenfassungen',
+   links:[['Website','https://copilot.microsoft.com'],['M365 Copilot','https://www.microsoft.com/microsoft-copilot']]},
+
+  // --- CODING ---
+  {id:'copilot',name:'GitHub Copilot',icon:'🛩️',cat:'coding',stars:4,
+   desc:'82% Enterprise-Adoption. Nahtlose GitHub-Integration, Gratis-Tier mit 12K Completions/Monat.',
+   price:'$0-39/Mo',priceLabel:'ab $0',
+   strengths:['Nahtlose GitHub-Integration','Gratis-Tier: 12K Completions/Monat','Breite IDE-Unterstuetzung (VS Code, JetBrains, Neovim)','Agent-Mode (Copilot Workspace)'],
+   weaknesses:['Weniger kontextbewusst als Cursor','Abhaengig von GitHub-Oekosystem','Code-Qualitaet teils inkonsistent'],
+   prices:[['Free','12K Completions/Mo'],['Individual','$10/Mo'],['Business','$19/User/Mo'],['Enterprise','$39/User/Mo']],
+   bestFor:'Teams mit GitHub, breite IDE-Unterstuetzung',
+   links:[['Website','https://github.com/features/copilot'],['Docs','https://docs.github.com/en/copilot']]},
+  {id:'cursor',name:'Cursor IDE',icon:'⚡',cat:'coding',stars:5,
+   desc:'Projektbewusste IDE (VS Code Fork). Versteht gesamte Codebase, ueberlegenes Refactoring.',
+   price:'$0-40/Mo',priceLabel:'ab $0',
+   strengths:['Versteht gesamte Codebase — projektbewusst','Reduziert Technical Debt','Ueberlegenes Refactoring','Composer-Mode fuer Multi-File Edits'],
+   weaknesses:['Hoehere Kosten als Copilot','Eigene IDE (nicht Plugin)','Lernkurve fuer Power-Features'],
+   prices:[['Hobby','Kostenlos (limitiert)'],['Pro','$20/Mo'],['Business','$40/User/Mo']],
+   bestFor:'Grosse Codebases, Refactoring, Multi-File Edits',
+   links:[['Website','https://cursor.com'],['Docs','https://docs.cursor.com']]},
+  {id:'claudecode',name:'Claude Code (CLI)',icon:'🖥️',cat:'coding',stars:5,
+   desc:'Terminal-basierter Agent mit Zugang zu Opus 4.6. Agentic Workflows, 1M Token Context, MCP-Integration.',
+   price:'API-basiert',priceLabel:'API-basiert',
+   strengths:['Zugang zu Claude Opus 4.6','Agentic Workflows — autonome Multi-Step Tasks','1M Token Context Awareness','MCP-Integration (Model Context Protocol)','Git-aware, Projekt-bewusst'],
+   weaknesses:['Nur CLI (keine native IDE-Integration)','Variable API-Kosten (Pay-per-Use)','Erfordert Terminal-Komfort'],
+   prices:[['Max Plan','$200/Mo (Claude.ai + Code)'],['API','Opus/Sonnet Preise']],
+   bestFor:'Terminal Power-User, Agentic Workflows, grosse Projekte',
+   links:[['Docs','https://docs.anthropic.com/en/docs/claude-code'],['GitHub','https://github.com/anthropics/claude-code']]},
+  {id:'cline',name:'Cline',icon:'🔌',cat:'coding',stars:4,
+   desc:'Open Source VS Code Agent. Plan/Act Modi, unterstuetzt lokale + Cloud-Modelle.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Open Source — volle Kontrolle','Plan/Act Modi fuer verschiedene Workflows','Unterstuetzt lokale + Cloud-Modelle','Datenschutz & Kostenkontrolle'],
+   weaknesses:['Weniger poliert als kommerzielle Alternativen','Erfordert eigene Modell-Konfiguration'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'Privacy, Budget, lokale Modelle',
+   links:[['GitHub','https://github.com/cline-coding/cline']]},
+  {id:'continue',name:'Continue',icon:'🔄',cat:'coding',stars:4,
+   desc:'Open Source IDE Extension. Voll lokal via Ollama, anpassbare Assistenten, 20K+ GitHub Stars.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Voll lokal via Ollama','Anpassbare Assistenten','20K+ GitHub Stars, aktive Community','Erweiterbarkeit'],
+   weaknesses:['Erfordert technisches Setup','Weniger Out-of-Box Erfahrung'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'Local-First Development, Erweiterbarkeit',
+   links:[['GitHub','https://github.com/continuedev/continue']]},
+  {id:'aider',name:'Aider',icon:'🤝',cat:'coding',stars:4,
+   desc:'Terminal Pair-Programmer. Git-aware Edits, unterstuetzt lokale + Cloud-Modelle.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Git-aware Edits','Unterstuetzt lokale + Cloud-Modelle','Praezise Code-Edits im Terminal'],
+   weaknesses:['Nur Terminal','Erfordert Modell-Konfiguration'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'Terminal Workflows, praezise Code-Edits',
+   links:[['GitHub','https://github.com/paul-gauthier/aider']]},
+  {id:'windsurf',name:'Windsurf (Codeium)',icon:'🏄',cat:'coding',stars:5,
+   desc:'Erste Agentic AI-IDE (VS Code Fork). Cascade-Agent fuer repo-weite Multi-File Edits, dauerhaft kostenlos.',
+   price:'$0-60/Mo',priceLabel:'ab $0',
+   strengths:['Dauerhaft kostenlose Autocomplete + Chat','Cascade: repo-bewusster Multi-File Agent','Unterstuetzt Opus 4.6, Sonnet 4.5','Live Preview & Netlify Deployment'],
+   weaknesses:['25 Credits/Mo im Free Tier','Eigene IDE (kein Plugin)','Juengeres Oekosystem als Cursor'],
+   prices:[['Free','25 Credits/Mo (unbegrenzt Autocomplete)'],['Pro','$15/Mo (500 Credits)'],['Teams','$30/User/Mo'],['Enterprise','$60/User/Mo']],
+   bestFor:'Gratis Cursor-Alternative, Agentic IDE, Multi-File Edits',
+   links:[['Website','https://windsurf.com'],['Docs','https://docs.windsurf.com']]},
+  {id:'boltnew',name:'Bolt.new',icon:'🔩',cat:'coding',stars:4,
+   desc:'Full-Stack Apps aus Prompts. WebContainers (Node.js im Browser), Vite/Next.js/React, sofortige Preview.',
+   price:'Freemium',priceLabel:'Freemium',
+   strengths:['Komplette Full-Stack Apps aus natuerlicher Sprache','Node.js laeuft direkt im Browser (WebContainers)','Sofortige Preview & Deployment','Vite, Next.js, React unterstuetzt'],
+   weaknesses:['Token-Limits im Free Tier','Weniger Kontrolle als manuelle Entwicklung','Komplexe Apps erfordern Nacharbeit'],
+   prices:[['Free','Limitierte Tokens'],['Pro','ab $20/Mo'],['Teams','ab $30/Mo']],
+   bestFor:'Rapid Prototyping, MVPs, Vibe Coding',
+   links:[['Website','https://bolt.new']]},
+  {id:'lovable',name:'Lovable.dev',icon:'💜',cat:'coding',stars:4,
+   desc:'Schnellstwachsendes AI-Startup Europas ($1.8B). Full-Stack React Apps mit Auth & DB aus natuerlicher Sprache.',
+   price:'Freemium',priceLabel:'Freemium',
+   strengths:['Non-Coder koennen komplette Apps bauen','Automatische Auth, Datenbank, UI','20x schnellere Entwicklung (laut Hersteller)','Schoenes UI out-of-the-box'],
+   weaknesses:['Vendor Lock-in Risiko','Komplexe Logik erfordert manuelles Eingreifen','Junge Plattform, schnelle Aenderungen'],
+   prices:[['Free','Limitiert'],['Starter','ab $20/Mo'],['Teams','ab $50/Mo']],
+   bestFor:'Non-Coder, Founder MVPs, schnelle App-Entwicklung',
+   links:[['Website','https://lovable.dev']]},
+  {id:'v0dev',name:'v0 (Vercel)',icon:'▲',cat:'coding',stars:4,
+   desc:'AI UI-Generator. React-Komponenten + Full-Stack Next.js Apps aus Prompts oder Screenshots.',
+   price:'$0-50/Mo',priceLabel:'ab $0',
+   strengths:['Production-ready React/Next.js Code','shadcn/ui + Tailwind CSS — modernes Styling','Screenshots → Code Konvertierung','200 Gratis-Credits zum Testen'],
+   weaknesses:['Next.js/React fokussiert','Erfordert Frontend-Kenntnisse fuer Anpassungen','Credits verbrauchen sich schnell'],
+   prices:[['Free','200 Credits'],['Basic','$10/Mo (1.500 Credits)'],['Premium','$50/Mo (10.000 Credits)']],
+   bestFor:'Next.js/React UIs, Vibe Coding, Frontend-Prototypen',
+   links:[['Website','https://v0.app'],['Docs','https://v0.dev/docs']]},
+  {id:'replitagent',name:'Replit Agent',icon:'🔁',cat:'coding',stars:4,
+   desc:'Autonomer App-Builder. Agent 3 arbeitet 3+ Stunden selbststaendig, Self-Healing Code, komplette Deployments.',
+   price:'Freemium',priceLabel:'Freemium',
+   strengths:['3+ Stunden autonomes Arbeiten (Agent 3)','Self-Healing Code — findet und repariert Bugs automatisch','Kompletter Dev-Cycle: Planung → Code → DB → Deploy','Conversational Interface fuer Einsteiger'],
+   weaknesses:['Qualitaet variiert bei komplexen Projekten','Deployment auf Replit-Infrastruktur beschraenkt','Agent-Ergebnisse nicht immer vorhersehbar'],
+   prices:[['Free','Limitiert'],['Replit Core','ab $25/Mo'],['Teams','ab $40/Mo']],
+   bestFor:'Komplette App-Entwicklung, Einsteiger, autonomes Coding',
+   links:[['Website','https://replit.com/ai'],['Docs','https://docs.replit.com']]},
+
+  // --- BILD ---
+  {id:'midjourney',name:'Midjourney v6/v7',icon:'🎨',cat:'bild',stars:5,
+   desc:'Kuenstlerische Dominanz. Ueberlegene Aesthetik, Concept Art Exzellenz, emotionale Resonanz.',
+   price:'ab $10/Mo',priceLabel:'$10/Mo',
+   strengths:['Kuenstlerische Dominanz — ueberlegene Aesthetik','Concept Art Exzellenz','Personalisierung & Style-Learning','Fantasy/Stilisierte Arbeiten fuehrend'],
+   weaknesses:['Schwache Textwiedergabe (vs. DALL-E 3)','Nicht ideal fuer praezise kommerzielle Layouts','Nur ueber eigene Plattform nutzbar'],
+   prices:[['Basic','$10/Mo'],['Standard','$30/Mo'],['Pro','$60/Mo']],
+   bestFor:'Concept Art, Fantasy-Landschaften, stilisierte Portraits',
+   links:[['Website','https://midjourney.com']]},
+  {id:'dalle3',name:'DALL-E 3',icon:'🖼️',cat:'bild',stars:4,
+   desc:'Prompt-Genauigkeit (92% Textwiedergabe). Praezise kommerzielle Inhalte, direkt in ChatGPT.',
+   price:'In ChatGPT Plus',priceLabel:'$20/Mo*',
+   strengths:['92% Textwiedergabe — Benchmark-Leader','Praezise kommerzielle Inhalte','Komplexe raeumliche Beziehungen','Benutzerfreundlich (direkt in ChatGPT)'],
+   weaknesses:['Weniger kuenstlerisch als Midjourney','Kreativitaet teils eingeschraenkt durch Genauigkeitsfokus'],
+   prices:[['Via ChatGPT Plus','$20/Mo'],['API','Pay-per-Image']],
+   bestFor:'Marketing-Material, Social Media, Produktvisualisierungen',
+   links:[['Via ChatGPT','https://chat.openai.com'],['API','https://platform.openai.com/docs/guides/images']]},
+  {id:'stablediffusion',name:'Stable Diffusion 3',icon:'🔓',cat:'bild',stars:4,
+   desc:'Open Source. Volle Anpassbarkeit, Fine-Tuning auf eigenen Daten, automatisierte Workflows.',
+   price:'Kostenlos (Self-Host)',priceLabel:'Gratis*',
+   strengths:['Volle Anpassbarkeit & Fine-Tuning','Auf eigenen Datensaetzen trainierbar','Automatisierte Workflows moeglich','Kostenlos bei Selbst-Hosting'],
+   weaknesses:['Steile Lernkurve','Technisches Know-how erforderlich','Selbst-gehostete Infrastruktur noetig'],
+   prices:[['Self-Hosted','Kostenlos'],['Cloud APIs','Variabel']],
+   bestFor:'Enterprise-Deployments, Marken-Konsistenz, Character Consistency',
+   links:[['GitHub','https://github.com/Stability-AI/stablediffusion'],['ComfyUI','https://github.com/comfyanonymous/ComfyUI']]},
+
+  // --- VIDEO ---
+  {id:'sora',name:'OpenAI Sora 2',icon:'🎬',cat:'video',stars:5,
+   desc:'Physikalisch genaueste Ergebnisse. 20+ Sekunden, synchronisierter Dialog & Sound.',
+   price:'Kein Free Tier',priceLabel:'Bezahlt',
+   strengths:['Physikalisch genaueste Ergebnisse','Realistische Physik-Simulation','Synchronisierter Dialog und Sound','20+ Sekunden Generierung'],
+   weaknesses:['Kein Free Tier (seit Jan 2026 eliminiert)','Limitierter Rollout','Eingeschraenkte Verfuegbarkeit'],
+   prices:[['ChatGPT Plus','$20/Mo (limitiert)'],['Pro','$200/Mo']],
+   bestFor:'Hoechste Qualitaet, realistische Physik',
+   links:[['Website','https://openai.com/sora']]},
+  {id:'runway',name:'Runway Gen-4.5',icon:'🎥',cat:'video',stars:5,
+   desc:'Ueberlegene Character Consistency. Native 4K, verbesserte temporale Konsistenz.',
+   price:'ab $12/Mo',priceLabel:'$12/Mo',
+   strengths:['Ueberlegene Character Consistency','Native 4K Aufloesung','Verbesserte temporale Konsistenz','Bessere Prompt-Treue als Vorgaenger'],
+   weaknesses:['Credits-System kann teuer werden','Lernkurve fuer beste Ergebnisse'],
+   prices:[['Standard','ab $12/Mo'],['Pro','ab $28/Mo']],
+   bestFor:'Cinematische Qualitaet, Character Consistency, 4K Output',
+   links:[['Website','https://runwayml.com']]},
+  {id:'kling',name:'Kling AI 2.1',icon:'🎭',cat:'video',stars:4,
+   desc:'Exzellente Lip-Sync. 1080p Videos, cinematische Tiefe, erweiterte Shot Extension.',
+   price:'ab $12/Mo',priceLabel:'$12/Mo',
+   strengths:['Exzellente Lip-Sync','Erweiterte Shot Extension','10-Sekunden-Videos bei 1080p','Cinematische Tiefe'],
+   weaknesses:['Weniger bekannt als Sora/Runway','Qualitaet variiert bei komplexen Szenen'],
+   prices:[['Standard','ab $12/Mo']],
+   bestFor:'Lip-Sync, Dialog-Content, cinematische Shots',
+   links:[['Website','https://klingai.com']]},
+  {id:'pika',name:'Pika Labs 2.5',icon:'✨',cat:'video',stars:3,
+   desc:'Zugaenglich und kreativ. Pikaffects fuer kreative Effekte, gute Balance aus Einfachheit und Qualitaet.',
+   price:'Freemium',priceLabel:'Freemium',
+   strengths:['Zugaenglichkeit','Kreative Effekte (Pikaffects)','Gute Balance aus Einfachheit und Qualitaet'],
+   weaknesses:['Geringere Aufloesung als Runway','Weniger geeignet fuer professionellen Content'],
+   prices:[['Free','Limitiert'],['Standard','ab $8/Mo']],
+   bestFor:'Kreative Manipulation, Einstieg in Video-KI',
+   links:[['Website','https://pika.art']]},
+  {id:'heygen',name:'HeyGen',icon:'🧑‍💼',cat:'video',stars:4,
+   desc:'KI-Avatar-Videos. Avatar IV mit natuerlichem Verhalten, Video Agent erstellt komplette Videos autonom.',
+   price:'ab $24/Mo',priceLabel:'$24/Mo',
+   strengths:['Realistische KI-Avatare (Avatar IV)','175+ Sprachen mit Lip-Sync','Video Agent: Script → Animation autonom','50% schnellere Generierung, bis 10 Min stabil'],
+   weaknesses:['Kein Free Tier','Hohe Kosten bei viel Video-Output','Uncanny Valley bei komplexen Emotionen'],
+   prices:[['Creator','$24/Mo'],['Business','$108/Mo'],['Enterprise','Individuell']],
+   bestFor:'Marketing-Videos, Schulungen, mehrsprachiger Content',
+   links:[['Website','https://www.heygen.com']]},
+  {id:'synthesia',name:'Synthesia',icon:'🎞️',cat:'video',stars:4,
+   desc:'Enterprise KI-Video-Plattform. 240+ Avatare, 160+ Sprachen, $4B Bewertung (Jan 2026).',
+   price:'ab $22/Mo',priceLabel:'$22/Mo',
+   strengths:['240+ realistische Avatare','160+ Sprachen','Express-2: Ganzkörper-Avatare mit Gesten','Custom Avatar aus 1 Min Webcam-Aufnahme','1M+ Nutzer, $4B Bewertung'],
+   weaknesses:['Enterprise-fokussiert, teuer fuer Einzelnutzer','Weniger kreativ als Runway/Sora','Begrenzte Anpassungsmoeglichkeiten im Starter-Tier'],
+   prices:[['Starter','$22/Mo'],['Creator','$67/Mo'],['Enterprise','Individuell']],
+   bestFor:'Unternehmens-Schulungen, HR-Videos, mehrsprachige Kommunikation',
+   links:[['Website','https://www.synthesia.io']]},
+  {id:'veo3',name:'Google Veo 3',icon:'🎬',cat:'video',stars:5,
+   desc:'Googles Video-Flaggschiff. Erstes Modell mit nativem Audio + Dialog, 4K-Output, physikalisch ueberzeugend.',
+   price:'ab $20/Mo',priceLabel:'ab $20/Mo',
+   strengths:['Natives Audio + Dialog-Generierung (einzigartig)','Bis 4K Aufloesung, cinematische Qualitaet','Starke Prompt-Treue bei Szenenkomposition','Physikalisch glaubwuerdige Bewegungen','Veo 3.1: Native 1080p, 4x schneller, 3x guenstiger'],
+   weaknesses:['Max 8 Sekunden Clips','$249/Mo fuer vollen Zugang (AI Ultra Plan)','Ethik-Bedenken: realistische Deepfakes moeglich','Text-Rendering in Videos teils fehlerhaft'],
+   prices:[['Gemini Advanced','$20/Mo (limitiert)'],['AI Ultra','$249/Mo (voller Zugang)'],['Vertex AI','Pay-per-Use']],
+   bestFor:'Kurzvideos mit Dialog, cinematische Qualitaet, Audio-integrierte Clips',
+   links:[['Website','https://deepmind.google/technologies/veo/'],['AI Studio','https://aistudio.google.com']]},
+  {id:'lumaray3',name:'Luma Dream Machine (Ray3)',icon:'🌟',cat:'video',stars:5,
+   desc:'Ray3.14: Professionellstes Luma-Modell. Native 1080p, HDR-Pipeline, Reasoning-basierte Generierung.',
+   price:'ab $9.99/Mo',priceLabel:'ab $10/Mo',
+   strengths:['Weltweit erstes natives HDR-Video-Modell','Ray3.14: Native 1080p, 4x schneller als Ray2','Reasoning-basierte Generierung fuer bessere Kohaerenz','Image-to-Video, Keyframes, Video-to-Video','Draft-Mode fuer schnelle Exploration'],
+   weaknesses:['Kein natives Audio wie Veo 3','Credits-System begrenzt Output-Menge','Komplexe Prompts manchmal inkonsistent'],
+   prices:[['Free','30 Generierungen/Mo'],['Standard','$9.99/Mo'],['Pro','$29.99/Mo'],['Premier','$99.99/Mo']],
+   bestFor:'HDR-Content, cinematische Shorts, professionelle Video-Produktion',
+   links:[['Website','https://lumalabs.ai/ray']]},
+  {id:'hailuo',name:'Hailuo AI (MiniMax)',icon:'🎭',cat:'video',stars:4,
+   desc:'Chinesischer Video-KI-Hit. Exzellente Physik-Simulation, Anime-/Illustrations-Stile, sehr guenstiger Einstieg.',
+   price:'Freemium',priceLabel:'Freemium',
+   strengths:['Exzellente Physik-Simulation und Bewegungsrealismus','Hailuo 2.3: Anime, Illustration, Ink-Wash, Game-CG Stile','Sehr guenstiges Pricing fuer hohe Iteration','Starke Prompt-Treue bei klaren Szenen'],
+   weaknesses:['Kein Audio/Lip-Sync (anders als Veo 3)','Temporale Konsistenz bei komplexen Szenen wackelig','Max Clip-Laenge begrenzt','Datenschutz: chinesischer Anbieter'],
+   prices:[['Free','Limitierte Generierungen'],['Basic','ab $9.99/Mo']],
+   bestFor:'Stylisierte Videos, Anime-Content, Budget-freundliche Exploration',
+   links:[['Website','https://hailuoai.video']]},
+  {id:'viggle',name:'Viggle AI',icon:'💃',cat:'video',stars:4,
+   desc:'KI-Motion-Transfer: Statische Bilder tanzen lassen. Physik-basierte Character-Animation ohne manuelles Rigging.',
+   price:'$0-25/Mo',priceLabel:'ab $0',
+   strengths:['Best-in-Class Motion Transfer mit 3D-Physik (JST-1 Modell)','Kein manuelles Rigging noetig — Foto rein, Animation raus','Sehr zugaenglich fuer Social Media (TikTok, Shorts)','4M+ Discord-Community, $19M Series A Funding'],
+   weaknesses:['Nur Motion Transfer — kein allgemeiner Video-Generator','Free Tier maximal 720p, kaempft mit schnellen Bewegungen','Keine Gesichtskontrolle, kein Kamerawinkel-Anpassung','Datenschutz-Bedenken (YouTube-Trainingsdaten)'],
+   prices:[['Free','5 Videos/Tag (720p)'],['Pro','$10/Mo (1080p)'],['Live','$25/Mo (Priority)']],
+   bestFor:'Social Media Creator, virale Tanz-/Motion-Memes, Character-Animation',
+   links:[['Website','https://viggle.ai']]},
+
+  // --- AUDIO ---
+  {id:'suno',name:'Suno AI',icon:'🎵',cat:'audio',stars:5,
+   desc:'Schnellste Musik-Generierung. 4-Minuten-Songs in unter einer Minute, vielfaeltige Genres.',
+   price:'~$10/Mo',priceLabel:'$10/Mo',
+   strengths:['Schnellste Generierung: 4-Min-Songs in <1 Minute','Beste Gesamtqualitaet','Einfache Bedienung (Text-Prompt → Song)','Vielfaeltige Genres'],
+   weaknesses:['Lizenz-Unsicherheit bei kommerzieller Nutzung','Qualitaet bei laengeren Stuecken teils inkonsistent'],
+   prices:[['Pro','~$10/Mo fuer 500 Songs']],
+   bestFor:'Schnelle Musik-Generierung, kreatives Experimentieren',
+   links:[['Website','https://suno.com']]},
+  {id:'elevenlabs',name:'ElevenLabs / Eleven Music',icon:'🎙️',cat:'audio',stars:5,
+   desc:'Erstes KI-Musik-Tool mit YouTube-Monetarisierungs-Freigabe. Rechtliche Sicherheit fuer Profis.',
+   price:'$0-99/Mo',priceLabel:'ab $0',
+   strengths:['YouTube-Monetarisierungs-Freigabe — keine Copyright-Strikes','Kommerzielle Lizenzierung via Merlin Network','Rechtliche Sicherheit (kritisch fuer Profis)','Hochwertige Sprachsynthese + Musik'],
+   weaknesses:['Langsamere Musik-Generierung als Suno','Hoehere Kosten fuer Pro-Features'],
+   prices:[['Free','11 Min/Mo'],['Starter','$5/Mo'],['Creator','$22/Mo'],['Pro','$99/Mo + kommerz. Lizenz']],
+   bestFor:'Professioneller Content, YouTube Creator, Voice-Over + Musik',
+   links:[['Website','https://elevenlabs.io'],['Musik','https://elevenlabs.io/music']]},
+  {id:'udio',name:'Udio',icon:'🎶',cat:'audio',stars:4,
+   desc:'Professionelle Audio-Qualitaet (48kHz/32-bit). Ueberlegener Vocal-Realismus.',
+   price:'Freemium',priceLabel:'Freemium',
+   strengths:['Professionelle Audio-Qualitaet (48kHz/32-bit)','Ueberlegener Vocal-Realismus','High-Fidelity Output'],
+   weaknesses:['Langsamere Generierung als Suno','Weniger intuitiv'],
+   prices:[['Free','Limitiert'],['Pro','~$10/Mo']],
+   bestFor:'Professionelle Audio-Qualitaet, High-Fidelity',
+   links:[['Website','https://udio.com']]},
+  {id:'descript',name:'Descript',icon:'✂️',cat:'audio',stars:4,
+   desc:'Textbasierter Video-/Audio-Editor. Bearbeite Videos durch Transkript-Editing, KI entfernt Fuellwoerter automatisch.',
+   price:'ab $0',priceLabel:'ab $0',
+   strengths:['Textbasiertes Editing — Video bearbeiten wie ein Dokument','Underlord AI Co-Editor','Overdub Voice Cloning (1 Min Training)','95% Transkriptions-Genauigkeit in 22+ Sprachen','Automatische Filler-Entfernung & Studio Sound'],
+   weaknesses:['Komplexe Projekte erfordern Einarbeitung','Export-Optionen im Free Tier limitiert','Hoher Speicherverbrauch bei langen Projekten'],
+   prices:[['Free','1 Projekt, 10 Min Transkription'],['Hobbyist','$24/Mo'],['Business','$33/Mo'],['Enterprise','Individuell']],
+   bestFor:'Podcaster, YouTuber, Content Creator, Videoschnitt',
+   links:[['Website','https://www.descript.com']]},
+
+  // --- PRODUKTIVITAET ---
+  {id:'notionai',name:'Notion AI',icon:'📝',cat:'produktivitaet',stars:4,
+   desc:'KI direkt in deinem Workspace. Zusammenfassungen, Schreiben, Datenanalyse — alles integriert.',
+   price:'$10/Mo Add-on',priceLabel:'$10/Mo',
+   strengths:['Direkt in Notion integriert','Zusammenfassungen, Schreiben, Uebersetzung','Datenbank-Abfragen mit natuerlicher Sprache'],
+   weaknesses:['Nur innerhalb Notion nutzbar','Add-on Kosten zusaetzlich zu Notion'],
+   prices:[['AI Add-on','$10/User/Mo']],
+   bestFor:'Teams die Notion nutzen, Knowledge Management',
+   links:[['Website','https://notion.so/product/ai']]},
+  {id:'otterai',name:'Otter.ai',icon:'🦦',cat:'produktivitaet',stars:4,
+   desc:'Automatische Meeting-Transkription. AI-Zusammenfassungen, Action Items, Multi-Plattform.',
+   price:'ab $0',priceLabel:'ab $0',
+   strengths:['Automatische Transkription in Echtzeit','AI-generierte Zusammenfassungen','Integration mit Zoom, Teams, Google Meet'],
+   weaknesses:['Englisch-fokussiert','Free Tier limitiert'],
+   prices:[['Free','300 Min/Mo'],['Pro','$16.99/Mo'],['Business','$30/User/Mo']],
+   bestFor:'Meeting-Dokumentation, Interviews, Vorlesungen',
+   links:[['Website','https://otter.ai']]},
+  {id:'zapier',name:'Zapier AI',icon:'⚡',cat:'produktivitaet',stars:4,
+   desc:'KI-gestuetzte Workflow-Automatisierung. 7000+ App-Integrationen, No-Code.',
+   price:'ab $0',priceLabel:'ab $0',
+   strengths:['7000+ App-Integrationen','No-Code Automatisierung','KI-gestuetzte Workflow-Erstellung'],
+   weaknesses:['Komplexe Workflows koennen teuer werden','Lernkurve fuer fortgeschrittene Automationen'],
+   prices:[['Free','100 Tasks/Mo'],['Starter','$19.99/Mo'],['Professional','$49/Mo']],
+   bestFor:'Workflow-Automatisierung, App-Integration',
+   links:[['Website','https://zapier.com']]},
+  {id:'perplexity',name:'Perplexity AI',icon:'🔎',cat:'produktivitaet',stars:5,
+   desc:'KI-Suchmaschine #1. Echtzeit-Websuche + LLM-Reasoning, Antworten mit Quellenangaben statt Linklisten.',
+   price:'$0-20/Mo',priceLabel:'ab $0',
+   strengths:['Echtzeit-Websuche + KI-Zusammenfassung','Antworten mit zitierten Quellen','Pro Search fuer tiefe Recherche','Zugang zu GPT-5, Claude, Gemini Pro in einem Tool','WhatsApp-Integration & Comet Browser'],
+   weaknesses:['Pro-Features hinter Paywall','Antworten manchmal zu oberflaechlich','Weniger kreativ als dedizierte LLMs'],
+   prices:[['Free','Unbegrenzte Schnellsuchen'],['Pro','$20/Mo (GPT-5, Claude, Gemini)']],
+   bestFor:'Recherche, Faktencheck, taegliche KI-Suche',
+   links:[['Website','https://www.perplexity.ai']]},
+  {id:'notebooklm',name:'NotebookLM (Google)',icon:'📓',cat:'produktivitaet',stars:5,
+   desc:'KI-Forschungsassistent. Antwortet NUR aus deinen Dokumenten (keine Halluzinationen), virale Audio Overviews.',
+   price:'Gratis',priceLabel:'Gratis',
+   strengths:['Grounded Responses — null Halluzinationen','Audio Overviews: Dokumente als Podcast','Unterstuetzt PDFs, Google Docs, Websites, YouTube','Deep Research Integration','Lernt Nutzer-Praeferenzen (2026)'],
+   weaknesses:['Nur innerhalb hochgeladener Quellen nutzbar','Audio Overviews nur auf Englisch optimal','Limitierte Quellenanzahl pro Notebook'],
+   prices:[['Free','Gratis'],['Plus','Teil von Google One AI Premium']],
+   bestFor:'Studium, Forschung, Dokument-Analyse, Podcast-Erstellung',
+   links:[['Website','https://notebooklm.google.com']]},
+  {id:'n8n',name:'n8n',icon:'🔄',cat:'produktivitaet',stars:5,
+   desc:'Fair-Code Workflow-Automatisierung mit KI. 600+ Integrationen, Agentic Workflows, Self-Hosting moeglich.',
+   price:'$0-Selfhost',priceLabel:'ab $0',
+   strengths:['Fair-Code: Self-Hosting kostenlos moeglich','600+ App-Integrationen','Agentic AI Workflows mit Human-in-the-Loop','5.200+ Community Workflow-Templates','Code-Flexibilitaet + No-Code Speed'],
+   weaknesses:['Steilere Lernkurve als Zapier','Self-Hosting erfordert Server-Kenntnisse','Weniger poliert als kommerzielle Alternativen'],
+   prices:[['Self-Hosted','Kostenlos (Fair-Code)'],['Cloud Starter','$20/Mo'],['Cloud Pro','$50/Mo']],
+   bestFor:'Agentic AI Workflows, technische Automatisierung, Self-Hosting',
+   links:[['Website','https://n8n.io'],['GitHub','https://github.com/n8n-io/n8n']]},
+  {id:'gamma',name:'Gamma.app',icon:'📊',cat:'produktivitaet',stars:4,
+   desc:'KI-Praesentationen in unter einer Minute. 250M+ erstellte Praesentationen, 50M+ Nutzer.',
+   price:'Freemium',priceLabel:'Freemium',
+   strengths:['Praesentation in unter 1 Minute generiert','Gamma 3.0 AI Agent editiert mit dir','Export zu PDF, PowerPoint, Google Slides','Real-Time Collaboration','50M+ Nutzer, 700K Erstellungen taeglich'],
+   weaknesses:['Design-Anpassungen begrenzt','Wasserzeichen im Free Tier','Weniger Kontrolle als PowerPoint/Keynote'],
+   prices:[['Free','Mit Wasserzeichen'],['Plus','$10/Mo'],['Pro','$20/Mo']],
+   bestFor:'Schnelle Praesentationen, Pitch Decks, Content Creation',
+   links:[['Website','https://gamma.app']]},
+  {id:'poe',name:'Poe (Quora)',icon:'💬',cat:'aggregator',stars:4,
+   desc:'Multi-Model Aggregator. 200+ KI-Modelle (Text, Bild, Video, Audio) in einer Oberflaeche.',
+   price:'$0-20/Mo',priceLabel:'ab $0',
+   strengths:['200+ Modelle in einer App (GPT-5, Claude, Gemini, DeepSeek)','Multi-Bot Chat vergleicht Antworten','Bild-, Video-, Audio-Generierung inklusive','Gruppen-Chats mit bis zu 200 Nutzern'],
+   weaknesses:['Pro-Abo noetig fuer volle Modellauswahl','Weniger tiefe Integration als native Apps','Qualitaet abhaengig vom gewaehlten Modell'],
+   prices:[['Free','Limitierte Nutzung'],['Pro','$20/Mo (alle Modelle)']],
+   bestFor:'Modell-Vergleich, Exploration, ein Abo fuer alles',
+   links:[['Website','https://poe.com']]},
+
+  // --- LOKAL / OSS ---
+  {id:'ollama',name:'Ollama',icon:'🦙',cat:'lokal',stars:5,
+   desc:'LLMs lokal ausfuehren. 120K+ GitHub Stars, einfachstes Setup, volle Privatsphaere.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Einfachstes lokales LLM-Setup','120K+ GitHub Stars','Unterstuetzt Llama, Mistral, DeepSeek, Qwen, Gemma','Volle Privatsphaere, Offline-faehig'],
+   weaknesses:['Erfordert GPU fuer groessere Modelle','Weniger performant als Cloud-APIs'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'Lokale Entwicklung, Datenschutz, Offline-Nutzung',
+   links:[['GitHub','https://github.com/ollama/ollama'],['Website','https://ollama.ai'],['Modelle','https://ollama.ai/library']]},
+  {id:'llama4',name:'Llama 4 (Meta)',icon:'🦙',cat:'lokal',stars:4,
+   desc:'Metas Open-Source-Flaggschiff. 128K Context, multimodal, kostenlos anpassbar.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['128K Context Window','Multimodal (Text + Bild)','Verbesserter Multilingual Support','Uebertrifft Gemini bei Zusammenfassungen','Kostenlos nutzbar und anpassbar'],
+   weaknesses:['GPU-intensiv (Enterprise-Grade Hardware)','Leicht hinter GPT-4/Claude bei komplexem Reasoning','Community License (frei fuer <700M User)'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'Lokales Deployment, Fine-Tuning, Dokumentverarbeitung',
+   links:[['GitHub','https://github.com/meta-llama/llama'],['Hugging Face','https://huggingface.co/meta-llama']]},
+  {id:'mistral3',name:'Mistral 3 Family',icon:'🌬️',cat:'lokal',stars:4,
+   desc:'Apache 2.0 lizenziert. Von 3B bis 675B MoE, Edge-faehig, multilingual.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['#2 OSS non-reasoning auf LMArena','Apache 2.0 — volle kommerzielle Freiheit','Ministral-Serie fuer Edge (3B/8B/14B)','Multimodal + Multilingual','256K Context (Large 3)'],
+   weaknesses:['MoE-Architektur erhoeht Komplexitaet','Juengeres Oekosystem als Llama'],
+   prices:[['Open Source','Kostenlos (Apache 2.0)']],
+   bestFor:'Edge Computing, Mobile, Multilingual, kommerzielle Nutzung',
+   links:[['Website','https://mistral.ai'],['GitHub','https://github.com/mistralai'],['Hugging Face','https://huggingface.co/mistralai']]},
+  {id:'deepseek',name:'DeepSeek V3.2',icon:'🔍',cat:'lokal',stars:3,
+   desc:'Ultra-guenstig ($0.14/MTok). Starkes Math/Reasoning, aber DSGVO-Bedenken.',
+   price:'$0.14/MTok',priceLabel:'$0.14/MTok',
+   strengths:['97.5% AIME 2025 — Exzellentes Math/Reasoning','Ultra-guenstig: $0.14/MTok Input','Open Source (MIT Lizenz)','Transparenter Denkprozess'],
+   weaknesses:['⚠️ DSGVO-Verstoss (Datentransfer China)','12x anfaelliger fuer Agent-Hijacking','U.S.-Modelle loesen 20%+ mehr SW-Tasks','Schlechte kreative Schreibfaehigkeiten'],
+   prices:[['API Input','$0.14/MTok'],['API Output','$0.28/MTok'],['Self-Hosted','Kostenlos']],
+   bestFor:'Mathematisches Reasoning, interne Projekte (NICHT fuer EU-Daten!)',
+   links:[['Website','https://deepseek.com'],['GitHub','https://github.com/deepseek-ai']]},
+  {id:'lmstudio',name:'LM Studio',icon:'💻',cat:'lokal',stars:4,
+   desc:'Desktop-App fuer lokale LLMs. GUI, keine CLI noetig, benutzerfreundlich.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Benutzerfreundliche GUI','Keine CLI noetig','Chat-Interface fuer lokale Modelle'],
+   weaknesses:['Weniger flexibel als Ollama','Groesserer Ressourcenverbrauch'],
+   prices:[['Desktop App','Kostenlos']],
+   bestFor:'Einsteiger, nicht-technische Nutzer',
+   links:[['Website','https://lmstudio.ai']]},
+
+  // --- FRAMEWORKS ---
+  {id:'langchain',name:'LangChain',icon:'🔗',cat:'frameworks',stars:5,
+   desc:'LLM-Workflow-Orchestrierung. 100K+ GitHub Stars, Multi-Step Reasoning, umfangreiche Integrationen.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['100K+ GitHub Stars','Flexibilitaet & umfangreiche Integrationen','Multi-Step Reasoning Chains','Python + JavaScript/TypeScript'],
+   weaknesses:['Steilere Lernkurve','Kann fuer einfache Tasks zu komplex sein'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'Komplexe Workflows, RAG, Agenten',
+   links:[['GitHub','https://github.com/langchain-ai/langchain'],['Docs','https://python.langchain.com/']]},
+  {id:'llamaindex',name:'LlamaIndex',icon:'📚',cat:'frameworks',stars:4,
+   desc:'Daten-Indexierung & RAG. 40K+ Stars, einfache externe Datenanbindung.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['RAG-Einfachheit','Skalierbarkeit','Externe Datenanbindung','40K+ GitHub Stars'],
+   weaknesses:['Weniger flexibel als LangChain fuer non-RAG Tasks'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'RAG, Dokument-Verstaendnis, private Datenabfragen',
+   links:[['GitHub','https://github.com/run-llama/llama_index'],['Docs','https://docs.llamaindex.ai/']]},
+  {id:'huggingface',name:'Hugging Face Transformers',icon:'🤗',cat:'frameworks',stars:5,
+   desc:'DER Model Hub. 140K+ Stars, hunderte vortrainierte Modelle, einfaches Fine-Tuning.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['140K+ GitHub Stars','Hunderte vortrainierte Modelle','Einfaches Fine-Tuning','Groesste ML-Community'],
+   weaknesses:['Erfordert ML-Grundkenntnisse'],
+   prices:[['Open Source','Kostenlos'],['Pro','$9/Mo'],['Enterprise','Variabel']],
+   bestFor:'Modellzugang, Transfer Learning, NLP-Tasks',
+   links:[['GitHub','https://github.com/huggingface/transformers'],['Docs','https://huggingface.co/docs/transformers/']]},
+  {id:'crewai',name:'CrewAI',icon:'👥',cat:'frameworks',stars:4,
+   desc:'Multi-Agenten-Orchestrierung. Rollenbasierte Teams, Crews & Flows Architektur.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Multi-Agenten-Orchestrierung','Rollenbasierte Teams','Lokal + Cloud','25K+ GitHub Stars'],
+   weaknesses:['Erfordert fortgeschrittene Kenntnisse','Debugging kann komplex sein'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'Multi-Agenten-Systeme, kollaborative Workflows',
+   links:[['GitHub','https://github.com/crewAIInc/crewAI'],['Docs','https://docs.crewai.com/']]},
+  {id:'comfyui',name:'ComfyUI',icon:'🎛️',cat:'frameworks',stars:4,
+   desc:'Node-basierter Stable Diffusion Workflow Editor. 70K+ Stars, visuell, modular.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Visueller Node-basierter Editor','70K+ GitHub Stars','Modular & erweiterbar'],
+   weaknesses:['Steile Lernkurve','Erfordert GPU'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'Komplexe Bild-Workflows, Automatisierung',
+   links:[['GitHub','https://github.com/comfyanonymous/ComfyUI']]},
+  {id:'vllm',name:'vLLM',icon:'⚡',cat:'frameworks',stars:4,
+   desc:'Blitzschnelle LLM-Inferenz. GPU-optimiert, OpenAI-kompatible API, 40K+ Stars.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Schneller als Ollama','OpenAI-kompatible API','Advanced Batching','40K+ GitHub Stars'],
+   weaknesses:['Erfordert GPU-Hardware','Komplexeres Setup als Ollama'],
+   prices:[['Open Source','Kostenlos']],
+   bestFor:'High-Throughput Inferenz, Produktions-Deployments',
+   links:[['GitHub','https://github.com/vllm-project/vllm'],['Docs','https://docs.vllm.ai/']]},
+  {id:'groq',name:'Groq',icon:'🚀',cat:'frameworks',stars:4,
+   desc:'Ultra-schnelle LLM-Inferenz via LPU-Chips. 500-800 Tokens/Sek, von NVIDIA fuer $20B uebernommen (2025).',
+   price:'Pay-per-Use',priceLabel:'Pay-per-Use',
+   strengths:['500-800 Tokens/Sekunde — 10x schneller als GPUs','Sub-50ms Latenz','Eigener LPU-Chip (Language Processing Unit)','90% weniger Energieverbrauch als GPUs','$20B NVIDIA-Uebernahme bestaetigt Technologie'],
+   weaknesses:['Nur Inferenz, kein Training','Begrenzte Modellauswahl','Post-Akquisition: Zukunft der API unklar'],
+   prices:[['Llama 3.3 70B','$0.59/MTok Input'],['Mixtral 8x7B','$0.24/MTok Input'],['DeepSeek R1','$0.75/MTok Input']],
+   bestFor:'Latenz-kritische Apps, Echtzeit-Inferenz, Speed-First Deployments',
+   links:[['Website','https://groq.com'],['Console','https://console.groq.com']]},
+  {id:'openclaw',name:'OpenClaw',icon:'🦀',cat:'frameworks',stars:5,
+   desc:'Autonomer KI-Agent mit 5.700+ Skills. Verwaltet Messaging, Kalender, Workflows — aber mit massiven Sicherheitsrisiken.',
+   price:'Kostenlos + API',priceLabel:'Gratis + API',
+   strengths:['200K+ GitHub Stars, groesstes Agent-Oekosystem','Persistenter Speicher ueber Wochen — merkt sich Kontext','50+ Integrationen (WhatsApp, Telegram, Slack, iMessage)','5.700+ Community-Skills auf ClawHub Marketplace','Voellig lokal mit Ollama betreibbar'],
+   weaknesses:['⚠️ 341 Schadhafte Skills auf ClawHub gefunden (Passwort-Diebstahl)','⚠️ Anfaellig fuer Prompt Injection — Backdoors moeglich','⚠️ Meta hat OpenClaw aus Sicherheitsgruenden gebannt','1.800+ exponierte Instanzen mit geleakten API-Keys','Breite System-Berechtigungen = grosses Angriffsrisiko'],
+   prices:[['Open Source','Gratis'],['API-Kosten','$5-100/Mo je Nutzung']],
+   bestFor:'Persoenliche Automatisierung — aber NUR mit Sicherheitsbewusstsein einsetzen!',
+   links:[['GitHub','https://github.com/openclaw/openclaw']]},
+  {id:'openhands',name:'OpenHands',icon:'🤖',cat:'frameworks',stars:5,
+   desc:'Open-Source KI-Software-Ingenieur. Schreibt Code, fuehrt Tests aus, reviewed PRs — 65K+ GitHub Stars.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['65K+ GitHub Stars, 188+ Contributors','Model-agnostisch: Claude, GPT, oder jedes LLM','SDK (Python), CLI, GUI und Cloud-Interface','Native Integration mit GitHub, GitLab, CI/CD, Jira'],
+   weaknesses:['Token-hungrig bei komplexen Tasks','Kann bei unklaren Aufgaben in Schleifen geraten','Abhaengig von guten Tests/Specs fuer Qualitaet'],
+   prices:[['Open Source','Kostenlos (MIT)'],['Cloud Growth','$500/Mo (Team)']],
+   bestFor:'Automatisierte PR-Reviews, Test-Fixes, Code-Generierung',
+   links:[['GitHub','https://github.com/OpenHands/OpenHands'],['Website','https://openhands.dev']]},
+  {id:'openwebui',name:'Open WebUI',icon:'🌐',cat:'frameworks',stars:5,
+   desc:'Self-hosted ChatGPT-Alternative. Funktioniert mit Ollama, vLLM, OpenAI — 60K+ Stars, Multi-User, RAG.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['ChatGPT-Qualitaet UI ohne Vendor Lock-in','Backend-agnostisch: Ollama, vLLM, LM Studio, OpenAI, Anthropic','9 Vector-DB-Optionen fuer RAG (ChromaDB, PGVector, Qdrant etc.)','Multi-User mit Berechtigungen und Conversation-History'],
+   weaknesses:['Self-Hosting Know-how noetig (Docker, Reverse Proxy)','Performance abhaengig von eigener Hardware','Schnell evolvierender Code — Breaking Changes zwischen Versionen'],
+   prices:[['Open Source','Kostenlos (MIT)'],['Enterprise','SSO, RBAC, Audit']],
+   bestFor:'Teams die eine private ChatGPT-Alternative mit voller Datensouveraenitaet wollen',
+   links:[['GitHub','https://github.com/open-webui/open-webui'],['Website','https://openwebui.com']]},
+  {id:'dify',name:'Dify',icon:'🔧',cat:'frameworks',stars:5,
+   desc:'Visueller LLM-App-Builder. Drag-and-Drop Workflows, RAG, Agenten — 70K+ Stars, auch fuer Non-Coder.',
+   price:'$0-159/Mo',priceLabel:'ab $0',
+   strengths:['Visueller Drag-and-Drop Workflow-Builder — kein Code noetig','70K+ GitHub Stars, sehr aktive Community','50+ eingebaute Tools (Google, DALL-E, Stable Diffusion, WolframAlpha)','Production-ready: Observability, Logging, Multi-Tenancy'],
+   weaknesses:['Visueller Builder limitierend bei komplexer Custom-Logik','Self-Hosted braucht Docker-Expertise (min. 2 CPU, 4GB RAM)','Cloud-Pricing eskaliert schnell ueber Free Tier hinaus'],
+   prices:[['Community','Kostenlos (Docker)'],['Cloud Sandbox','Gratis (200 Calls)'],['Professional','$59/Mo'],['Team','$159/Mo']],
+   bestFor:'Business-Teams die KI-Apps, Chatbots und RAG ohne tiefes Coding bauen wollen',
+   links:[['Website','https://dify.ai'],['GitHub','https://github.com/langgenius/dify']]},
+  {id:'autogen',name:'AutoGen / AG2',icon:'🤝',cat:'frameworks',stars:4,
+   desc:'Microsofts Multi-Agenten-Framework. Mehrere KI-Agenten arbeiten zusammen — wird zu Microsoft Agent Framework.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Pionier des Multi-Agenten-Paradigmas','Cross-Language: Python + .NET','Starke Microsoft-Unterstuetzung, Azure-Integration','Pluggable: Custom Agents, Tools, Memory, Models'],
+   weaknesses:['Projekt-Split (Microsoft v0.4 vs Community AG2) verwirrend','Agenten koennen in komplexen Dialogen abdriften','Beide Versionen gehen in Microsoft Agent Framework auf — Migrationspfad unklar'],
+   prices:[['Open Source','Kostenlos (Apache 2.0)']],
+   bestFor:'Forschung und Prototyping von Multi-Agenten-Systemen',
+   links:[['Microsoft','https://github.com/microsoft/autogen'],['AG2','https://github.com/ag2ai/ag2']]},
+  {id:'anythingllm',name:'AnythingLLM',icon:'📦',cat:'frameworks',stars:5,
+   desc:'All-in-One Desktop KI-App. RAG, Agenten, Dokument-Chat — ein Paket, jedes LLM, jede Vector-DB. 53K+ Stars.',
+   price:'$0-99/Mo',priceLabel:'ab $0',
+   strengths:['53K+ GitHub Stars — umfassendste All-in-One Loesung','Zero-Config Start: Desktop-App mit eingebautem LLM, RAG, Agenten','Jeder LLM-Provider (Ollama, OpenAI, Anthropic) + jede Vector-DB','Mobile App (Android) synchronisiert mit Desktop'],
+   weaknesses:['Lernkurve bei RAG-Konfiguration und Retrieval-Tuning','Gelegentliche UX-Instabilitaeten','Self-Hosting braucht GPU/CPU Ressourcen und Wartung'],
+   prices:[['Desktop/Docker','Kostenlos (MIT)'],['Cloud Small','$25/Mo'],['Cloud Standard','$50/Mo'],['Cloud Large','$99/Mo']],
+   bestFor:'Einsteiger und kleine Teams die eine private KI mit Dokument-Chat und RAG wollen',
+   links:[['Website','https://anythingllm.com'],['GitHub','https://github.com/Mintplex-Labs/anything-llm']]},
+  {id:'litellm',name:'LiteLLM',icon:'🔌',cat:'frameworks',stars:4,
+   desc:'Unified API-Gateway fuer 100+ LLMs. Ein Endpunkt, Cost-Tracking, Load Balancing, Fallbacks.',
+   price:'$0-250/Mo',priceLabel:'ab $0',
+   strengths:['Ein OpenAI-kompatibler Endpunkt fuer 100+ LLM-Provider','Eingebautes Cost-Tracking pro User/Projekt','Load Balancing, Fallbacks, Caching out-of-the-box','MCP-Support und Agent (A2A) Gateway'],
+   weaknesses:['Proxy-Layer fuegt Latenz hinzu','Enterprise-Features (SSO, RBAC) nur in Bezahlversion','Komplexe Konfiguration fuer erweiterte Features'],
+   prices:[['Open Source','Kostenlos (Self-Hosted)'],['Enterprise Basic','$250/Mo'],['Enterprise Premium','$30K/Jahr']],
+   bestFor:'Organisationen mit mehreren LLM-Providern die ein zentrales Gateway brauchen',
+   links:[['Website','https://www.litellm.ai'],['GitHub','https://github.com/BerriAI/litellm']]},
+
+  {id:'openrouter',name:'OpenRouter',icon:'🌐',cat:'aggregator',stars:4,
+   desc:'Unified API fuer 400+ LLMs. Ein API-Key fuer alle Anbieter, automatische Fallbacks, BYOK moeglich.',
+   price:'Pay-per-Use',priceLabel:'Pay-per-Use',
+   strengths:['400+ Modelle ueber eine einzige API','Gleiche Preise wie Direktzugang + 5.5% Fee','Automatische Fallbacks bei Ausfaellen','BYOK: Erste 1M Requests kostenlos','Uptime-Pooling ueber mehrere Provider'],
+   weaknesses:['5.5% Aufschlag auf Provider-Preise','Zusaetzliche Latenz durch Proxy-Layer','Abhaengigkeit von Drittanbieter-Verfuegbarkeit'],
+   prices:[['BYOK','1M Requests gratis, dann 5%'],['Direct','Provider-Preis + 5.5%']],
+   bestFor:'Multi-Model Apps, Provider-Redundanz, schnelles Prototyping',
+   links:[['Website','https://openrouter.ai'],['Docs','https://openrouter.ai/docs']]},
+
+  // --- ALL-IN-ONE / AGGREGATOR ---
+  {id:'abacus',name:'Abacus.AI (ChatLLM)',icon:'🧮',cat:'aggregator',stars:5,
+   desc:'All-in-One KI-Plattform. 40+ Frontier-Modelle (Text, Bild, Video) in einem Abo. DeepAgent fuer autonome Tasks.',
+   price:'ab $10/Mo',priceLabel:'ab $10/Mo',
+   strengths:['40+ Frontier-Modelle fuer $10/Mo (GPT-5, Claude Opus, Gemini 3, Grok 4)','DeepAgent: autonome Multi-Step-Aufgaben','Bild- und Video-Generierung inklusive (Sora 2, Kling, Veo 3)','Teams-Plan: wirklich unlimitierte Nutzung','Neue Modelle innerhalb von Wochen verfuegbar'],
+   weaknesses:['Credit-System kann verwirrend sein','Weniger bekannt als ChatGPT/Claude','Enterprise-Features erfordern hohe Investition'],
+   prices:[['Basic','$10/Mo (20K Credits)'],['Pro','$20/Mo (unlimitierter DeepAgent)'],['Teams','$10/User/Mo (unlimitiert)']],
+   bestFor:'Power-User die ein Abo fuer alle Modelle wollen, Teams, Modell-Vergleiche',
+   links:[['Website','https://abacus.ai'],['ChatLLM','https://chatllm.abacus.ai']]},
+  {id:'t3chat',name:'T3 Chat',icon:'💬',cat:'aggregator',stars:4,
+   desc:'Schnelle Multi-Model Chat-App von Theo Browne. GPT-5, Claude, Gemini fuer $8/Mo — guenstigste All-in-One Loesung.',
+   price:'$0-8/Mo',priceLabel:'ab $0',
+   strengths:['Nur $8/Mo fuer alle Frontier-Modelle (vs $20 ChatGPT Plus)','2x schneller als ChatGPT Web, 10x schneller als DeepSeek','Conversation Branching: verschiedene Modelle an jedem Punkt testen','Local-First Datenspeicherung fuer Privatsphaere'],
+   weaknesses:['Relativ neue Plattform, kleineres Feature-Set','100 Premium-Requests/Mo Limit','Kein API-Zugang — rein Chat-Interface'],
+   prices:[['Free','Limitierte Nutzung'],['Pro','$8/Mo (alle Modelle)']],
+   bestFor:'Budget-bewusste Nutzer, Modell-Vergleiche, schneller Chat',
+   links:[['Website','https://t3.chat']]},
+  {id:'chathub',name:'ChatHub',icon:'🔀',cat:'aggregator',stars:4,
+   desc:'Browser-Extension + App: Mehrere KI-Chatbots gleichzeitig Side-by-Side nutzen und vergleichen.',
+   price:'$0-25/Mo',priceLabel:'ab $0',
+   strengths:['Side-by-Side Vergleich mehrerer Modelle in Echtzeit','Nutzt bestehende Provider-Logins (kein extra API-Key noetig)','Verfuegbar auf allen Plattformen: Browser, Web, iOS, Android, Desktop','Bild-Generierung integriert (DALL-E 3, Stable Diffusion)'],
+   weaknesses:['Unlimited-Plan teuer ($25-39/Mo)','Free Tier auf 2 gleichzeitige Chatbots begrenzt','Browser-Session-Injection kann bei Provider-Updates brechen'],
+   prices:[['Free','2 Chatbots Side-by-Side'],['Lifetime','$15 (einmalig)'],['Unlimited','$25/Mo']],
+   bestFor:'Modell-Vergleich in Echtzeit, bestehende Abos besser nutzen',
+   links:[['Website','https://chathub.gg']]},
+  {id:'typingmind',name:'TypingMind',icon:'⌨️',cat:'aggregator',stars:4,
+   desc:'Premium-Frontend fuer LLMs mit eigenen API-Keys. Einmalkauf statt Abo, volle Datenkontrolle.',
+   price:'$39-79 einmalig',priceLabel:'ab $39',
+   strengths:['Einmalkauf — nur API-Kosten laufend','Alle Daten lokal gespeichert (Privacy-First)','Feine Modell-Parameter-Kontrolle (Temperature, Top-P etc.)','141K+ monatliche Nutzer, Fortune 500 vertrauen darauf'],
+   weaknesses:['Eigene API-Keys erforderlich (nicht Einsteiger-freundlich)','Kein eigenes Model-Hosting — reines Frontend','API-Kosten separat bei jedem Provider'],
+   prices:[['Standard','$39 (einmalig)'],['Extended','$59 (einmalig)'],['Premium','$79 (einmalig)']],
+   bestFor:'API-Key Nutzer die ein besseres UI als ChatGPT wollen, Privacy',
+   links:[['Website','https://www.typingmind.com']]},
+  {id:'msty',name:'Msty',icon:'🎛️',cat:'aggregator',stars:4,
+   desc:'All-in-One AI Studio: Lokale + Cloud-Modelle mischen, parallele Antworten vergleichen, Workflows bauen.',
+   price:'$0-349',priceLabel:'ab $0',
+   strengths:['Lokale und Cloud-Modelle in einer Oberflaeche mischen','Multiverse Chats: mehrere Modelle parallel vergleichen','Knowledge Stack: PDFs, YouTube-Transkripte, Daten-Vaults','Cross-Platform: Windows, macOS, Linux'],
+   weaknesses:['Lokale Inferenz nur mit GGUF-Format','Lifetime-Preis gestiegen ($349)','Kleinere Community als Ollama/LM Studio'],
+   prices:[['Free','Kernfunktionen kostenlos'],['Aurum Yearly','$149/Jahr'],['Aurum Lifetime','$349 (einmalig)']],
+   bestFor:'Hybrid-Nutzer (lokal + Cloud), Modell-Vergleich, Knowledge Work',
+   links:[['Website','https://msty.ai']]}
+];
+
+const TRENDS_DATA = [
+  {num:'01',title:'Agentic AI',
+   simple:'KI erledigt komplette Aufgabenschritte selbst, statt nur eine einzelne Antwort zu liefern.',
+   expert:'Wichtige Themen fuer Produktion: Tool-Permissions, Guardrails, menschliche Freigaben und sauberes Agent-Observability-Logging.',
+   tag:'Das groesste Thema',tagColor:'#ef4444',borderColor:'#ef4444'},
+  {num:'02',title:'Model Context Protocol (MCP)',
+   simple:'MCP ist ein gemeinsamer Standard, damit KI-Assistenten verlässlich mit Tools und Datenquellen sprechen koennen.',
+   expert:'Behandle MCP wie API-Vertraege: versioniere Server, teste Tool-Schemas automatisch und haerte Berechtigungen pro Aktion.',
+   tag:'Industriestandard',tagColor:'#4f8cff',borderColor:'#4f8cff'},
+  {num:'03',title:'Multimodale Modelle',
+   simple:'Ein Modell verarbeitet Text, Bilder, Audio und Video im selben Workflow ohne Medienbruch.',
+   expert:'Plane modality-spezifische Qualitaetsmessung (z.B. OCR-Fehler, Audio-Halluzinationen, Frame-Konsistenz) statt einer einzigen Gesamtmetrik.',
+   tag:'Nativ integriert',tagColor:'#a855f7',borderColor:'#a855f7'},
+  {num:'04',title:'Effizienz statt Skalierung',
+   simple:'Kleinere Modelle werden durch bessere Architektur oft stark genug und deutlich guenstiger.',
+   expert:'Nutze Distillation, Quantization und Routing: gleiche Zielqualitaet bei geringerem VRAM, niedrigerer Latenz und besseren Inferenzkosten.',
+   tag:'Paradigmenwechsel',tagColor:'#22c55e',borderColor:'#22c55e'},
+  {num:'05',title:'Lokale / Edge AI',
+   simple:'Mehr KI laeuft direkt auf Laptop oder Smartphone: schneller, privater und offline-faehig.',
+   expert:'Setze auf Hybrid-Architektur: local-first fuer sensible Daten, Cloud-Fallback fuer schwere Tasks und zentrale Modell-Governance.',
+   tag:'Daten bleiben bei dir',tagColor:'#06b6d4',borderColor:'#06b6d4'}
+];
+
+const TIMELINE_DATA = [
+  {year:'Ende 2024',content:'<strong>ChatGPT erreicht 300M Nutzer</strong>. GPT-4 und Claude 3 definieren den Markt. Erste Coding-Assistenten werden Mainstream. "KI" wird Wort des Jahres.'},
+  {year:'Fruehling 2025',content:'<strong>Gemini 2.5 und Claude Opus 4</strong> erscheinen. Multimodale Faehigkeiten explodieren. MCP Protocol gewinnt Traktion. Agentic AI wird das dominierende Paradigma.'},
+  {year:'Sommer 2025',content:'<strong>85% der Entwickler</strong> nutzen KI-Tools. 41% des neuen Codes ist KI-generiert. Sora 2, Runway Gen-4 revolutionieren Video. ElevenLabs klaert Musik-Lizenzen.'},
+  {year:'Herbst 2025',content:'<strong>Claude Opus 4.6</strong> mit 1M Token Context. GPT-5.2 fuehrt bei Reasoning. Gemini 3 mit nativer Multimodalitaet. MCP wird an die Linux Foundation uebergeben.'},
+  {year:'Anfang 2026',content:'<strong>Die neue Industrialisierung</strong> ist in vollem Gang. Effiziente kleine Modelle (3B-14B) laufen auf Smartphones. Multi-Agenten-Systeme werden produktionsreif.'},
+  {year:'2026 Ausblick',content:'<strong>KI-Kompetenz wird zur Grundkompetenz</strong>, wie Computerkenntnisse in den 2000ern. EU AI Act wird voll anwendbar. 40% der Enterprise-Apps integrieren KI-Agenten. OpenAI plant erstes Hardware-Geraet (Jony Ive).'},
+  {year:'2027 Prognose',content:'<strong>Agentic AI</strong> wird Mainstream — 80% der Enterprise-Workplace-Apps mit KI-Copiloten (IDC). Tesla Optimus Konsumentenverkauf geplant. KI-native Applikationen verdraengen "KI-als-Feature". Bis zu 90% der Entwicklung KI-getrieben.'},
+  {year:'2028-2030',content:'<strong>170 Mio. neue Stellen, 92 Mio. verdraengt</strong> (WEF). Humanoide Roboter in Haushalten. AGI-Debatte: Median-Prognosen zwischen 2030 (Labs) und 2047 (Akademiker). Goldman Sachs: KI hebt globales BIP um 7%.'}
+];
+
+const RESOURCES_DATA = [
+  {icon:'🤖',title:'KI-Assistenten',links:[
+    ['ChatGPT','https://chat.openai.com'],['Claude','https://claude.ai'],
+    ['Gemini','https://gemini.google.com'],['Google AI Studio','https://aistudio.google.com']]},
+  {icon:'💻',title:'Coding-Tools',links:[
+    ['GitHub Copilot','https://github.com/features/copilot'],['Cursor IDE','https://cursor.com'],
+    ['Claude Code Docs','https://docs.anthropic.com/en/docs/claude-code'],['Cline (GitHub)','https://github.com/cline-coding/cline']]},
+  {icon:'🎨',title:'Kreativ-Tools',links:[
+    ['Midjourney','https://midjourney.com'],['Runway','https://runwayml.com'],
+    ['Suno AI','https://suno.com'],['ElevenLabs','https://elevenlabs.io']]},
+  {icon:'🏠',title:'Lokal / Open Source',links:[
+    ['Ollama','https://ollama.ai'],['Hugging Face','https://huggingface.co'],
+    ['LM Studio','https://lmstudio.ai'],['ComfyUI (GitHub)','https://github.com/comfyanonymous/ComfyUI']]},
+  {icon:'🔧',title:'Frameworks (GitHub)',links:[
+    ['LangChain','https://github.com/langchain-ai/langchain'],['LlamaIndex','https://github.com/run-llama/llama_index'],
+    ['CrewAI','https://github.com/crewAIInc/crewAI'],['vLLM','https://github.com/vllm-project/vllm']]},
+  {icon:'📖',title:'Dokumentation',links:[
+    ['OpenAI API Docs','https://platform.openai.com/docs/'],['Anthropic Docs','https://docs.anthropic.com'],
+    ['Google AI Docs','https://ai.google.dev/gemini-api/'],['Hugging Face Docs','https://huggingface.co/docs/transformers/']]}
+];
+
+const LEARNING_PATH = [
+  {level:'Einsteiger',icon:'🌱',steps:[
+    {id:'l1s1',title:'ChatGPT oder Claude ausprobieren',desc:'Erstelle einen kostenlosen Account und stelle deine erste Frage.'},
+    {id:'l1s2',title:'Vergleichstabelle studieren',desc:'Verstehe die Unterschiede zwischen ChatGPT, Claude und Gemini.'},
+    {id:'l1s3',title:'Einen KI-Assistenten taeglich nutzen',desc:'Integriere KI in deinen Alltag: Recherche, Zusammenfassungen, Brainstorming.'},
+    {id:'l1s4',title:'Prompt Engineering Basics lernen',desc:'Lerne, wie du bessere Ergebnisse durch praezise Anweisungen erhaeltst.'},
+    {id:'l1s5',title:'Ein Bild mit KI erstellen',desc:'Probiere DALL-E (in ChatGPT) oder Midjourney aus.'}]},
+  {level:'Fortgeschritten',icon:'🚀',steps:[
+    {id:'l2s1',title:'Ollama installieren',desc:'Fuehre dein erstes lokales LLM aus — volle Privatsphaere, keine Cloud.'},
+    {id:'l2s2',title:'Einen KI-Coding-Assistenten einrichten',desc:'Installiere Copilot, Cursor oder Claude Code fuer dein Projekt.'},
+    {id:'l2s3',title:'Erste RAG-App mit LangChain bauen',desc:'Verbinde ein LLM mit eigenen Dokumenten fuer praezise Antworten.'},
+    {id:'l2s4',title:'Bild-Workflows mit ComfyUI erstellen',desc:'Lerne node-basierte Bildgenerierung mit Stable Diffusion.'},
+    {id:'l2s5',title:'MCP-Server verstehen',desc:'Lerne, wie das Model Context Protocol KI-Tools verbindet.'}]},
+  {level:'Experte',icon:'🏆',steps:[
+    {id:'l3s1',title:'Multi-Agenten-System mit CrewAI bauen',desc:'Erstelle ein Team spezialisierter KI-Agenten fuer komplexe Aufgaben.'},
+    {id:'l3s2',title:'Eigenes Modell fine-tunen',desc:'Trainiere ein Open-Source-Modell auf deinem eigenen Datensatz.'},
+    {id:'l3s3',title:'vLLM fuer Production Inference aufsetzen',desc:'Deploye ein Modell mit GPU-Optimierung und OpenAI-kompatibler API.'},
+    {id:'l3s4',title:'KI in ein Produkt integrieren',desc:'Baue eine vollstaendige Anwendung mit KI-Backend.'},
+    {id:'l3s5',title:'Zur Open-Source-Community beitragen',desc:'Contribute zu Ollama, LangChain, CrewAI oder anderen Projekten.'}]}
+];
+
+// ============================================================
+// KI-GRUNDLAGEN — Pillars, Triad, Milestones
+// ============================================================
+const KI_PILLARS = [
+  {id:'ki',icon:'🧠',name:'Kuenstliche Intelligenz (KI)',
+   short:'Oberbegriff: Maschinen, die Aufgaben loesen, die normalerweise menschliche Intelligenz erfordern.',
+   detail:'KI umfasst alles von einfachen Regelsystemen ("Wenn X, dann Y") bis hin zu lernfaehigen Systemen. Der Begriff wurde 1956 auf der Dartmouth-Konferenz gepraegt. Heute meint man meist Machine Learning, wenn man "KI" sagt.'},
+  {id:'ml',icon:'📊',name:'Machine Learning (ML)',
+   short:'Algorithmen, die aus Daten lernen — ohne explizit programmiert zu werden.',
+   detail:'Statt feste Regeln vorzugeben, erkennt das System Muster in Trainingsdaten und leitet Vorhersagen ab. Beispiele: Spam-Filter, Empfehlungssysteme, Bilderkennung. ML ist ein Teilgebiet von KI.'},
+  {id:'dl',icon:'🔬',name:'Deep Learning',
+   short:'Neuronale Netze mit vielen Schichten — lernt automatisch die relevanten Merkmale aus Rohdaten.',
+   detail:'Waehrend klassisches ML oft manuell erstellte Features braucht, extrahiert Deep Learning die wichtigen Merkmale automatisch. CNNs fuer Bilder, RNNs fuer Sequenzen, Transformers fuer Text — alle nutzen geschichtete Neuronale Netze.'},
+  {id:'transformer',icon:'⚡',name:'Transformer-Architektur (2017)',
+   short:'Der Durchbruch: "Attention Is All You Need" — parallele Verarbeitung statt sequentiell.',
+   detail:'Eingefuehrt 2017 von Google (Vaswani et al.). Der Self-Attention-Mechanismus bewertet die Relevanz jedes Worts im Kontext aller anderen Woerter — parallel statt nacheinander. Das Paper wurde ueber 170.000-mal zitiert und ist die Basis aller heutigen Sprachmodelle.'},
+  {id:'llm',icon:'💬',name:'Large Language Models (LLMs)',
+   short:'Riesige Transformer-Modelle mit Milliarden Parametern, trainiert auf grossen Textmengen.',
+   detail:'LLMs erzeugen Text, indem sie das naechstwahrscheinliche Token vorhersagen. GPT-4 hat geschaetzt ueber 1 Billion Parameter. Sie loesen vielfaeltige Aufgaben ohne aufgabenspezifisches Training (Zero-Shot / Few-Shot Learning). Die aktuelle Generation (GPT-5.2, Claude Opus 4.6, Gemini 3) beherrscht Reasoning, Code und Multimodalitaet.'}
+];
+
+const KI_TRIAD = [
+  {icon:'🖥️',title:'Rechenleistung',desc:'Training erfordert tausende GPUs ueber Wochen. NVIDIA dominiert mit H100/H200. Das Stargate-Projekt plant 500 Mrd. USD fuer KI-Infrastruktur.',
+   stat:'500 Mrd. USD Stargate',color:'#4f8cff'},
+  {icon:'📚',title:'Daten',desc:'LLMs lernen aus Billionen von Tokens. Datenqualitaet schlaegt Quantitaet. Hochwertige Trainingsdaten werden knapp ("Data Wall"). Synthetische Daten gewinnen an Bedeutung.',
+   stat:'Billionen Tokens',color:'#a855f7'},
+  {icon:'🧬',title:'Algorithmen',desc:'Transformer als Basis, erweitert durch Mixture of Experts (MoE), State Space Models (SSMs) und Chain-of-Thought Reasoning. DeepSeek V3: 671 Mrd. Parameter, nur 37 Mrd. aktiv.',
+   stat:'671B → 37B aktiv (MoE)',color:'#22c55e'}
+];
+
+const KI_MILESTONES = [
+  {year:'2012',text:'<strong>AlexNet</strong> gewinnt ImageNet — Deep Learning beweist Ueberlegenheit'},
+  {year:'2014',text:'<strong>GANs</strong> — Grundlage fuer KI-Bildgenerierung'},
+  {year:'2017',text:'<strong>"Attention Is All You Need"</strong> — Transformer-Architektur eingefuehrt'},
+  {year:'2018',text:'<strong>GPT-1</strong> — erstes Generative Pre-trained Transformer Modell (117 Mio. Parameter)'},
+  {year:'2020',text:'<strong>GPT-3</strong> (175 Mrd. Parameter) + <strong>AlphaFold 2</strong> (Nobelpreis 2024)'},
+  {year:'2022',text:'<strong>ChatGPT</strong> — 100 Mio. Nutzer in 2 Monaten, KI wird Mainstream'},
+  {year:'2022',text:'<strong>Stable Diffusion</strong> — Open-Source demokratisiert Bildgenerierung'},
+  {year:'2023',text:'<strong>GPT-4</strong> multimodal + <strong>Claude 2</strong> + <strong>Llama 2</strong> Open Source'},
+  {year:'2024',text:'<strong>Sora</strong> Video-Gen + <strong>MCP Protocol</strong> + Gemini 1.5 mit 1M Kontext'},
+  {year:'2025',text:'<strong>DeepSeek R1</strong> — Frontier-Niveau fuer nur ~6 Mio. USD Trainingskosten'},
+  {year:'2025',text:'<strong>GPT-5.2</strong> + <strong>Claude Opus 4.6</strong> + <strong>Gemini 3</strong> — Agentic AI wird Paradigma'},
+  {year:'2026',text:'<strong>Effiziente Modelle</strong> laufen auf Smartphones. Multi-Agenten-Systeme werden produktionsreif'}
+];
+
+// ============================================================
+// KI-CAPABILITIES — What AI can do today
+// ============================================================
+const KI_CAPABILITIES = [
+  {icon:'💻',title:'Code & Software',color:'#a855f7',
+   stats:['85% der Devs nutzen KI','46% des Codes KI-generiert','55% schneller'],
+   examples:[
+     'GitHub Copilot: 20 Mio. Nutzer, 90% der Fortune-100',
+     'Pull-Request-Zeiten von 9,6 auf 2,4 Tage (75% Reduktion)',
+     'Claude Code: 1 Mrd. USD Umsatz in 6 Monaten',
+     'Bolt.new / Lovable: Full-Stack-Apps aus Textbeschreibung'
+   ],
+   detail:'SWE-bench 80,9%: KI loest echte GitHub-Issues in realen Repos. Lovable erreichte 100 Mio. USD ARR in 8 Monaten. Der Trend "Vibe Coding" — natuerlichsprachliche Programmierung — waechst, 72% der Profis nutzen es aber noch nicht produktiv.'},
+  {icon:'✍️',title:'Text & Sprache',color:'#4f8cff',
+   stats:['100+ Sprachen','Profi-Niveau','3.5x produktiver'],
+   examples:[
+     'Texterstellung: Artikel, E-Mails, Berichte auf professionellem Niveau',
+     'Uebersetzung: Kontextbewusst, uebertrifft klassische Machine Translation',
+     'Analyse: Sentiment, Themen-Extraktion, Klassifikation skalierbar',
+     '65% aller Support-Anfragen werden ohne Mensch geloest'
+   ],
+   detail:'Modelle wie GPT-5.2 und Claude Opus 4.6 erzeugen Text, der kaum von menschlichem zu unterscheiden ist. Die Antwortzeiten im Kundendienst sanken von 6 Stunden auf unter 4 Minuten. 74% der Fuehrungskraefte berichten von ROI im ersten Jahr.'},
+  {icon:'🎨',title:'Bild-Generierung',color:'#ec4899',
+   stats:['Fotorealistisch','4.5 Sek. Generation','Kaum unterscheidbar'],
+   examples:[
+     'Midjourney v7: Kompletter Architektur-Neuaufbau, fotorealistische Ergebnisse',
+     'Stable Diffusion 3: Open Source, lokal ausfuehrbar, riesige Community',
+     'Zaha Hadid Architects: Skizzen werden in Stunden zu Renderings',
+     'Boris Eldagsen lehnte Sony-Fotopreis ab — Debatte "Promptography vs Photography"'
+   ],
+   detail:'Flux 1.1 Pro generiert fotorealistische Bilder in 4,5 Sekunden. Midjourney v7 (April 2025) hat eine "totally different architecture" — die Ergebnisse sind kaum von echten Fotos unterscheidbar. 50%+ der Spieleentwickler nutzen generative KI.'},
+  {icon:'🎬',title:'Video & Film',color:'#f97316',
+   stats:['25 Sek. Videos','Kino-Qualitaet','Disney-Partnerschaft'],
+   examples:[
+     'Sora 2: Videos bis 25 Sek. mit synchronem Dialog und Musik',
+     'Runway Gen-4.5: Gold-Standard fuer cinematische KI-Videos',
+     'OpenAI + Disney: 200+ Charaktere fuer KI-Videos lizenziert',
+     'Sundance 2026: Produktionsreife KI-Kurzfilme praesentiert'
+   ],
+   detail:'Das Problem der zeitlichen Konsistenz (Flackern, Verzerrung) ist weitgehend geloest. Unabhaengige Filmemacher produzieren Inhalte in Kino-Qualitaet, die vor 5 Jahren Millionenbudgets erfordert haetten. AMC Networks arbeitet mit Runway fuer VFX-Beschleunigung.'},
+  {icon:'🎵',title:'Audio & Musik',color:'#fbbf24',
+   stats:['50K Songs/Tag Upload','Billboard Charts','2.45 Mrd. USD (Suno)'],
+   examples:[
+     'Suno AI: Alle 2 Wochen so viel Musik wie der gesamte Spotify-Katalog',
+     'Erste KI-Kuenstlerin (Xania Monet) in Billboard-Charts: 44,4 Mio. Streams',
+     'ElevenLabs: 500 Mio. USD Series D bei 11 Mrd. Bewertung',
+     'Deezer: 50.000 voll KI-generierte Songs pro Tag hochgeladen'
+   ],
+   detail:'KI-generierte Musik erscheint woechentlich in den Billboard-Charts. Warner Music und UMG haben Lizenzdeals mit Suno und Udio geschlossen. Die Grenze zwischen menschlicher und KI-Musik verschwimmt zunehmend.'},
+  {icon:'🔬',title:'Wissenschaft & Medizin',color:'#22c55e',
+   stats:['90% Sensitivitaet','3-5 Jahre statt 15','Nobelpreis 2024'],
+   examples:[
+     'AlphaFold 3: 200+ Mio. Proteinstrukturen vorhergesagt — Nobelpreis 2024',
+     'Brustkrebs-Erkennung: 90% KI vs. 78% Radiologen',
+     'Isomorphic Labs + Eli Lilly + Novartis: 3 Mrd. USD Deals',
+     'Medikamentenentwicklung von 10-15 Jahren auf potenziell 3-5 Jahre'
+   ],
+   detail:'KI erkennt 49,8% der von Aerzten uebersehenen Intervallkarzinome. Microsoft MAI-DxO erreicht 85,5% Genauigkeit bei med. Faellen vs. 20% bei erfahrenen Aerzten. Generative KI entwirft neuartige Antibiotika — 7 von 24 synthetisierten Verbindungen zeigten antibakterielle Aktivitaet.'},
+  {icon:'📊',title:'Business & Produktivitaet',color:'#06b6d4',
+   stats:['94% nutzen KI','2.7% Produktivitaetswachstum','254 Mrd. USD Markt'],
+   examples:[
+     '94% aller Unternehmen nutzen KI in mindestens einer Geschaeftsfunktion',
+     'Bank of America Erica: 3 Mrd.+ Kundeninteraktionen',
+     'US-Produktivitaet wuchs 2025 um 2,7% — fast doppelt so viel wie normal',
+     'Hotels: KI beantwortet 60-70% der Gaesteanfragen automatisch'
+   ],
+   detail:'OpenAI: >13 Mrd. USD Umsatz (2025), Ziel 30 Mrd. (2026). Anthropic: ~5 Mrd. USD Run-Rate. Globaler KI-Markt: 254 Mrd. USD mit CAGR 36,89%. Venture-Finanzierung fuer KI: 202,3 Mrd. USD in 2025 (vs. 114 Mrd. in 2024).'},
+  {icon:'🤖',title:'Robotik & Hardware',color:'#ef4444',
+   stats:['1000+ Optimus aktiv','90% China-Anteil','20-30K USD Ziel'],
+   examples:[
+     'Tesla Optimus Gen 3: Massenproduktion gestartet, 1.000+ in Tesla-Fabriken',
+     'China dominiert: 90% des Humanoiden-Markts (Unitree, Agibot)',
+     'Boston Dynamics Atlas: 2026 Deployments komplett vergeben',
+     'Qualcomm Snapdragon 8 Gen 5: 15B+ Parameter lokal auf dem Smartphone'
+   ],
+   detail:'Der Konsumentenverkauf humanoider Roboter ist fuer spaet 2027 geplant. Zielpreis: 20.000-30.000 USD bei Vollproduktion. Edge-KI wird 2026 Standard in Premium-Smartphones. Apple Intelligence und Google Tensor G5 machen KI zum integralen Geraetebestandteil.'}
+];
+
+// ============================================================
+// KI-LIMITS — Honest look at current limitations
+// ============================================================
+const KI_LIMITS = [
+  {icon:'🎭',title:'Halluzinationen',severity:'high',severityLabel:'Hoch',
+   desc:'KI erfindet plausibel klingende, aber falsche Fakten. Selbst die besten Modelle halluzinieren bei komplexen Aufgaben in 2-5% der Faelle, bei schwierigen Fragen bis zu 33-51%.',
+   detail:'Gemini 2.0 Flash: ~0,7% (Spitzenreiter). GPT-4o: ~1,5%. OpenAI o3 erreicht bei PersonQA bis zu 51% — mehr als doppelt so viel wie der Vorgaenger. Kernproblem: LLMs sind auf "wahrscheinlichste Antwort" trainiert, nicht auf Unsicherheitsbewertung.',
+   stat:'Bis zu 51% bei schwierigen Fragen'},
+  {icon:'🧩',title:'Reasoning-Schwaechen',severity:'high',severityLabel:'Hoch',
+   desc:'Multi-Step-Logik, fragile Prompts und medizinisches Reasoning bleiben problematisch. Kleine Prompt-Aenderungen koennen die Genauigkeit um bis zu 54 Prozentpunkte senken.',
+   detail:'Modelle exzellieren bei einfachen Schlussfolgerungen, versagen bei mehreren Abhaengigkeiten. Multiple-Choice-Reihenfolge verschiebt Ergebnisse um 10-20 Punkte. In klinischen Szenarien schneiden alle getesteten Modelle schlechter ab als Aerzte.',
+   stat:'54 Punkte Genauigkeitsverlust moeglich'},
+  {icon:'📏',title:'Kontextfenster-Realitaet',severity:'medium',severityLabel:'Mittel',
+   desc:'Modelle werben mit 1M+ Tokens, aber die effektive Nutzbarkeit liegt bei nur 60-70%. Leistung wird mit zunehmender Laenge unzuverlaessig.',
+   detail:'Forschung (Hong et al., 2025): 18 getestete LLMs nutzen ihren Kontext nicht gleichmaessig. Einige Top-Modelle zeigten ab 100 Tokens Fehler. Praktisch: Informationen gehen verloren, Mehrteil-Gespraeche sammeln Verlauf an, der irgendwann das Fenster sprengt.',
+   stat:'Nur 60-70% effektiv nutzbar'},
+  {icon:'🎲',title:'Reproduzierbarkeit',severity:'medium',severityLabel:'Mittel',
+   desc:'Gleicher Prompt, unterschiedliche Ergebnisse — ein fundamentales Problem. Weniger als ein Drittel der KI-Forschung ist reproduzierbar.',
+   detail:'LLMs sind probabilistisch: Jeder Token wird aus einer Wahrscheinlichkeitsverteilung gesampelt. Selbst bei Temperature=0 liefern Cloud-APIs keine deterministischen Ergebnisse (Batching, Scheduling, numerische Rundungen).',
+   stat:'&lt;33% der KI-Forschung reproduzierbar'},
+  {icon:'⚖️',title:'Bias & Fairness',severity:'high',severityLabel:'Hoch',
+   desc:'KI-Systeme reproduzieren und verstaerken gesellschaftliche Vorurteile. Dokumentiert in Gesundheitswesen, Recruiting und Bildgenerierung.',
+   detail:'Fuehrende LLMs generieren weniger wirksame Behandlungsempfehlungen fuer Afro-Amerikanische Patienten. Amazons Recruiting-KI bewertete Frauen systematisch schlechter. iTutorGroup lehnte Bewerber ueber 55/60 automatisch ab. 79% der berufstaetigen Frauen in den USA arbeiten in Jobs mit hohem Automatisierungsrisiko.',
+   stat:'79% der Frauen in Hochrisiko-Jobs'},
+  {icon:'🌍',title:'Umwelt & Energie',severity:'medium',severityLabel:'Mittel',
+   desc:'GPT-5 braucht pro Anfrage ~18 Wh (vs. Google-Suche: 0,3 Wh). KI-Rechenzentren emittieren bereits mehr CO2 als die Luftfahrtindustrie.',
+   detail:'GPT-4 Training: ~50.000 MWh (San Francisco 3 Tage versorgen). Rechenzentren weltweit: ~1.050 TWh bis 2026. Aber: Gemini-Anfragen wurden in 12 Monaten 33x energieeffizienter. Kleinere Modelle und Edge-KI helfen massiv.',
+   stat:'18 Wh pro GPT-5 Anfrage'},
+  {icon:'📜',title:'Urheberrecht & Datenschutz',severity:'evolving',severityLabel:'Ungeklaert',
+   desc:'51+ Klagen weltweit. Kein Gericht entscheidet vor Sommer 2026 ueber Fair Use bei KI-Training. 64% sorgen sich um Datenweitergabe, 50% geben trotzdem persoenliche Daten ein.',
+   detail:'NYT vs. OpenAI (seit Dez. 2023) weiterhin anhaengig. Groesster Vergleich: Bartz vs. Anthropic — 1,5 Mrd. USD. Warner Music + Suno und UMG + Udio haben Lizenzdeals geschlossen. EU AI Act: Strafen bis 35 Mio. EUR oder 7% Jahresumsatz.',
+   stat:'1,5 Mrd. USD groesster Vergleich'},
+  {icon:'🫧',title:'KI-Blase?',severity:'evolving',severityLabel:'Ungeklaert',
+   desc:'192,7 Mrd. USD Startup-Finanzierung 2025, aber 95% der Organisationen erzielen null Return. Bewertungen auf Dotcom-Niveau.',
+   detail:'Verbraucher geben nur 12 Mrd. USD/Jahr fuer KI-Dienste aus — vs. 500+ Mrd. geplante Investitionen. 30% des S&P 500 bestehen aus nur 5 Unternehmen. Sam Altman raeumt eine KI-Blase ein. OECD: KI-Blase als "zentrales Abwaertsrisiko" fuer die US-Wirtschaft.',
+   stat:'95% ohne Return'}
+];
+
+// ============================================================
+// THREE.JS — AI UNIVERSUM (Hero)
+// ============================================================
+(function initThreeScene() {
+  const canvas = document.getElementById('hero-canvas');
+  const container = document.getElementById('canvas-wrapper');
+  if (!canvas || !container || typeof THREE === 'undefined') {
+    document.getElementById('loading-screen').classList.add('hidden');
+    return;
+  }
+
+  const isMobile = window.innerWidth < 768;
+  const cW = container.clientWidth;
+  const cH = container.clientHeight;
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0a0e1a, 0.015);
+
+  const camera = new THREE.PerspectiveCamera(60, cW / cH, 0.1, 1000);
+  const heroZ = isMobile ? 50 : 35;
+  const dockZ = isMobile ? 60 : 45;
+  const cameraHome = new THREE.Vector3(0, 0, heroZ);
+  const cameraTargetPos = cameraHome.clone();
+  const lookHome = new THREE.Vector3(0, 0, 0);
+  const lookTarget = lookHome.clone();
+  const cameraLookAt = lookHome.clone();
+  camera.position.copy(cameraHome);
+  camera.lookAt(lookHome);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: true });
+  renderer.setSize(cW, cH);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x0a0e1a, 1);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = isMobile ? 1.0 : 1.05;
+
+  // Lighting for a less flat look.
+  scene.add(new THREE.AmbientLight(0xa5b4fc, 0.45));
+  const keyLight = new THREE.PointLight(0x4f8cff, 1.2, 140);
+  keyLight.position.set(20, 15, 24);
+  scene.add(keyLight);
+  const rimLight = new THREE.PointLight(0xa855f7, 0.8, 140);
+  rimLight.position.set(-18, -8, -22);
+  scene.add(rimLight);
+
+  // Category nodes configuration
+  const categories = [
+    { name: 'Assistenten', color: 0x4f8cff, angle: 0 },
+    { name: 'Coding', color: 0xa855f7, angle: 40 },
+    { name: 'Bild-KI', color: 0xec4899, angle: 80 },
+    { name: 'Video-KI', color: 0xf97316, angle: 120 },
+    { name: 'Audio', color: 0xfbbf24, angle: 160 },
+    { name: 'Produktivitaet', color: 0x22c55e, angle: 200 },
+    { name: 'Lokal/OSS', color: 0x06b6d4, angle: 240 },
+    { name: 'Trends', color: 0xef4444, angle: 280 },
+    { name: 'Frameworks', color: 0x8b5cf6, angle: 290 },
+    { name: 'All-in-One', color: 0xe879f9, angle: 325 }
+  ];
+
+  const toolNodes = [
+    { name: 'ChatGPT', cat: 0 }, { name: 'Claude', cat: 0 }, { name: 'Gemini', cat: 0 }, { name: 'Grok', cat: 0 }, { name: 'Copilot', cat: 0 },
+    { name: 'Copilot', cat: 1 }, { name: 'Cursor', cat: 1 }, { name: 'Claude Code', cat: 1 }, { name: 'Cline', cat: 1 },
+    { name: 'Midjourney', cat: 2 }, { name: 'DALL-E 3', cat: 2 }, { name: 'Stable Diff', cat: 2 },
+    { name: 'Sora 2', cat: 3 }, { name: 'Runway', cat: 3 }, { name: 'Veo 3', cat: 3 }, { name: 'Luma Ray3', cat: 3 }, { name: 'Kling', cat: 3 }, { name: 'Viggle', cat: 3 },
+    { name: 'Suno', cat: 4 }, { name: 'ElevenLabs', cat: 4 }, { name: 'Udio', cat: 4 },
+    { name: 'Notion AI', cat: 5 }, { name: 'Otter.ai', cat: 5 }, { name: 'Zapier', cat: 5 },
+    { name: 'Ollama', cat: 6 }, { name: 'Llama 4', cat: 6 }, { name: 'Mistral 3', cat: 6 }, { name: 'DeepSeek', cat: 6 },
+    { name: 'Agentic AI', cat: 7 }, { name: 'MCP', cat: 7 }, { name: 'Edge AI', cat: 7 },
+    { name: 'LangChain', cat: 8 }, { name: 'CrewAI', cat: 8 }, { name: 'HuggingFace', cat: 8 }, { name: 'OpenClaw', cat: 8 }, { name: 'Dify', cat: 8 }, { name: 'OpenHands', cat: 8 },
+    { name: 'Abacus.AI', cat: 9 }, { name: 'T3 Chat', cat: 9 }, { name: 'ChatHub', cat: 9 }, { name: 'Poe', cat: 9 }
+  ];
+
+  const allMeshes = [];
+  const catMeshes = [];
+  const categoryVisuals = [];
+  const nodeGroup = new THREE.Group();
+  scene.add(nodeGroup);
+
+  // Shared radial-gradient texture for glows (eliminates rectangular sprite artifacts)
+  const _haloC = document.createElement('canvas');
+  _haloC.width = 128; _haloC.height = 128;
+  const _haloCtx = _haloC.getContext('2d');
+  const _haloGrad = _haloCtx.createRadialGradient(64, 64, 0, 64, 64, 64);
+  _haloGrad.addColorStop(0, 'rgba(255,255,255,1)');
+  _haloGrad.addColorStop(0.15, 'rgba(255,255,255,0.7)');
+  _haloGrad.addColorStop(0.4, 'rgba(255,255,255,0.18)');
+  _haloGrad.addColorStop(0.7, 'rgba(255,255,255,0.04)');
+  _haloGrad.addColorStop(1, 'rgba(255,255,255,0)');
+  _haloCtx.fillStyle = _haloGrad;
+  _haloCtx.fillRect(0, 0, 128, 128);
+  const haloTexture = new THREE.CanvasTexture(_haloC);
+
+  // Soft circle texture for particles
+  const _partC = document.createElement('canvas');
+  _partC.width = 32; _partC.height = 32;
+  const _partCtx = _partC.getContext('2d');
+  const _partGrad = _partCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+  _partGrad.addColorStop(0, 'rgba(255,255,255,1)');
+  _partGrad.addColorStop(0.4, 'rgba(255,255,255,0.4)');
+  _partGrad.addColorStop(1, 'rgba(255,255,255,0)');
+  _partCtx.fillStyle = _partGrad;
+  _partCtx.fillRect(0, 0, 32, 32);
+  const particleTexture = new THREE.CanvasTexture(_partC);
+
+  // Helper: create text sprite
+  function makeLabel(text, color, scale) {
+    const c = document.createElement('canvas');
+    const ctx = c.getContext('2d');
+    c.width = 256; c.height = 64;
+    ctx.font = 'bold 22px Inter, sans-serif';
+    ctx.fillStyle = '#' + new THREE.Color(color).getHexString();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, 128, 32);
+    const tex = new THREE.CanvasTexture(c);
+    const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false, opacity: 0.94 });
+    const sprite = new THREE.Sprite(mat);
+    sprite.scale.set(scale * 4, scale, 1);
+    return sprite;
+  }
+
+  function makeHalo(color, size, opacity) {
+    const haloMat = new THREE.SpriteMaterial({
+      map: haloTexture,
+      color,
+      transparent: true,
+      opacity,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const halo = new THREE.Sprite(haloMat);
+    halo.scale.set(size, size, 1);
+    halo.userData.baseOpacity = opacity;
+    return halo;
+  }
+
+  // Center node — "KI" (multi-layer glow)
+  const centerGeo = new THREE.SphereGeometry(0.8, 32, 32);
+  const centerMat = new THREE.MeshStandardMaterial({
+    color: 0xddeeff,
+    emissive: 0x4f8cff,
+    emissiveIntensity: 0.55,
+    roughness: 0.15,
+    metalness: 0.35,
+    transparent: true,
+    opacity: 0.95
+  });
+  const centerMesh = new THREE.Mesh(centerGeo, centerMat);
+  nodeGroup.add(centerMesh);
+  const centerLabel = makeLabel('KI', 0xffffff, 1.5);
+  centerLabel.position.set(0, 2.2, 0);
+  nodeGroup.add(centerLabel);
+
+  // Multi-layer glow for center
+  const glowGeo = new THREE.SphereGeometry(1.2, 32, 32);
+  const glowMat = new THREE.MeshBasicMaterial({
+    color: 0x4f8cff,
+    transparent: true,
+    opacity: 0.08,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  const centerGlowMesh = new THREE.Mesh(glowGeo, glowMat);
+  nodeGroup.add(centerGlowMesh);
+  const glowGeo2 = new THREE.SphereGeometry(1.8, 24, 24);
+  const glowMat2 = new THREE.MeshBasicMaterial({
+    color: 0x4f8cff,
+    transparent: true,
+    opacity: 0.03,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  const centerGlow2 = new THREE.Mesh(glowGeo2, glowMat2);
+  nodeGroup.add(centerGlow2);
+  const centerHalo = makeHalo(0x4f8cff, isMobile ? 6 : 5, 0.16);
+  centerHalo.position.copy(centerMesh.position);
+  nodeGroup.add(centerHalo);
+  // Orbit ring around center
+  const centerRingGeo = new THREE.RingGeometry(1.6, 1.72, 80);
+  const centerRingMat = new THREE.MeshBasicMaterial({
+    color: 0x4f8cff,
+    transparent: true,
+    opacity: 0.14,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  const centerRing = new THREE.Mesh(centerRingGeo, centerRingMat);
+  centerRing.rotation.x = Math.PI * 0.42;
+  nodeGroup.add(centerRing);
+
+  const catRadius = isMobile ? 14 : 12;
+  const toolRadius = isMobile ? 5 : 4;
+
+  // Category nodes (enhanced materials + orbit rings)
+  categories.forEach((cat, i) => {
+    const rad = (cat.angle * Math.PI) / 180;
+    const x = Math.cos(rad) * catRadius;
+    const z = Math.sin(rad) * catRadius;
+    const y = (Math.random() - 0.5) * 4;
+
+    const geo = new THREE.SphereGeometry(0.5, 32, 32);
+    const mat = new THREE.MeshStandardMaterial({
+      color: cat.color,
+      emissive: cat.color,
+      emissiveIntensity: 0.45,
+      roughness: 0.18,
+      metalness: 0.3,
+      transparent: true,
+      opacity: 0.9
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(x, y, z);
+    mesh.userData = { type: 'category', name: cat.name, index: i };
+    nodeGroup.add(mesh);
+    catMeshes.push(mesh);
+    allMeshes.push(mesh);
+
+    // Inner glow sphere
+    const gGeo = new THREE.SphereGeometry(0.75, 20, 20);
+    const gMat = new THREE.MeshBasicMaterial({
+      color: cat.color,
+      transparent: true,
+      opacity: 0.06,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const gMesh = new THREE.Mesh(gGeo, gMat);
+    gMesh.position.copy(mesh.position);
+    nodeGroup.add(gMesh);
+
+    // Outer halo sprite (now uses radial texture — no more white boxes)
+    const halo = makeHalo(cat.color, isMobile ? 3 : 2.5, 0.1);
+    halo.position.copy(mesh.position);
+    nodeGroup.add(halo);
+
+    // Orbit ring around category
+    const ringGeo = new THREE.RingGeometry(1.0, 1.08, 64);
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: cat.color,
+      transparent: true,
+      opacity: 0.12,
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.position.copy(mesh.position);
+    ring.rotation.x = Math.PI * 0.5 + (Math.random() - 0.5) * 0.5;
+    ring.rotation.z = Math.random() * Math.PI;
+    nodeGroup.add(ring);
+
+    // Label
+    const label = makeLabel(cat.name, cat.color, 1.2);
+    label.position.set(x, y + 1.6, z);
+    nodeGroup.add(label);
+
+    // Edge to center (gradient-like energy line)
+    const lineGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(0, 0, 0), new THREE.Vector3(x, y, z)
+    ]);
+    const lineMat = new THREE.LineBasicMaterial({ color: cat.color, transparent: true, opacity: 0.18 });
+    const centerLine = new THREE.Line(lineGeo, lineMat);
+    nodeGroup.add(centerLine);
+
+    categoryVisuals.push({
+      mesh,
+      glow: gMesh,
+      halo,
+      ring,
+      label,
+      line: centerLine,
+      toolMeshes: [],
+      toolLines: []
+    });
+  });
+
+  // Tool nodes
+  toolNodes.forEach((tool) => {
+    const parent = catMeshes[tool.cat];
+    const cat = categories[tool.cat];
+    const spread = (Math.random() - 0.5) * Math.PI * 0.8;
+    const baseAngle = (cat.angle * Math.PI) / 180;
+    const angle = baseAngle + spread;
+    const dist = toolRadius + Math.random() * 2;
+    const x = parent.position.x + Math.cos(angle) * dist;
+    const z = parent.position.z + Math.sin(angle) * dist;
+    const y = parent.position.y + (Math.random() - 0.5) * 3;
+
+    const geo = new THREE.SphereGeometry(0.22, 20, 20);
+    const mat = new THREE.MeshStandardMaterial({
+      color: cat.color,
+      emissive: cat.color,
+      emissiveIntensity: 0.3,
+      roughness: 0.25,
+      metalness: 0.15,
+      transparent: true,
+      opacity: 0.72
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(x, y, z);
+    mesh.userData = { type: 'tool', name: tool.name, catIndex: tool.cat };
+    nodeGroup.add(mesh);
+    allMeshes.push(mesh);
+
+    // Edge to category
+    const lineGeo = new THREE.BufferGeometry().setFromPoints([
+      parent.position.clone(), new THREE.Vector3(x, y, z)
+    ]);
+    const lineMat = new THREE.LineBasicMaterial({ color: cat.color, transparent: true, opacity: 0.08 });
+    const toolLine = new THREE.Line(lineGeo, lineMat);
+    nodeGroup.add(toolLine);
+    categoryVisuals[tool.cat].toolMeshes.push(mesh);
+    categoryVisuals[tool.cat].toolLines.push(toolLine);
+  });
+
+  // Particles
+  const particleCount = isMobile ? 150 : 400;
+  const pGeo = new THREE.BufferGeometry();
+  const pPositions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount * 3; i++) {
+    pPositions[i] = (Math.random() - 0.5) * 120;
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+  const pMat = new THREE.PointsMaterial({
+    map: particleTexture,
+    color: 0x6fa4ff,
+    size: isMobile ? 0.35 : 0.4,
+    transparent: true,
+    opacity: 0.35,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    sizeAttenuation: true
+  });
+  const particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
+
+  // Interaction state
+  let isDragging = false;
+  let suppressClick = false;
+  let dragDistance = 0;
+  let prevMouse = { x: 0, y: 0 };
+  let rotationSpeed = { x: 0, y: 0 };
+  let autoRotate = true;
+  let idleTimer = null;
+  let focusResetTimer = null;
+  let sectionScrollTimer = null;
+  let hoveredCatIndex = null;
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  const tmpWorldPos = new THREE.Vector3();
+  canvas.style.cursor = 'grab';
+
+  // Tooltip
+  const tooltip = document.createElement('div');
+  tooltip.style.cssText = 'position:fixed;padding:4px 12px;background:rgba(17,24,39,0.9);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#f1f5f9;font-size:0.8rem;font-family:Inter,sans-serif;pointer-events:none;z-index:100;opacity:0;transition:opacity 0.15s';
+  document.body.appendChild(tooltip);
+
+  function queueAutoRotate(delayMs) {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => { autoRotate = true; }, delayMs);
+  }
+
+  function setClusterFocus(catIndex) {
+    if (hoveredCatIndex === catIndex) return;
+    hoveredCatIndex = catIndex;
+    categoryVisuals.forEach((visual, idx) => {
+      const isFocused = catIndex !== null && idx === catIndex;
+      const isDimmed = catIndex !== null && idx !== catIndex;
+      visual.mesh.material.opacity = isDimmed ? 0.2 : (isFocused ? 1 : 0.9);
+      visual.mesh.scale.setScalar(isFocused ? 1.22 : 1);
+      visual.glow.material.opacity = isDimmed ? 0.01 : (isFocused ? 0.14 : 0.06);
+      visual.halo.userData.baseOpacity = isDimmed ? 0.01 : (isFocused ? 0.22 : 0.1);
+      visual.label.material.opacity = isDimmed ? 0.2 : 0.94;
+      visual.line.material.opacity = isDimmed ? 0.03 : (isFocused ? 0.34 : 0.18);
+      if (visual.ring) {
+        visual.ring.material.opacity = isDimmed ? 0.02 : (isFocused ? 0.22 : 0.12);
+      }
+      visual.toolMeshes.forEach((toolMesh) => {
+        toolMesh.material.opacity = isDimmed ? 0.1 : (isFocused ? 0.95 : 0.72);
+        toolMesh.scale.setScalar(isFocused ? 1.12 : 1);
+      });
+      visual.toolLines.forEach((toolLine) => {
+        toolLine.material.opacity = isDimmed ? 0.015 : (isFocused ? 0.24 : 0.08);
+      });
+    });
+    centerMat.opacity = catIndex === null ? 0.95 : 0.98;
+    glowMat.opacity = catIndex === null ? 0.08 : 0.12;
+    centerHalo.userData.baseOpacity = catIndex === null ? 0.16 : 0.22;
+  }
+
+  function focusCameraOnObject(object) {
+    object.getWorldPosition(tmpWorldPos);
+    const factor = isMobile ? 0.24 : 0.3;
+    cameraTargetPos.set(tmpWorldPos.x * factor, tmpWorldPos.y * factor, isMobile ? 44 : 34);
+    lookTarget.copy(tmpWorldPos).multiplyScalar(0.65);
+    autoRotate = false;
+    clearTimeout(idleTimer);
+    clearTimeout(focusResetTimer);
+    focusResetTimer = setTimeout(() => {
+      cameraTargetPos.copy(cameraHome);
+      lookTarget.copy(lookHome);
+      queueAutoRotate(1200);
+    }, 2600);
+  }
+
+  canvas.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    autoRotate = false;
+    dragDistance = 0;
+    prevMouse = { x: e.clientX, y: e.clientY };
+    clearTimeout(idleTimer);
+    clearTimeout(focusResetTimer);
+    canvas.style.cursor = 'grabbing';
+  });
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    if (isDragging) {
+      const dx = e.clientX - prevMouse.x;
+      const dy = e.clientY - prevMouse.y;
+      dragDistance += Math.abs(dx) + Math.abs(dy);
+      rotationSpeed.x = dy * 0.002;
+      rotationSpeed.y = dx * 0.002;
+      nodeGroup.rotation.y += dx * 0.005;
+      nodeGroup.rotation.x += dy * 0.005;
+      nodeGroup.rotation.x = Math.max(-0.5, Math.min(0.5, nodeGroup.rotation.x));
+      prevMouse = { x: e.clientX, y: e.clientY };
+    }
+
+    // Hover detection
+    if (!isDragging) {
+      raycaster.setFromCamera(mouse, camera);
+      const hits = raycaster.intersectObjects(allMeshes);
+      if (hits.length > 0 && hits[0].object.userData.name) {
+        const hit = hits[0].object;
+        const catIndex = hit.userData.type === 'category' ? hit.userData.index : hit.userData.catIndex;
+        setClusterFocus(catIndex);
+        tooltip.textContent = hit.userData.name;
+        tooltip.style.left = e.clientX + 12 + 'px';
+        tooltip.style.top = e.clientY - 20 + 'px';
+        tooltip.style.opacity = '1';
+        canvas.style.cursor = 'pointer';
+      } else {
+        setClusterFocus(null);
+        tooltip.style.opacity = '0';
+        canvas.style.cursor = 'grab';
+      }
+    } else {
+      tooltip.style.opacity = '0';
+      canvas.style.cursor = 'grabbing';
+    }
+  });
+  canvas.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    canvas.style.cursor = 'grab';
+    if (dragDistance > 10) {
+      suppressClick = true;
+      setTimeout(() => { suppressClick = false; }, 160);
+    }
+    queueAutoRotate(3000);
+  });
+  canvas.addEventListener('mouseleave', () => {
+    isDragging = false;
+    tooltip.style.opacity = '0';
+    setClusterFocus(null);
+    canvas.style.cursor = 'grab';
+    queueAutoRotate(3000);
+  });
+
+  // Click → scroll to section
+  canvas.addEventListener('click', (e) => {
+    if (suppressClick) return;
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(allMeshes);
+    if (hits.length > 0) {
+      const hit = hits[0].object;
+      const ud = hit.userData;
+      const catIndex = ud.type === 'category' ? ud.index : ud.catIndex;
+      setClusterFocus(catIndex);
+      focusCameraOnObject(hit);
+      const sectionMap = {
+        'Assistenten': 'big-three', 'Coding': 'tools', 'Bild-KI': 'tools',
+        'Video-KI': 'tools', 'Audio': 'tools', 'Produktivitaet': 'tools',
+        'Lokal/OSS': 'tools', 'Trends': 'trends', 'Frameworks': 'tools'
+      };
+      const categoryName = ud.type === 'category' ? ud.name : categories[ud.catIndex].name;
+      const target = sectionMap[categoryName] || 'tools';
+      if (target) {
+        clearTimeout(sectionScrollTimer);
+        sectionScrollTimer = setTimeout(() => scrollToSection(target), 420);
+      }
+    }
+  });
+
+  // Scroll zoom
+  canvas.addEventListener('wheel', (e) => {
+    cameraTargetPos.z = Math.max(20, Math.min(100, cameraTargetPos.z + e.deltaY * 0.05));
+  }, { passive: true });
+
+  // Touch support
+  let touchStart = null;
+  canvas.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      isDragging = true;
+      autoRotate = false;
+      dragDistance = 0;
+      touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      clearTimeout(idleTimer);
+      clearTimeout(focusResetTimer);
+    }
+  }, { passive: true });
+  canvas.addEventListener('touchmove', (e) => {
+    if (isDragging && touchStart && e.touches.length === 1) {
+      const dx = e.touches[0].clientX - touchStart.x;
+      const dy = e.touches[0].clientY - touchStart.y;
+      dragDistance += Math.abs(dx) + Math.abs(dy);
+      rotationSpeed.x = dy * 0.0017;
+      rotationSpeed.y = dx * 0.0017;
+      nodeGroup.rotation.y += dx * 0.005;
+      nodeGroup.rotation.x += dy * 0.005;
+      nodeGroup.rotation.x = Math.max(-0.5, Math.min(0.5, nodeGroup.rotation.x));
+      touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+  }, { passive: true });
+  canvas.addEventListener('touchend', () => {
+    isDragging = false;
+    if (dragDistance > 12) {
+      suppressClick = true;
+      setTimeout(() => { suppressClick = false; }, 180);
+    }
+    queueAutoRotate(3000);
+  }, { passive: true });
+
+  // Resize
+  window.addEventListener('resize', () => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  });
+
+  // Scroll-driven canvas transition (hero → docked)
+  const heroSection = document.getElementById('hero');
+  const dockSection = document.getElementById('ai-universum');
+  let canvasProgress = 0;
+
+  function updateCanvasTransition() {
+    const scrollY = window.scrollY;
+    const heroH = heroSection.offsetHeight;
+    const transStart = heroH * 0.12;
+    const transEnd = dockSection.offsetTop;
+
+    let progress = 0;
+    if (scrollY <= transStart) {
+      progress = 0;
+    } else if (scrollY >= transEnd) {
+      progress = 1;
+    } else {
+      progress = (scrollY - transStart) / (transEnd - transStart);
+    }
+
+    // Smoothstep easing
+    const t = progress * progress * (3 - 2 * progress);
+    canvasProgress = t;
+
+    // Camera Z transition
+    const targetZ = heroZ + (dockZ - heroZ) * t;
+    cameraHome.z = targetZ;
+    if (t < 0.99) {
+      cameraTargetPos.z = targetZ;
+    }
+
+    // Enable interaction when mostly docked (no CSS scaling — z-index layering handles visibility)
+    container.classList.toggle('interactive', t > 0.85);
+  }
+
+  // Animate
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = performance.now() * 0.001;
+    if (autoRotate) {
+      nodeGroup.rotation.y += 0.0005;
+    }
+    if (!isDragging) {
+      nodeGroup.rotation.y += rotationSpeed.y;
+      nodeGroup.rotation.x += rotationSpeed.x;
+      nodeGroup.rotation.x = Math.max(-0.5, Math.min(0.5, nodeGroup.rotation.x));
+    }
+    rotationSpeed.x *= 0.93;
+    rotationSpeed.y *= 0.93;
+
+    camera.position.lerp(cameraTargetPos, 0.065);
+    cameraLookAt.lerp(lookTarget, 0.08);
+    camera.lookAt(cameraLookAt);
+
+    // Multi-layer bloom pulse
+    centerGlowMesh.scale.setScalar(1 + Math.sin(t * 1.8) * 0.06);
+    centerGlow2.scale.setScalar(1 + Math.sin(t * 1.2) * 0.08);
+    centerHalo.material.opacity = THREE.MathUtils.clamp(
+      (centerHalo.userData.baseOpacity || 0.16) + Math.sin(t * 2.2) * 0.03,
+      0.04,
+      0.28
+    );
+    centerRing.rotation.z += 0.003;
+    centerRing.rotation.x = Math.PI * 0.42 + Math.sin(t * 0.5) * 0.08;
+    categoryVisuals.forEach((visual, idx) => {
+      const pulseScale = 1 + Math.sin(t * 1.5 + idx * 0.8) * 0.06;
+      visual.glow.scale.setScalar(pulseScale);
+      const pulseOpacity = Math.sin(t * 2 + idx * 0.9) * 0.025;
+      visual.halo.material.opacity = THREE.MathUtils.clamp(
+        (visual.halo.userData.baseOpacity || 0.1) + pulseOpacity,
+        0.02,
+        0.24
+      );
+      if (visual.ring) {
+        visual.ring.rotation.z += 0.004 + idx * 0.0005;
+      }
+    });
+    particles.rotation.y += 0.0002;
+
+    // Scroll-driven canvas position transition
+    updateCanvasTransition();
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Hide loading screen after a short delay
+  setTimeout(() => {
+    document.getElementById('loading-screen').classList.add('hidden');
+  }, 800);
+})();
+
+// ============================================================
+// RENDERING FUNCTIONS
+// ============================================================
+function stars(n) {
+  return '<span class="tool-card-stars">' + '★'.repeat(n) + '☆'.repeat(5 - n) + '</span>';
+}
+
+function renderToolCard(tool) {
+  const color = CAT_COLORS[tool.cat] || '#4f8cff';
+  const level = getToolLevel(tool);
+  const levelLabel = LEVEL_LABELS[level];
+  const levelColor = LEVEL_COLORS[level];
+  return `<div class="tool-card" style="--card-accent:${color}" data-cat="${tool.cat}" data-level="${level}" data-name="${tool.name.toLowerCase()}" onclick="openModal('${tool.id}')">
+    <div class="tool-card-header">
+      <div class="tool-card-title-area">
+        <span class="tool-card-icon">${tool.icon}</span>
+        <span class="tool-card-name">${tool.name}</span>
+      </div>
+      <span class="tool-card-badge" style="background:${color}22;color:${color}">${CAT_LABELS[tool.cat]}</span>
+    </div>
+    <div class="tool-card-desc">${tool.desc}</div>
+    <div class="tool-card-meta">
+      <span class="tool-meta-item">${stars(tool.stars)}</span>
+      <span class="tool-meta-item">${tool.priceLabel}</span>
+      <span class="tool-meta-item" style="background:${levelColor}1a;color:${levelColor};border:1px solid ${levelColor}44">${levelLabel}</span>
+    </div>
+    <div class="tool-card-footer">
+      <span style="font-size:.78rem;color:var(--text-muted)">${tool.bestFor.split(',')[0]}</span>
+      <span class="tool-detail-btn">Details →</span>
+    </div>
+  </div>`;
+}
+
+function renderModal(tool) {
+  const color = CAT_COLORS[tool.cat] || '#4f8cff';
+  const level = getToolLevel(tool);
+  const levelLabel = LEVEL_LABELS[level];
+  const levelHint = LEVEL_HINTS[level];
+  const levelColor = LEVEL_COLORS[level];
+  const expertDeepDive = level === 'experte'
+    ? `<div class="modal-section">
+      <div class="modal-section-title">Expert Deep Dive</div>
+      <ul class="modal-list">
+        <li>Definiere Abnahmekriterien: Zielmetrik, Latenzbudget und Kostenlimit pro Workflow.</li>
+        <li>Plane Monitoring von Halluzinationen, Tool-Fehlern und Prompt-Drift ueber Zeit.</li>
+        <li>Trenne klar zwischen Experiment-, Staging- und Produktions-Prompts mit Versionierung.</li>
+      </ul>
+    </div>`
+    : '';
+  let priceRows = tool.prices.map(p => `<tr><td>${p[0]}</td><td><strong>${p[1]}</strong></td></tr>`).join('');
+  let linkBtns = tool.links.map(l => `<a href="${l[1]}" target="_blank" rel="noopener" class="modal-link">${l[0]} ↗</a>`).join('');
+
+  return `<button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-icon">${tool.icon}</div>
+    <div class="modal-title">${tool.name}</div>
+    <span class="modal-category" style="background:${color}22;color:${color}">${CAT_LABELS[tool.cat]}</span>
+    <div class="modal-section">
+      <div class="modal-section-title">Ueberblick</div>
+      <p style="font-size:.9rem;color:var(--text-secondary);line-height:1.7">${tool.desc}</p>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Einstiegslevel</div>
+      <p style="font-size:.9rem;color:var(--text-secondary)"><span style="display:inline-block;margin-right:6px;padding:2px 10px;border-radius:999px;background:${levelColor}1a;color:${levelColor};border:1px solid ${levelColor}44">${levelLabel}</span>${levelHint}</p>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Staerken</div>
+      <ul class="modal-list">${tool.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Schwaechen</div>
+      <ul class="modal-list cons">${tool.weaknesses.map(w => `<li>${w}</li>`).join('')}</ul>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Preise</div>
+      <table class="modal-price-table"><thead><tr><th>Tier</th><th>Preis</th></tr></thead><tbody>${priceRows}</tbody></table>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Best For</div>
+      <p style="font-size:.9rem;color:var(--text-secondary)">${tool.bestFor}</p>
+    </div>
+    ${expertDeepDive}
+    <div class="modal-section">
+      <div class="modal-section-title">Links</div>
+      <div class="modal-links">${linkBtns}</div>
+    </div>`;
+}
+
+function renderTimeline() {
+  document.getElementById('timeline').innerHTML = TIMELINE_DATA.map(t =>
+    `<div class="timeline-item"><div class="timeline-year">${t.year}</div><div class="timeline-content">${t.content}</div></div>`
+  ).join('');
+}
+
+// ============================================================
+// RENDER NEW SECTIONS (Grundlagen, Capabilities, Limits)
+// ============================================================
+function renderPillars() {
+  const el = document.getElementById('pillar-hierarchy');
+  if (!el) return;
+  el.innerHTML = KI_PILLARS.map((p, i) => {
+    const connector = i < KI_PILLARS.length - 1 ? '<div class="pillar-connector"></div>' : '';
+    return `<div class="pillar-step" data-pillar="${p.id}" onclick="togglePillar('${p.id}')" style="padding-left:${16 + i * 16}px">
+      <div class="pillar-icon">${p.icon}</div>
+      <div class="pillar-info">
+        <div class="pillar-name">${p.name}</div>
+        <div class="pillar-short">${p.short}</div>
+      </div>
+    </div>
+    <div class="pillar-detail" id="pillar-detail-${p.id}">${p.detail}</div>${connector}`;
+  }).join('');
+}
+function togglePillar(id) {
+  const detail = document.getElementById('pillar-detail-' + id);
+  const step = document.querySelector('[data-pillar="' + id + '"]');
+  if (!detail) return;
+  const isOpen = detail.classList.contains('open');
+  document.querySelectorAll('.pillar-detail').forEach(d => d.classList.remove('open'));
+  document.querySelectorAll('.pillar-step').forEach(s => s.classList.remove('active'));
+  if (!isOpen) {
+    detail.classList.add('open');
+    step.classList.add('active');
+  }
+}
+
+function renderTriad() {
+  const el = document.getElementById('ai-triad');
+  if (!el) return;
+  el.innerHTML = KI_TRIAD.map(t =>
+    `<div class="triad-card" style="--triad-color:${t.color}">
+      <div class="triad-icon">${t.icon}</div>
+      <div class="triad-title">${t.title}</div>
+      <div class="triad-desc">${t.desc}</div>
+      <div class="triad-stat">${t.stat}</div>
+    </div>`
+  ).join('');
+}
+
+function renderMilestones() {
+  const el = document.getElementById('milestones-grid');
+  if (!el) return;
+  el.innerHTML = KI_MILESTONES.map(m =>
+    `<div class="milestone-item">
+      <div class="milestone-year">${m.year}</div>
+      <div class="milestone-text">${m.text}</div>
+    </div>`
+  ).join('');
+}
+
+function renderCapabilities() {
+  const el = document.getElementById('capability-grid');
+  if (!el) return;
+  el.innerHTML = KI_CAPABILITIES.map((c, i) =>
+    `<div class="capability-card" style="--cap-color:${c.color}">
+      <div class="cap-header">
+        <div class="cap-icon">${c.icon}</div>
+        <div class="cap-title">${c.title}</div>
+      </div>
+      <div class="cap-stats">${c.stats.map(s => `<span class="cap-stat">${s}</span>`).join('')}</div>
+      <ul class="cap-examples">${c.examples.map(e => `<li>${e}</li>`).join('')}</ul>
+      <div class="cap-toggle" onclick="toggleCapDetail(${i})">Mehr erfahren ▾</div>
+      <div class="cap-detail" id="cap-detail-${i}">${c.detail}</div>
+    </div>`
+  ).join('');
+}
+function toggleCapDetail(i) {
+  const detail = document.getElementById('cap-detail-' + i);
+  if (!detail) return;
+  const isOpen = detail.classList.contains('open');
+  detail.classList.toggle('open');
+  const toggle = detail.previousElementSibling;
+  if (toggle) toggle.textContent = isOpen ? 'Mehr erfahren ▾' : 'Weniger ▴';
+}
+
+function renderLimits() {
+  const el = document.getElementById('limit-grid');
+  if (!el) return;
+  el.innerHTML = KI_LIMITS.map(l =>
+    `<div class="limit-card">
+      <div class="limit-header">
+        <div class="limit-icon">${l.icon}</div>
+        <div class="limit-title">${l.title}</div>
+        <span class="severity-badge ${l.severity}">${l.severityLabel}</span>
+      </div>
+      <div class="limit-desc">${l.desc}</div>
+      <div class="limit-detail">${l.detail}</div>
+      <span class="limit-stat">${l.stat}</span>
+    </div>`
+  ).join('');
+}
+
+// ============================================================
+// RENDER ALL SECTIONS
+// ============================================================
+function renderAll() {
+  // New sections: Grundlagen, Capabilities, Limits
+  renderPillars();
+  renderTriad();
+  renderMilestones();
+  renderCapabilities();
+  renderLimits();
+
+  // Big Three cards
+  document.getElementById('big-three-cards').innerHTML = BIG_THREE.map(renderToolCard).join('');
+
+  // Tools grid
+  document.getElementById('tools-grid').innerHTML = TOOLS.map(renderToolCard).join('');
+
+  // Trends
+  document.getElementById('trends-grid').innerHTML = TRENDS_DATA.map(t =>
+    `<div class="trend-card" style="border-left:3px solid ${t.borderColor}">
+      <div class="trend-number">${t.num}</div>
+      <div class="trend-title">${t.title}</div>
+      <div class="trend-desc"><strong>Kurz erklaert:</strong> ${t.simple}</div>
+      <div class="trend-desc trend-expert"><strong>Expert Deep Dive:</strong> ${t.expert}</div>
+      <span class="trend-tag" style="background:${t.tagColor}22;color:${t.tagColor}">${t.tag}</span>
+    </div>`
+  ).join('');
+
+  // Timeline
+  renderTimeline();
+
+  // Resources
+  document.getElementById('resources-grid').innerHTML = RESOURCES_DATA.map(r =>
+    `<div class="resource-card">
+      <div class="resource-icon">${r.icon}</div>
+      <div class="resource-title">${r.title}</div>
+      <ul class="resource-links">${r.links.map(l => `<li><a href="${l[1]}" target="_blank" rel="noopener">↗ ${l[0]}</a></li>`).join('')}</ul>
+    </div>`
+  ).join('');
+
+  // Learning Path
+  const saved = JSON.parse(localStorage.getItem('ki-kompass-progress') || '{}');
+  document.getElementById('learning-path').innerHTML = LEARNING_PATH.map(level => {
+    const completed = level.steps.filter(s => saved[s.id]).length;
+    const total = level.steps.length;
+    return `<div class="path-level">
+      <div class="path-level-header">
+        <div class="path-level-title"><span class="path-level-icon">${level.icon}</span>${level.level}</div>
+        <span class="path-level-progress">${completed}/${total}</span>
+      </div>
+      <div class="path-level-body">
+        ${level.steps.map(s => {
+          const done = saved[s.id];
+          return `<div class="path-step${done ? ' completed' : ''}">
+            <div class="path-checkbox${done ? ' checked' : ''}" data-step="${s.id}" onclick="toggleStep('${s.id}', this)"></div>
+            <div class="path-step-content">
+              <div class="path-step-title">${s.title}</div>
+              <div class="path-step-desc">${s.desc}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// INTERACTIVITY
+// ============================================================
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Modal
+const allTools = [...BIG_THREE, ...TOOLS];
+const toolFilterState = { cat: 'alle', level: 'alle', query: '' };
+
+function applyToolFilters() {
+  let visibleCount = 0;
+  document.querySelectorAll('#tools-grid .tool-card').forEach(card => {
+    const matchesCat = toolFilterState.cat === 'alle' || card.dataset.cat === toolFilterState.cat;
+    const matchesLevel = toolFilterState.level === 'alle' || card.dataset.level === toolFilterState.level;
+    const matchesQuery = !toolFilterState.query || card.textContent.toLowerCase().includes(toolFilterState.query);
+    const visible = matchesCat && matchesLevel && matchesQuery;
+    card.style.display = visible ? '' : 'none';
+    if (visible) visibleCount += 1;
+  });
+  const emptyState = document.getElementById('tools-empty');
+  if (emptyState) emptyState.classList.toggle('visible', visibleCount === 0);
+}
+
+function openModal(toolId) {
+  const tool = allTools.find(t => t.id === toolId);
+  if (!tool) return;
+  document.getElementById('modal-content').innerHTML = renderModal(tool);
+  document.getElementById('modal-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('modal-overlay').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// Filter
+document.getElementById('filter-bar').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  toolFilterState.cat = btn.dataset.cat;
+  applyToolFilters();
+});
+
+document.getElementById('level-filter-bar').addEventListener('click', (e) => {
+  const btn = e.target.closest('.level-filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.level-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  toolFilterState.level = btn.dataset.level;
+  applyToolFilters();
+});
+
+// Search
+document.getElementById('tool-search').addEventListener('input', (e) => {
+  toolFilterState.query = e.target.value.toLowerCase().trim();
+  applyToolFilters();
+});
+
+// Learning path progress
+function toggleStep(stepId, el) {
+  const saved = JSON.parse(localStorage.getItem('ki-kompass-progress') || '{}');
+  saved[stepId] = !saved[stepId];
+  localStorage.setItem('ki-kompass-progress', JSON.stringify(saved));
+  const step = el.closest('.path-step');
+  if (saved[stepId]) {
+    el.classList.add('checked');
+    step.classList.add('completed');
+  } else {
+    el.classList.remove('checked');
+    step.classList.remove('completed');
+  }
+  // Update progress counts
+  renderLearningPathProgress();
+}
+function renderLearningPathProgress() {
+  const saved = JSON.parse(localStorage.getItem('ki-kompass-progress') || '{}');
+  document.querySelectorAll('.path-level').forEach((level, i) => {
+    const steps = LEARNING_PATH[i].steps;
+    const completed = steps.filter(s => saved[s.id]).length;
+    level.querySelector('.path-level-progress').textContent = `${completed}/${steps.length}`;
+  });
+}
+
+// Stat counter animation
+function animateCounters() {
+  document.querySelectorAll('.stat-number[data-target]').forEach(el => {
+    const target = parseFloat(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const decimals = parseInt(el.dataset.decimals) || 0;
+    let current = 0;
+    const step = target / 60;
+    function update() {
+      current += step;
+      if (current >= target) {
+        current = target;
+        el.textContent = (decimals ? current.toFixed(decimals) : Math.round(current)) + suffix;
+        return;
+      }
+      el.textContent = (decimals ? current.toFixed(decimals) : Math.round(current)) + suffix;
+      requestAnimationFrame(update);
+    }
+    update();
+  });
+}
+
+// Sticky nav + scroll tracking
+const stickyNav = document.getElementById('sticky-nav');
+const sections = ['was-ist-ki', 'ki-grundlagen', 'ki-kann', 'ki-grenzen', 'persona', 'start-hier', 'big-three', 'tools', 'trends', 'zukunft', 'ressourcen', 'lernpfad'];
+window.addEventListener('scroll', () => {
+  // Show/hide nav
+  stickyNav.classList.toggle('visible', window.scrollY > window.innerHeight * 0.5);
+
+  // Active section
+  let current = '';
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 200) current = id;
+  }
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.toggle('active', link.dataset.section === current);
+  });
+}, { passive: true });
+
+// Fade-in on scroll (IntersectionObserver)
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Trigger stat counters when "was-ist-ki" section becomes visible
+      if (entry.target.closest('#was-ist-ki') && entry.target.classList.contains('stats-grid')) {
+        animateCounters();
+      }
+    }
+  });
+}, { threshold: 0.1 });
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderAll();
+  applyToolFilters();
+  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+  // Fallback: hide loading screen if Three.js didn't
+  setTimeout(() => {
+    document.getElementById('loading-screen').classList.add('hidden');
+  }, 2000);
+});
+</script>
+</body>
+</html>
