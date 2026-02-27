@@ -32,11 +32,40 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg-primary)}
 ::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:var(--r-full)}
 
-#loading-screen{position:fixed;inset:0;z-index:10000;background:var(--bg-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s,visibility .6s}
+#loading-screen{position:fixed;inset:0;z-index:10000;background:var(--bg-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s cubic-bezier(0.4,0,0.2,1),visibility .8s;overflow:hidden}
 #loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
-.loading-spinner{width:48px;height:48px;border:3px solid var(--border-glass);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
-.loading-text{margin-top:var(--s-md);color:var(--text-secondary);font-size:.9rem}
-@keyframes spin{to{transform:rotate(360deg)}}
+#loading-screen::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,0.25) 50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06));z-index:10;background-size:100% 2px,3px 100%;pointer-events:none}
+#loader-canvas{position:absolute;inset:0;z-index:1}
+.loader-ui{position:relative;z-index:2;text-align:center;pointer-events:none;margin-top:280px}
+.loader-title{font-family:var(--f-mono,'JetBrains Mono',monospace);font-weight:700;letter-spacing:0.5em;color:#fff;font-size:1.2rem;margin-bottom:var(--s-sm);text-shadow:0 0 20px var(--accent)}
+.loader-status{font-family:var(--f-mono,'JetBrains Mono',monospace);color:var(--accent);font-size:0.7rem;opacity:0.8;text-transform:uppercase}
+.loader-bar-wrap{width:240px;height:2px;background:rgba(255,255,255,0.05);margin:var(--s-lg) auto;border-radius:var(--r-full);overflow:hidden}
+.loader-bar-fill{height:100%;width:0%;background:var(--accent);box-shadow:0 0 15px var(--accent);transition:width 0.3s ease}
+
+.quiz-overlay{position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:0.4s}
+.quiz-overlay.active{opacity:1;visibility:visible}
+.quiz-modal{background:var(--bg-secondary);border:1px solid var(--accent);border-radius:var(--r-xl);max-width:600px;width:90%;padding:var(--s-3xl);text-align:center;position:relative}
+.quiz-option{display:block;width:100%;padding:var(--s-md) var(--s-lg);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);margin-bottom:var(--s-sm);text-align:left;font-size:.95rem;color:var(--text-primary);transition:0.2s;cursor:pointer}
+.quiz-option:hover{border-color:var(--accent);background:var(--bg-glass-hover)}
+
+.fab-navigator{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;font-size:1.4rem;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,0.5);z-index:4000;transition:0.3s;opacity:0;visibility:hidden;cursor:pointer}
+.fab-navigator.visible{opacity:1;visibility:visible}
+.fab-navigator:hover{transform:scale(1.1);box-shadow:0 12px 40px rgba(79,140,255,0.4)}
+
+.compare-bar{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);z-index:4500;background:var(--bg-secondary);border:1px solid var(--accent);padding:var(--s-md) var(--s-xl);border-radius:var(--r-full);display:flex;align-items:center;gap:var(--s-lg);box-shadow:0 10px 40px rgba(0,0,0,0.5);transition:transform var(--t-slow)}
+.compare-bar.visible{transform:translateX(-50%) translateY(0)}
+.compare-bar .compare-count{font-weight:700;color:var(--accent)}
+.compare-bar .compare-btn{padding:var(--s-xs) var(--s-lg);background:var(--accent);color:#fff;font-weight:600;border-radius:var(--r-full);font-size:.85rem;transition:0.2s}
+.compare-bar .compare-btn:hover{background:#3a7aef}
+.compare-bar .compare-clear{font-size:.8rem;color:var(--text-muted);text-decoration:underline;cursor:pointer}
+.compare-bar .compare-clear:hover{color:var(--text-primary)}
+.compare-check{position:absolute;top:var(--s-sm);right:var(--s-sm);z-index:2;accent-color:var(--accent);width:18px;height:18px;cursor:pointer}
+
+.compare-modal-grid{display:grid;gap:var(--s-lg);margin-top:var(--s-xl)}
+.compare-col{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl)}
+.compare-col h3{margin-bottom:var(--s-md);display:flex;align-items:center;gap:var(--s-sm)}
+
+@media print{body{background:#fff;color:#000}.sticky-nav,#canvas-wrapper,#loading-screen,.hero-cta,.fab-navigator,.compare-bar,.quiz-overlay,.tool-detail-btn,.compare-check{display:none!important}.section{padding:1rem}.tool-card,.stat-card,.persona-card{break-inside:avoid;border-color:#ccc}}
 
 .sticky-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,14,26,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-glass);transform:translateY(-100%);transition:transform var(--t-slow);padding:0 var(--s-lg)}
 .sticky-nav.visible{transform:translateY(0)}
@@ -310,7 +339,10 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 .severity-badge.evolving{background:rgba(79,140,255,0.15);color:#4f8cff}
 .limit-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--s-md)}
 .limit-detail{font-size:.82rem;color:var(--text-muted);line-height:1.6;padding-top:var(--s-md);border-top:1px solid var(--border-glass)}
-.limit-stat{display:inline-block;margin-top:var(--s-sm);padding:4px 10px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);border-radius:var(--r-full);font-size:.72rem;font-weight:600;color:#ef4444}
+.limit-stat{display:inline-block;margin-top:var(--s-sm);padding:4px 10px;border-radius:var(--r-full);font-size:.72rem;font-weight:600}
+.limit-stat.high{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);color:#ef4444}
+.limit-stat.medium{background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.15);color:#f97316}
+.limit-stat.evolving{background:rgba(79,140,255,0.08);border:1px solid rgba(79,140,255,0.15);color:#4f8cff}
 
 @media(max-width:768px){
   .section{padding:var(--s-2xl) var(--s-md)}
@@ -339,8 +371,12 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 <div id="canvas-wrapper"><canvas id="hero-canvas"></canvas></div>
 
 <div id="loading-screen">
-  <div class="loading-spinner"></div>
-  <p class="loading-text">KI-Universum wird geladen...</p>
+  <canvas id="loader-canvas"></canvas>
+  <div class="loader-ui">
+    <div class="loader-title">LUNOLABS</div>
+    <div class="loader-status" id="loader-status">INITIALIZING_NEURAL_LINK</div>
+    <div class="loader-bar-wrap"><div class="loader-bar-fill" id="loader-bar"></div></div>
+  </div>
 </div>
 
 <nav class="sticky-nav" id="sticky-nav">
@@ -444,11 +480,11 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
   <div class="section-header fade-in">
     <span class="section-tag">Ehrlich</span>
     <h2 class="section-title">Wo sind die Grenzen?</h2>
-    <p class="section-subtitle">KI ist beeindruckend — aber nicht perfekt. Ein ehrlicher Blick auf aktuelle Limits, Risiken und offene Fragen.</p>
+    <p class="section-subtitle">KI ist beeindruckend — aber nicht perfekt. Ein sachlicher Blick auf aktuelle Grenzen, offene Fragen und was sich verbessert.</p>
   </div>
   <div class="limit-grid fade-in" id="limit-grid"></div>
   <div class="industrie-quote fade-in" style="margin-top:var(--s-2xl)">
-    <blockquote>"KI-Systeme sind Werkzeuge mit beeindruckenden Staerken und realen Schwaechen. Wer beides kennt, kann KI gezielt und verantwortungsvoll einsetzen."</blockquote>
+    <blockquote>"KI-Systeme haben beeindruckende Staerken und reale Grenzen. Wer beides kennt, trifft bessere Entscheidungen — und nutzt KI dort, wo sie wirklich hilft."</blockquote>
   </div>
   <div class="section-divider"></div>
 </section>
@@ -458,6 +494,7 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
     <span class="section-tag">Navigation</span>
     <h2 class="section-title">Wer bist du?</h2>
     <p class="section-subtitle">Waehle deinen Hintergrund — wir zeigen dir, was fuer dich relevant ist.</p>
+    <button class="hero-cta" onclick="startQuiz()" style="margin-top:var(--s-lg)">🧭 KI-Navigator Quiz</button>
   </div>
   <div class="persona-grid fade-in">
     <div class="persona-card" onclick="scrollToSection('was-ist-ki')"><div class="persona-icon">🌱</div><div class="persona-name">Einsteiger</div><div class="persona-desc">"Was ist KI ueberhaupt?" — Einfache Erklaerungen, Vergleichstabelle, erste Schritte</div></div>
@@ -738,6 +775,22 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal" id="modal-content"></div>
+</div>
+
+<div class="quiz-overlay" id="quiz-overlay">
+  <div class="quiz-modal">
+    <button class="modal-close" onclick="closeQuiz()" style="position:absolute;top:var(--s-md);right:var(--s-md)">✕</button>
+    <div class="loader-bar-wrap" style="margin-bottom:var(--s-xl)"><div class="loader-bar-fill" id="quiz-progress-bar"></div></div>
+    <div id="quiz-content"></div>
+  </div>
+</div>
+
+<button class="fab-navigator" id="fab-navigator" onclick="startQuiz()" title="KI-Navigator Quiz">🧭</button>
+
+<div class="compare-bar" id="compare-bar">
+  <span><span class="compare-count" id="compare-count">0</span> Tools ausgewaehlt</span>
+  <button class="compare-btn" onclick="openComparison()">Vergleichen</button>
+  <span class="compare-clear" onclick="clearComparison()">Leeren</span>
 </div>
 
 <script>
@@ -1591,37 +1644,37 @@ const KI_CAPABILITIES = [
 // ============================================================
 const KI_LIMITS = [
   {icon:'🎭',title:'Halluzinationen',severity:'high',severityLabel:'Hoch',
-   desc:'KI erfindet plausibel klingende, aber falsche Fakten. Selbst die besten Modelle halluzinieren bei komplexen Aufgaben in 2-5% der Faelle, bei schwierigen Fragen bis zu 33-51%.',
-   detail:'Gemini 2.0 Flash: ~0,7% (Spitzenreiter). GPT-4o: ~1,5%. OpenAI o3 erreicht bei PersonQA bis zu 51% — mehr als doppelt so viel wie der Vorgaenger. Kernproblem: LLMs sind auf "wahrscheinlichste Antwort" trainiert, nicht auf Unsicherheitsbewertung.',
-   stat:'Bis zu 51% bei schwierigen Fragen'},
+   desc:'KI erfindet gelegentlich plausibel klingende, aber falsche Fakten. Im Alltag liegt die Rate bei 1-5%, in Spezial-Benchmarks deutlich hoeher.',
+   detail:'Gemini 2.0 Flash: ~0,7% (Spitzenreiter). GPT-4o: ~1,5%. Bei schwierigen Wissensfragen (z.B. PersonQA-Benchmark) steigen die Raten stark an. Kernproblem: LLMs sind auf "wahrscheinlichste Antwort" trainiert, nicht auf Unsicherheitsbewertung. Loesung: Fakten immer gegenchecken, besonders bei kritischen Entscheidungen.',
+   stat:'1-5% im Alltag, mehr bei Spezialfragen'},
   {icon:'🧩',title:'Reasoning-Schwaechen',severity:'high',severityLabel:'Hoch',
-   desc:'Multi-Step-Logik, fragile Prompts und medizinisches Reasoning bleiben problematisch. Kleine Prompt-Aenderungen koennen die Genauigkeit um bis zu 54 Prozentpunkte senken.',
-   detail:'Modelle exzellieren bei einfachen Schlussfolgerungen, versagen bei mehreren Abhaengigkeiten. Multiple-Choice-Reihenfolge verschiebt Ergebnisse um 10-20 Punkte. In klinischen Szenarien schneiden alle getesteten Modelle schlechter ab als Aerzte.',
-   stat:'54 Punkte Genauigkeitsverlust moeglich'},
+   desc:'Multi-Step-Logik und medizinisches Reasoning bleiben Schwachstellen. Prompt-Formulierung beeinflusst die Ergebnisse stark.',
+   detail:'Modelle liefern bei einfachen Schlussfolgerungen sehr gute Ergebnisse, kaempfen aber mit verketteten Abhaengigkeiten. Die Reihenfolge bei Multiple-Choice kann Ergebnisse um 10-20 Punkte verschieben. In klinischen Szenarien schneiden Modelle noch schlechter ab als erfahrene Aerzte — hier bleibt menschliche Expertise unverzichtbar.',
+   stat:'Prompt-Formulierung beeinflusst Ergebnis stark'},
   {icon:'📏',title:'Kontextfenster-Realitaet',severity:'medium',severityLabel:'Mittel',
-   desc:'Modelle werben mit 1M+ Tokens, aber die effektive Nutzbarkeit liegt bei nur 60-70%. Leistung wird mit zunehmender Laenge unzuverlaessig.',
-   detail:'Forschung (Hong et al., 2025): 18 getestete LLMs nutzen ihren Kontext nicht gleichmaessig. Einige Top-Modelle zeigten ab 100 Tokens Fehler. Praktisch: Informationen gehen verloren, Mehrteil-Gespraeche sammeln Verlauf an, der irgendwann das Fenster sprengt.',
-   stat:'Nur 60-70% effektiv nutzbar'},
+   desc:'Modelle werben mit 1M+ Tokens Kontext, aber die effektive Nutzung liegt bei 60-70%. Lange Texte werden ungleichmaessig verarbeitet.',
+   detail:'Forschung (Hong et al., 2025): 18 getestete LLMs nutzen ihren Kontext nicht gleichmaessig — Informationen am Anfang und Ende werden bevorzugt. Praktisch: Bei langen Gespraechen kann relevanter Kontext verloren gehen. Tipp: Wichtige Infos wiederholen oder in kuerzere Abschnitte aufteilen.',
+   stat:'60-70% effektiv nutzbar'},
   {icon:'🎲',title:'Reproduzierbarkeit',severity:'medium',severityLabel:'Mittel',
-   desc:'Gleicher Prompt, unterschiedliche Ergebnisse — ein fundamentales Problem. Weniger als ein Drittel der KI-Forschung ist reproduzierbar.',
-   detail:'LLMs sind probabilistisch: Jeder Token wird aus einer Wahrscheinlichkeitsverteilung gesampelt. Selbst bei Temperature=0 liefern Cloud-APIs keine deterministischen Ergebnisse (Batching, Scheduling, numerische Rundungen).',
-   stat:'&lt;33% der KI-Forschung reproduzierbar'},
+   desc:'Gleicher Prompt, leicht unterschiedliche Ergebnisse — ein bekanntes Merkmal. In der KI-Forschung insgesamt ist Reproduzierbarkeit eine Herausforderung.',
+   detail:'LLMs sind probabilistisch: Jeder Token wird aus einer Wahrscheinlichkeitsverteilung gesampelt. Selbst bei Temperature=0 liefern Cloud-APIs keine exakt identischen Ergebnisse (Batching, Scheduling, numerische Rundungen). Fuer viele Anwendungen ist das unproblematisch, bei kritischen Prozessen braucht es Validierung.',
+   stat:'Probabilistisches Verhalten by Design'},
   {icon:'⚖️',title:'Bias & Fairness',severity:'high',severityLabel:'Hoch',
-   desc:'KI-Systeme reproduzieren und verstaerken gesellschaftliche Vorurteile. Dokumentiert in Gesundheitswesen, Recruiting und Bildgenerierung.',
-   detail:'Fuehrende LLMs generieren weniger wirksame Behandlungsempfehlungen fuer Afro-Amerikanische Patienten. Amazons Recruiting-KI bewertete Frauen systematisch schlechter. iTutorGroup lehnte Bewerber ueber 55/60 automatisch ab. 79% der berufstaetigen Frauen in den USA arbeiten in Jobs mit hohem Automatisierungsrisiko.',
-   stat:'79% der Frauen in Hochrisiko-Jobs'},
+   desc:'KI-Systeme koennen gesellschaftliche Vorurteile aus Trainingsdaten uebernehmen. Dokumentiert in Gesundheitswesen, Recruiting und Bildgenerierung.',
+   detail:'Studien zeigen: LLMs generieren teils weniger wirksame Behandlungsempfehlungen fuer bestimmte Bevoelkerungsgruppen. Amazons Recruiting-KI bewertete Frauen systematisch schlechter (Projekt wurde gestoppt). iTutorGroup lehnte Bewerber ueber 55/60 automatisch ab. Die Branche arbeitet aktiv an Fairness-Benchmarks und Bias-Erkennung.',
+   stat:'Aktive Forschung an Fairness-Methoden'},
   {icon:'🌍',title:'Umwelt & Energie',severity:'medium',severityLabel:'Mittel',
-   desc:'GPT-5 braucht pro Anfrage ~18 Wh (vs. Google-Suche: 0,3 Wh). KI-Rechenzentren emittieren bereits mehr CO2 als die Luftfahrtindustrie.',
-   detail:'GPT-4 Training: ~50.000 MWh (San Francisco 3 Tage versorgen). Rechenzentren weltweit: ~1.050 TWh bis 2026. Aber: Gemini-Anfragen wurden in 12 Monaten 33x energieeffizienter. Kleinere Modelle und Edge-KI helfen massiv.',
-   stat:'18 Wh pro GPT-5 Anfrage'},
+   desc:'Eine KI-Anfrage braucht etwa 10x mehr Energie als eine Google-Suche. Der wachsende Energiebedarf von Rechenzentren ist eine reale Herausforderung.',
+   detail:'GPT-4 Training: geschaetzt ~50.000 MWh. Rechenzentren weltweit koennten bis 2026 ~1.050 TWh verbrauchen. Aber: Die Effizienz steigt rasant — Gemini-Anfragen wurden in 12 Monaten 33x energieeffizienter. Kleinere Modelle, Edge-KI und erneuerbare Energien fuer Rechenzentren sind wichtige Gegenmassnahmen.',
+   stat:'Effizienz steigt 33x in 12 Monaten'},
   {icon:'📜',title:'Urheberrecht & Datenschutz',severity:'evolving',severityLabel:'Ungeklaert',
-   desc:'51+ Klagen weltweit. Kein Gericht entscheidet vor Sommer 2026 ueber Fair Use bei KI-Training. 64% sorgen sich um Datenweitergabe, 50% geben trotzdem persoenliche Daten ein.',
-   detail:'NYT vs. OpenAI (seit Dez. 2023) weiterhin anhaengig. Groesster Vergleich: Bartz vs. Anthropic — 1,5 Mrd. USD. Warner Music + Suno und UMG + Udio haben Lizenzdeals geschlossen. EU AI Act: Strafen bis 35 Mio. EUR oder 7% Jahresumsatz.',
-   stat:'1,5 Mrd. USD groesster Vergleich'},
+   desc:'51+ Klagen weltweit. Die Rechtslage bei KI-Training und Urheberrecht ist noch nicht geklaert. 64% der Nutzer sorgen sich um Datenweitergabe.',
+   detail:'NYT vs. OpenAI (seit Dez. 2023) weiterhin anhaengig. Erste Vergleiche: Bartz vs. Anthropic — 1,5 Mrd. USD. Warner Music + Suno und UMG + Udio haben Lizenzdeals geschlossen. EU AI Act schafft regulatorische Klarheit mit Strafen bis 35 Mio. EUR oder 7% Jahresumsatz.',
+   stat:'Regulierung nimmt weltweit Form an'},
   {icon:'🫧',title:'KI-Blase?',severity:'evolving',severityLabel:'Ungeklaert',
-   desc:'192,7 Mrd. USD Startup-Finanzierung 2025, aber 95% der Organisationen erzielen null Return. Bewertungen auf Dotcom-Niveau.',
-   detail:'Verbraucher geben nur 12 Mrd. USD/Jahr fuer KI-Dienste aus — vs. 500+ Mrd. geplante Investitionen. 30% des S&P 500 bestehen aus nur 5 Unternehmen. Sam Altman raeumt eine KI-Blase ein. OECD: KI-Blase als "zentrales Abwaertsrisiko" fuer die US-Wirtschaft.',
-   stat:'95% ohne Return'}
+   desc:'192,7 Mrd. USD Startup-Finanzierung 2025. Investitionen uebersteigen die bisherigen Einnahmen deutlich — die Frage nach der Nachhaltigkeit ist berechtigt.',
+   detail:'Verbraucher geben ~12 Mrd. USD/Jahr fuer KI-Dienste aus — vs. 500+ Mrd. geplante Investitionen. Die Marktkonzentration ist hoch (wenige Tech-Riesen dominieren). Viele Unternehmen befinden sich noch in der Experimentierphase. Historisch: Auch das Internet hatte eine Spekulationsphase, bevor der echte Nutzen sich durchsetzte.',
+   stat:'Investitionen uebersteigen Einnahmen deutlich'}
 ];
 
 // ============================================================
@@ -2259,10 +2312,7 @@ const KI_LIMITS = [
   }
   animate();
 
-  // Hide loading screen after a short delay
-  setTimeout(() => {
-    document.getElementById('loading-screen').classList.add('hidden');
-  }, 800);
+  // Loading screen is now handled by init3DLoader sequence below
 })();
 
 // ============================================================
@@ -2278,6 +2328,7 @@ function renderToolCard(tool) {
   const levelLabel = LEVEL_LABELS[level];
   const levelColor = LEVEL_COLORS[level];
   return `<div class="tool-card" style="--card-accent:${color}" data-cat="${tool.cat}" data-level="${level}" data-name="${tool.name.toLowerCase()}" onclick="openModal('${tool.id}')">
+    <input type="checkbox" class="compare-check" data-id="${tool.id}" onclick="event.stopPropagation();handleCompareChange()" title="Zum Vergleich hinzufuegen">
     <div class="tool-card-header">
       <div class="tool-card-title-area">
         <span class="tool-card-icon">${tool.icon}</span>
@@ -2450,7 +2501,7 @@ function renderLimits() {
       </div>
       <div class="limit-desc">${l.desc}</div>
       <div class="limit-detail">${l.detail}</div>
-      <span class="limit-stat">${l.stat}</span>
+      <span class="limit-stat ${l.severity}">${l.stat}</span>
     </div>`
   ).join('');
 }
@@ -2653,6 +2704,10 @@ window.addEventListener('scroll', () => {
   document.querySelectorAll('.nav-link').forEach(link => {
     link.classList.toggle('active', link.dataset.section === current);
   });
+
+  // FAB navigator visibility
+  const fab = document.getElementById('fab-navigator');
+  if (fab) fab.classList.toggle('visible', window.scrollY > 500);
 }, { passive: true });
 
 // Fade-in on scroll (IntersectionObserver)
@@ -2669,17 +2724,262 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 // ============================================================
+// 3D LOADER
+// ============================================================
+let loaderRenderer, loaderScene, loaderCamera, loaderCube, loaderWaves;
+let loaderMousePos = { x: 0, y: 0 };
+
+function hideLoader() {
+  const loader = document.getElementById('loading-screen');
+  if (loader && !loader.classList.contains('hidden')) {
+    loader.style.opacity = '0';
+    loader.style.pointerEvents = 'none';
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      if (loaderRenderer) { loaderRenderer.dispose(); loaderRenderer = null; }
+    }, 1000);
+  }
+}
+
+function init3DLoader() {
+  try {
+    const canvas = document.getElementById('loader-canvas');
+    loaderRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    loaderRenderer.setSize(window.innerWidth, window.innerHeight);
+    loaderScene = new THREE.Scene();
+    loaderCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    loaderCamera.position.z = 12;
+
+    const geo = new THREE.BoxGeometry(2.5, 2.5, 2.5);
+    const mat = new THREE.MeshBasicMaterial({ color: 0x4f8cff, wireframe: true, transparent: true, opacity: 0.6 });
+    loaderCube = new THREE.Mesh(geo, mat);
+    loaderScene.add(loaderCube);
+
+    const waveCount = 1500;
+    const waveGeo = new THREE.BufferGeometry();
+    const posArr = new Float32Array(waveCount * 3);
+    for (let i = 0; i < waveCount; i++) {
+      posArr[i * 3] = (Math.random() - 0.5) * 30;
+      posArr[i * 3 + 1] = (Math.random() - 0.5) * 30;
+      posArr[i * 3 + 2] = (Math.random() - 0.5) * 10;
+    }
+    waveGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
+    loaderWaves = new THREE.Points(waveGeo, new THREE.PointsMaterial({
+      color: 0x4f8cff, size: 0.04, transparent: true, opacity: 0.4
+    }));
+    loaderScene.add(loaderWaves);
+
+    function animateLoader() {
+      if (!loaderRenderer) return;
+      requestAnimationFrame(animateLoader);
+      const t = performance.now() * 0.001;
+      loaderCube.rotation.y += 0.01 + loaderMousePos.x * 0.05;
+      loaderCube.rotation.x += 0.005 - loaderMousePos.y * 0.05;
+      const positions = loaderWaves.geometry.attributes.position.array;
+      for (let i = 0; i < positions.length; i += 3) {
+        const x = positions[i], y = positions[i + 1];
+        positions[i + 2] = Math.sin(t + (x * x + y * y) * 0.05) * 2.5;
+      }
+      loaderWaves.geometry.attributes.position.needsUpdate = true;
+      loaderRenderer.render(loaderScene, loaderCamera);
+    }
+    animateLoader();
+  } catch (e) {
+    console.error('3D Loader failed:', e);
+    hideLoader();
+  }
+}
+
+window.addEventListener('mousemove', (e) => {
+  loaderMousePos.x = (e.clientX / window.innerWidth) * 2 - 1;
+  loaderMousePos.y = -(e.clientY / window.innerHeight) * 2 + 1;
+});
+
+// Ultimate safety: force-hide loader after 5s
+setTimeout(hideLoader, 5000);
+
+// ============================================================
+// KI-NAVIGATOR QUIZ
+// ============================================================
+const QUIZ_DATA = [
+  {
+    q: 'Was beschreibt dich am besten?',
+    opts: [
+      { label: '🌱 Ich bin neu bei KI', tags: ['einsteiger'] },
+      { label: '💻 Ich programmiere regelmaessig', tags: ['entwickler'] },
+      { label: '🎨 Ich arbeite kreativ (Design, Video, Musik)', tags: ['kreativ'] },
+      { label: '📊 Ich treffe Business-Entscheidungen', tags: ['business'] }
+    ]
+  },
+  {
+    q: 'Was moechtest du mit KI erreichen?',
+    opts: [
+      { label: 'Texte schreiben & recherchieren', tags: ['assistenten', 'produktivitaet'] },
+      { label: 'Code schneller schreiben', tags: ['coding', 'frameworks'] },
+      { label: 'Bilder, Videos oder Musik erstellen', tags: ['bild', 'video', 'audio'] },
+      { label: 'Workflows automatisieren', tags: ['produktivitaet', 'frameworks'] }
+    ]
+  },
+  {
+    q: 'Wie wichtig ist dir Datenschutz?',
+    opts: [
+      { label: 'Sehr wichtig — am liebsten lokal', tags: ['lokal'] },
+      { label: 'Cloud ist ok fuer mich', tags: ['assistenten'] },
+      { label: 'Kommt auf den Anwendungsfall an', tags: [] }
+    ]
+  }
+];
+
+let quizStep = 0;
+let quizTags = [];
+
+function startQuiz() {
+  quizStep = 0;
+  quizTags = [];
+  document.getElementById('quiz-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  renderQuizStep();
+}
+
+function closeQuiz() {
+  document.getElementById('quiz-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function renderQuizStep() {
+  const content = document.getElementById('quiz-content');
+  const bar = document.getElementById('quiz-progress-bar');
+  if (quizStep >= QUIZ_DATA.length) {
+    bar.style.width = '100%';
+    showQuizResult();
+    return;
+  }
+  bar.style.width = ((quizStep / QUIZ_DATA.length) * 100) + '%';
+  const step = QUIZ_DATA[quizStep];
+  content.innerHTML = `
+    <h3 style="margin-bottom:var(--s-xl);font-size:1.3rem">${step.q}</h3>
+    ${step.opts.map((o, i) => `<button class="quiz-option" onclick="quizAnswer(${i})">${o.label}</button>`).join('')}
+    <p style="font-size:.75rem;color:var(--text-muted);margin-top:var(--s-md)">Frage ${quizStep + 1} von ${QUIZ_DATA.length}</p>
+  `;
+}
+
+function quizAnswer(idx) {
+  const tags = QUIZ_DATA[quizStep].opts[idx].tags;
+  quizTags.push(...tags);
+  quizStep++;
+  renderQuizStep();
+}
+
+function showQuizResult() {
+  const content = document.getElementById('quiz-content');
+  const allTools = [...BIG_THREE, ...TOOLS];
+  const tagCount = {};
+  quizTags.forEach(t => { tagCount[t] = (tagCount[t] || 0) + 1; });
+
+  // Score tools by tag match
+  const scored = allTools.map(tool => {
+    let score = 0;
+    if (tagCount[tool.cat]) score += tagCount[tool.cat] * 2;
+    if (quizTags.includes('einsteiger') && getToolLevel(tool) === 'einsteiger') score += 2;
+    if (quizTags.includes('entwickler') && ['coding', 'frameworks'].includes(tool.cat)) score += 2;
+    if (quizTags.includes('kreativ') && ['bild', 'video', 'audio'].includes(tool.cat)) score += 2;
+    if (quizTags.includes('lokal') && tool.cat === 'lokal') score += 3;
+    score += tool.stars * 0.5;
+    return { tool, score };
+  }).filter(s => s.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
+
+  content.innerHTML = `
+    <h3 style="margin-bottom:var(--s-md)">🎯 Deine Top-Empfehlungen</h3>
+    <p style="color:var(--text-secondary);margin-bottom:var(--s-xl);font-size:.9rem">Basierend auf deinen Antworten:</p>
+    <div style="text-align:left">
+      ${scored.map(s => `
+        <div style="background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-md);padding:var(--s-md);margin-bottom:var(--s-sm);cursor:pointer;transition:0.2s" onclick="closeQuiz();openModal('${s.tool.id}')">
+          <span style="font-size:1.2rem">${s.tool.icon}</span>
+          <strong>${s.tool.name}</strong>
+          <span style="color:var(--text-muted);font-size:.8rem;margin-left:var(--s-sm)">${s.tool.desc.substring(0, 60)}…</span>
+        </div>
+      `).join('')}
+    </div>
+    <button class="hero-cta" onclick="closeQuiz()" style="margin-top:var(--s-xl)">Guide erkunden</button>
+    <button style="display:block;margin:var(--s-md) auto 0;color:var(--text-muted);font-size:.8rem;text-decoration:underline" onclick="quizStep=0;quizTags=[];renderQuizStep()">Quiz wiederholen</button>
+  `;
+}
+
+// ============================================================
+// TOOL COMPARE
+// ============================================================
+function handleCompareChange() {
+  const checked = Array.from(document.querySelectorAll('.compare-check:checked'));
+  const ids = checked.map(cb => cb.dataset.id);
+  document.getElementById('compare-count').textContent = ids.length;
+  document.getElementById('compare-bar').classList.toggle('visible', ids.length > 0);
+}
+
+function clearComparison() {
+  document.querySelectorAll('.compare-check:checked').forEach(c => { c.checked = false; });
+  handleCompareChange();
+}
+
+function openComparison() {
+  const ids = Array.from(document.querySelectorAll('.compare-check:checked')).map(cb => cb.dataset.id);
+  const allTools = [...BIG_THREE, ...TOOLS];
+  const tools = ids.map(id => allTools.find(t => t.id === id)).filter(Boolean);
+  if (tools.length < 2) { alert('Bitte mindestens 2 Tools auswaehlen.'); return; }
+
+  const cols = tools.length <= 3 ? `repeat(${tools.length}, 1fr)` : 'repeat(auto-fit, minmax(280px, 1fr))';
+  document.getElementById('modal-content').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2 class="section-title" style="margin-bottom:var(--s-md)">Tool-Vergleich</h2>
+    <div class="compare-modal-grid" style="grid-template-columns:${cols}">
+      ${tools.map(t => {
+        const color = CAT_COLORS[t.cat] || '#4f8cff';
+        return `<div class="compare-col">
+          <h3><span style="font-size:1.5rem">${t.icon}</span> ${t.name}</h3>
+          <div style="font-size:.8rem;color:${color};margin-bottom:var(--s-md)">${CAT_LABELS[t.cat]} · ${t.priceLabel}</div>
+          <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:var(--s-md)">${t.desc}</p>
+          <div style="background:rgba(34,197,94,0.1);padding:var(--s-sm);border-radius:var(--r-sm);margin-bottom:var(--s-sm)">
+            <strong style="font-size:.75rem">Staerken</strong>
+            <ul style="font-size:.8rem;padding-left:var(--s-md);margin-top:4px">${t.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
+          </div>
+          <div style="background:rgba(239,68,68,0.1);padding:var(--s-sm);border-radius:var(--r-sm)">
+            <strong style="font-size:.75rem">Schwaechen</strong>
+            <ul style="font-size:.8rem;padding-left:var(--s-md);margin-top:4px">${t.weaknesses.map(w => `<li>${w}</li>`).join('')}</ul>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+  document.getElementById('modal-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// ============================================================
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+  init3DLoader();
   renderAll();
   applyToolFilters();
   document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
 
-  // Fallback: hide loading screen if Three.js didn't
-  setTimeout(() => {
-    document.getElementById('loading-screen').classList.add('hidden');
-  }, 2000);
+  // Loader progress sequence
+  let progress = 0;
+  const bar = document.getElementById('loader-bar');
+  const status = document.getElementById('loader-status');
+  const iv = setInterval(() => {
+    progress += Math.random() * 12;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(iv);
+      setTimeout(hideLoader, 800);
+    }
+    if (bar) bar.style.width = progress + '%';
+    if (status) {
+      if (progress > 85) status.textContent = 'DECRYPTING_GUIDE_DATA';
+      else if (progress > 60) status.textContent = 'SYNCING_2026_MODELS';
+      else if (progress > 30) status.textContent = 'LOADING_TOOL_UNIVERSE';
+    }
+  }, 150);
 });
 </script>
 </body>

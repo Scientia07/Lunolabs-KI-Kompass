@@ -1,0 +1,16 @@
+{
+  "name": "Lunolabs KI-Kompass 2026",
+  "short_name": "KI-Kompass",
+  "description": "Dein interaktiver Guide durch die KI-Revolution 2026.",
+  "start_url": "ai-evolution-guide-de.html",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#4f8cff",
+  "icons": [
+    {
+      "src": "Lunolabs-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
