@@ -597,7 +597,7 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
   <div class="section-header fade-in">
     <span class="section-tag">Werkzeuge</span>
     <h2 class="section-title">Das Tool-Universum</h2>
-    <p class="section-subtitle">60+ KI-Tools im ehrlichen Vergleich — mit Bewertungen, Preisen und konkreten Empfehlungen fuer verschiedene Erfahrungslevel.</p>
+    <p class="section-subtitle">70+ KI-Tools im ehrlichen Vergleich — mit Bewertungen, Preisen und konkreten Empfehlungen fuer verschiedene Erfahrungslevel.</p>
   </div>
   <div class="search-wrap fade-in"><span class="search-icon">🔍</span><input type="text" class="search-input" id="tool-search" placeholder="Tool suchen... (z.B. Cursor, Midjourney, Ollama)"></div>
   <div class="filter-bar fade-in" id="filter-bar">
@@ -826,10 +826,13 @@ const TOOL_LEVELS = {
   midjourney: 'fortgeschritten',
   dalle3: 'einsteiger',
   stablediffusion: 'experte',
+  flux2: 'fortgeschritten',
+  ideogram: 'einsteiger',
   sora: 'experte',
   runway: 'fortgeschritten',
   kling: 'fortgeschritten',
   pika: 'einsteiger',
+  ltx2: 'experte',
   suno: 'einsteiger',
   elevenlabs: 'experte',
   udio: 'fortgeschritten',
@@ -840,6 +843,7 @@ const TOOL_LEVELS = {
   llama4: 'experte',
   mistral3: 'experte',
   deepseek: 'experte',
+  qwen3: 'fortgeschritten',
   lmstudio: 'einsteiger',
   langchain: 'experte',
   llamaindex: 'experte',
@@ -1026,14 +1030,14 @@ const TOOLS = [
    links:[['Website','https://replit.com/ai'],['Docs','https://docs.replit.com']]},
 
   // --- BILD ---
-  {id:'nanobanana',name:'Nano Banana Pro (Gemini)',icon:'🍌',cat:'bild',stars:5,
-   desc:'Googles Nr. 1 Bildgenerator. 4K-Aufloesung, 94% Textgenauigkeit, Google-Search-Grounding fuer faktentreue Bilder.',
-   price:'$0.13-$0.24/Bild',priceLabel:'$0.13/Bild',
-   strengths:['94% Textwiedergabe — uebertrifft DALL-E 3','4K-Aufloesung nativ (bis 3840px)','Google Search Grounding fuer faktentreue Inhalte','Reasoning-Modus ("Thinking") fuer komplexe Kompositionen','Multi-Image-Conditioning (bis zu 3 Eingabebilder)','Nano Banana 2 (Flash) fuer Speed, Pro fuer Max-Qualitaet'],
-   weaknesses:['Kleine Gesichter und feine Details teils ungenau','Maskierte Bearbeitung kann Artefakte erzeugen','Relativ neu — Community kleiner als Midjourney/SD'],
-   prices:[['1K-2K Aufloesung','$0.134/Bild'],['4K Aufloesung','$0.24/Bild'],['Nano Banana 2 (Flash)','Guenstiger, Flash-Speed']],
-   bestFor:'Marketing-Assets, Infografiken, Text-in-Bild, faktentreue Visualisierungen',
-   links:[['Gemini API Docs','https://ai.google.dev/gemini-api/docs/image-generation'],['Google DeepMind','https://deepmind.google/models/gemini-image/pro/'],['Vertex AI','https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image']]},
+  {id:'nanobanana',name:'Nano Banana 2 (Gemini 3.1 Flash Image)',icon:'🍌',cat:'bild',stars:5,
+   desc:'Googles neues Flaggschiff (Feb. 2026). Pro-Qualitaet bei Flash-Speed, 4K nativ, 50% guenstiger als Vorgaenger.',
+   price:'ab $0.045/Bild',priceLabel:'$0.045/Bild',
+   strengths:['Pro-Qualitaet bei Flash-Geschwindigkeit — ersetzt Nano Banana Pro','4K-Aufloesung nativ (512px bis 3840px)','Google Search Grounding fuer faktentreue Inhalte','Praezises Text-Rendering und Uebersetzung in Bildern','Subject Consistency und Multi-Image-Conditioning','50% guenstiger als Vorgaenger bei besserer Qualitaet'],
+   weaknesses:['Kleine Gesichter und feine Details teils ungenau','Maskierte Bearbeitung kann Artefakte erzeugen','Relativ neu (26. Feb. 2026) — Community waechst'],
+   prices:[['0.5K','$0.045/Bild'],['1K','$0.067/Bild'],['2K','$0.101/Bild'],['4K','$0.151/Bild']],
+   bestFor:'Marketing-Assets, Infografiken, Text-in-Bild, schnelle Iterationen',
+   links:[['Google Blog','https://blog.google/innovation-and-ai/technology/ai/nano-banana-2/'],['Gemini API Docs','https://ai.google.dev/gemini-api/docs/image-generation'],['DeepMind','https://deepmind.google/models/gemini-image/flash/']]},
   {id:'midjourney',name:'Midjourney v6/v7',icon:'🎨',cat:'bild',stars:5,
    desc:'Kuenstlerische Dominanz. Ueberlegene Aesthetik, Concept Art Exzellenz, emotionale Resonanz.',
    price:'ab $10/Mo',priceLabel:'$10/Mo',
@@ -1058,6 +1062,22 @@ const TOOLS = [
    prices:[['Self-Hosted','Kostenlos'],['Cloud APIs','Variabel']],
    bestFor:'Enterprise-Deployments, Marken-Konsistenz, Character Consistency',
    links:[['GitHub','https://github.com/Stability-AI/stablediffusion'],['ComfyUI','https://github.com/comfyanonymous/ComfyUI']]},
+  {id:'flux2',name:'Flux 2.0 (Black Forest Labs)',icon:'⚡',cat:'bild',stars:5,
+   desc:'Photorealismus-King. Von Ex-Stability-AI-Gruendern, Open-Core, bis zu 10 Referenzbilder, ueberlegene Typografie.',
+   price:'ab $0.012/Bild',priceLabel:'$0.012/Bild',
+   strengths:['Photorealismus auf DSLR-Niveau — natuerlichste Hauttexturen','Multi-Reference: bis 10 Bilder fuer Stil-/Charakter-Konsistenz','Ueberlegene Typografie und Prompt-Treue','Open-Core: Dev-Variante auf Hugging Face (Apache 2.0)','Vision-Language-Modell (Mistral-3 24B) fuer Weltwissen','4 Megapixel Output-Aufloesung'],
+   weaknesses:['Max-Modell nur via API (nicht lokal)','Weniger kuenstlerisch-stilisiert als Midjourney','Junges Oekosystem im Vergleich zu Stable Diffusion'],
+   prices:[['Flux.2 Dev','$0.012/Bild'],['Flux.2 Pro','$0.030/Bild'],['Flux.2 Max','Premium'],['Flux.2 Klein','Open Source (Apache 2.0)']],
+   bestFor:'Photorealistische Bilder, Brand-Assets, Charakter-Konsistenz, Typografie',
+   links:[['Website','https://bfl.ai'],['Modelle','https://bfl.ai/models/flux-2'],['Hugging Face','https://huggingface.co/black-forest-labs']]},
+  {id:'ideogram',name:'Ideogram 3.0',icon:'✏️',cat:'bild',stars:4,
+   desc:'Text-in-Bild-Spezialist. 90% Textgenauigkeit (vs. ~30% bei Konkurrenz), von Ex-Google-Brain-Forschern.',
+   price:'ab $7/Mo',priceLabel:'$7/Mo',
+   strengths:['90% Textgenauigkeit — unangefochtener Leader fuer Text in Bildern','Style References: bis 3 Referenzbilder fuer Aesthetik-Kontrolle','Batch-Generierung fuer Teams','Ideal fuer Logos, Poster, Marketing mit perfektem Text'],
+   weaknesses:['Weniger photorealistisch als Flux/Midjourney','Free Tier sehr limitiert (10 Credits/Woche)','Kleineres Feature-Set als Multi-Purpose-Tools'],
+   prices:[['Free','10 Credits/Woche'],['Basic','$7/Mo'],['Plus','$16/Mo'],['Pro','$48/Mo']],
+   bestFor:'Logos, Poster, T-Shirt-Designs, Social Media mit Text',
+   links:[['Website','https://ideogram.ai'],['Features','https://ideogram.ai/features/3.0']]},
 
   // --- VIDEO ---
   {id:'sora',name:'OpenAI Sora 2',icon:'🎬',cat:'video',stars:5,
@@ -1140,6 +1160,15 @@ const TOOLS = [
    prices:[['Free','5 Videos/Tag (720p)'],['Pro','$10/Mo (1080p)'],['Live','$25/Mo (Priority)']],
    bestFor:'Social Media Creator, virale Tanz-/Motion-Memes, Character-Animation',
    links:[['Website','https://viggle.ai']]},
+
+  {id:'ltx2',name:'LTX-2 (Lightricks)',icon:'🎞️',cat:'video',stars:4,
+   desc:'Erstes komplettes Open-Source Video-Modell. 4K bei 50fps, synchrones Audio+Video, lokal auf Consumer-GPUs.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Open Source mit kommerziellem Lizenzmodell','4K-Video bei 50fps, bis 20 Sekunden','Synchrones Audio + Dialog + Musik in einem Pass','Multimodale Inputs: Text, Bild, Audio, Depth Maps, Referenzvideo','Keyframe-Conditioning, 3D-Kameralogik, LoRA Fine-Tuning','3x schneller mit 60% weniger VRAM via NVIDIA-Optimierung (NVFP4)'],
+   weaknesses:['Multi-GPU empfohlen fuer 4K','Junges Oekosystem, weniger Tutorials als Runway','Erfordert technisches Setup (ComfyUI / Python)'],
+   prices:[['Open Source','Kostenlos'],['ComfyUI','Kostenlos']],
+   bestFor:'Lokale Video-Produktion, Open-Source-Workflows, ComfyUI-Pipelines',
+   links:[['GitHub','https://github.com/Lightricks/LTX-Video'],['LTX Studio','https://ltx.studio'],['ComfyUI','https://blog.comfy.org/p/ltx-2-open-source-audio-video-ai']]},
 
   // --- AUDIO ---
   {id:'suno',name:'Suno AI',icon:'🎵',cat:'audio',stars:5,
@@ -1274,6 +1303,14 @@ const TOOLS = [
    prices:[['API Input','$0.14/MTok'],['API Output','$0.28/MTok'],['Self-Hosted','Kostenlos']],
    bestFor:'Mathematisches Reasoning, interne Projekte (NICHT fuer EU-Daten!)',
    links:[['Website','https://deepseek.com'],['GitHub','https://github.com/deepseek-ai']]},
+  {id:'qwen3',name:'Qwen 3 (Alibaba)',icon:'🌐',cat:'lokal',stars:5,
+   desc:'Meistgeladenes Open-Source-Modell weltweit. 119 Sprachen, Apache 2.0, Hybrid-Thinking, 128K Context.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['#1 Downloads auf Hugging Face — meistgenutztes Open-Source-Modell','Apache 2.0 — volle kommerzielle Freiheit','Hybrid-Thinking: automatischer Wechsel Deep-Reasoning / Quick-Response','119 Sprachen, 36T Token Trainingsdaten','MoE-Architektur (bis 235B) spart Compute bei Top-Qualitaet','MCP-Protokoll-Support fuer Agent-Tasks','Qwen3-Coder-Next (Feb. 2026) fuer lokale Coding-Agents'],
+   weaknesses:['MoE-Modelle brauchen viel VRAM (235B-A22B)','Weniger Fine-Tuning-Community als Llama','Chinesischer Ursprung kann Compliance-Fragen aufwerfen'],
+   prices:[['Open Source','Kostenlos (Apache 2.0)'],['Ollama','qwen3:8b / qwen3:32b']],
+   bestFor:'Multilingual, lokale Agents, Code-Generierung, Enterprise-OSS',
+   links:[['Website','https://qwen.ai'],['GitHub','https://github.com/QwenLM/Qwen3'],['Hugging Face','https://huggingface.co/Qwen'],['Ollama','https://ollama.com/library/qwen3']]},
   {id:'lmstudio',name:'LM Studio',icon:'💻',cat:'lokal',stars:4,
    desc:'Desktop-App fuer lokale LLMs. GUI, keine CLI noetig, benutzerfreundlich.',
    price:'Kostenlos',priceLabel:'Gratis',
