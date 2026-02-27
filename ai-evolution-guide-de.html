@@ -822,6 +822,7 @@ const TOOL_LEVELS = {
   cline: 'experte',
   continue: 'experte',
   aider: 'experte',
+  nanobanana: 'fortgeschritten',
   midjourney: 'fortgeschritten',
   dalle3: 'einsteiger',
   stablediffusion: 'experte',
@@ -1025,6 +1026,14 @@ const TOOLS = [
    links:[['Website','https://replit.com/ai'],['Docs','https://docs.replit.com']]},
 
   // --- BILD ---
+  {id:'nanobanana',name:'Nano Banana Pro (Gemini)',icon:'🍌',cat:'bild',stars:5,
+   desc:'Googles Nr. 1 Bildgenerator. 4K-Aufloesung, 94% Textgenauigkeit, Google-Search-Grounding fuer faktentreue Bilder.',
+   price:'$0.13-$0.24/Bild',priceLabel:'$0.13/Bild',
+   strengths:['94% Textwiedergabe — uebertrifft DALL-E 3','4K-Aufloesung nativ (bis 3840px)','Google Search Grounding fuer faktentreue Inhalte','Reasoning-Modus ("Thinking") fuer komplexe Kompositionen','Multi-Image-Conditioning (bis zu 3 Eingabebilder)','Nano Banana 2 (Flash) fuer Speed, Pro fuer Max-Qualitaet'],
+   weaknesses:['Kleine Gesichter und feine Details teils ungenau','Maskierte Bearbeitung kann Artefakte erzeugen','Relativ neu — Community kleiner als Midjourney/SD'],
+   prices:[['1K-2K Aufloesung','$0.134/Bild'],['4K Aufloesung','$0.24/Bild'],['Nano Banana 2 (Flash)','Guenstiger, Flash-Speed']],
+   bestFor:'Marketing-Assets, Infografiken, Text-in-Bild, faktentreue Visualisierungen',
+   links:[['Gemini API Docs','https://ai.google.dev/gemini-api/docs/image-generation'],['Google DeepMind','https://deepmind.google/models/gemini-image/pro/'],['Vertex AI','https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image']]},
   {id:'midjourney',name:'Midjourney v6/v7',icon:'🎨',cat:'bild',stars:5,
    desc:'Kuenstlerische Dominanz. Ueberlegene Aesthetik, Concept Art Exzellenz, emotionale Resonanz.',
    price:'ab $10/Mo',priceLabel:'$10/Mo',
