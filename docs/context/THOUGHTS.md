@@ -188,3 +188,47 @@ Neue Dateien in `docs/research/ki-grundlagen/`:
 
 ### Playwright-Test
 - 0 JS-Errors, alle Sections rendern, Interaktionen funktionieren
+
+
+## Update: Grenzen-Section ueberarbeitet (2026-03-01)
+
+- Alle 8 `KI_LIMITS`-Eintraege komplett neu geschrieben — uebertriebene/falsche Statistiken entfernt
+- Entfernt: "51% Halluzinationsrate" (cherry-picked), "CO2 > Luftfahrt" (falsch), "95% zero return" (uebertrieben), "79% Frauen in High-Risk-Jobs" (fehlplatziert)
+- Severity-Badges jetzt farblich differenziert: `.limit-stat.high` (Rot), `.medium` (Orange), `.evolving` (Blau)
+- `renderLimits()` uebergibt jetzt `severity`-Klasse an Stat-Badge
+- Sachlicher, konstruktiver Ton mit praktischen Tipps beibehalten
+
+
+## Update: Nano Banana 2 + 8 weitere Tools (2026-03-01)
+
+### Nano Banana 2 (Gemini 3.1 Flash Image)
+- Als erste Bild-KI hinzugefuegt (Top-Position)
+- Specs: Flash-Speed, 4K nativ, 50% guenstiger als Vorgaenger, Google Search Grounding
+- Release: 26. Februar 2026
+
+### Neue Tools (+8)
+- **Bild (+2):** Flux 2.0, Ideogram 3.0
+- **Video (+1):** LTX-2
+- **Lokal/OSS (+1):** Qwen 3
+- **Coding (+2):** Gemini CLI, OpenAI Codex
+- **Produktivitaet (+1):** Canva AI
+- Tool-Count aktualisiert auf 75+
+
+
+## Update: "Neu 2026" Badge (2026-03-01)
+
+- `NEW_TOOLS` Set mit 11 Tool-IDs fuer kuerzlich released Tools
+- Gruener Gradient-Badge mit Pulse-Animation (`.new-badge`)
+- `renderToolCard()` prueft `NEW_TOOLS.has(tool.id)` und zeigt Badge konditionell
+- Betroffene Tools: Nano Banana 2, Flux 2.0, Qwen 3, LTX-2, Veo 3, Luma Ray 3, Windsurf, Claude Code, Ideogram, Gemini CLI, Codex
+
+
+## Update: Praxis-Workflows Section (2026-03-01)
+
+### Neue Section: "5 Minuten mit KI"
+- 8 Copy-Paste-Prompt-Karten: E-Mail, Meeting, Code erklaeren, Recherche, Daten→Tabelle, Debug, Uebersetzen, LinkedIn
+- `PRAXIS_DATA` Array mit Icon, Titel, Tag, Beschreibung, Prompt-Text
+- `renderPraxis()` rendert Grid, `copyPrompt()` nutzt Clipboard API mit visuellem Feedback
+- Responsive Grid-Layout (min 320px pro Card)
+- "Praxis" Link in Sticky-Navigation eingefuegt
+- Section zwischen Ressourcen und Lernpfad positioniert
