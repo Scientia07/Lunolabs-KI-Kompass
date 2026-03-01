@@ -187,6 +187,8 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 .tool-card-title-area{display:flex;align-items:center;gap:var(--s-sm)}
 .tool-card-icon{font-size:1.5rem}.tool-card-name{font-size:1.05rem;font-weight:700}
 .tool-card-badge{padding:2px 8px;border-radius:var(--r-full);font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.new-badge{display:inline-block;padding:2px 7px;border-radius:var(--r-full);font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:linear-gradient(135deg,#10b981,#059669);color:#fff;animation:new-pulse 2s ease-in-out infinite;margin-left:var(--s-xs);vertical-align:middle}
+@keyframes new-pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.4)}50%{box-shadow:0 0 8px 2px rgba(16,185,129,0.15)}}
 .tool-card-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--s-md)}
 .tool-card-meta{display:flex;flex-wrap:wrap;gap:var(--s-sm);font-size:.78rem;color:var(--text-muted)}
 .tool-meta-item{display:flex;align-items:center;gap:4px;padding:2px 8px;background:var(--bg-glass);border-radius:var(--r-full)}
@@ -194,6 +196,20 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 .tool-card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:var(--s-md);padding-top:var(--s-md);border-top:1px solid var(--border-glass)}
 .tool-detail-btn{font-size:.78rem;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:4px;transition:gap var(--t-fast)}
 .tool-card:hover .tool-detail-btn{gap:8px}
+
+.praxis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:var(--s-lg);margin:var(--s-2xl) 0}
+.praxis-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-lg);padding:var(--s-xl);transition:all var(--t-normal)}
+.praxis-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.praxis-card-header{display:flex;align-items:center;gap:var(--s-sm);margin-bottom:var(--s-sm)}
+.praxis-card-icon{font-size:1.3rem}
+.praxis-card-title{font-weight:700;font-size:.95rem}
+.praxis-card-tag{font-size:.65rem;padding:2px 6px;border-radius:var(--r-full);background:var(--accent);color:#fff;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.praxis-card-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.5;margin-bottom:var(--s-md)}
+.praxis-prompt{position:relative;background:rgba(0,0,0,0.3);border:1px solid var(--border-glass);border-radius:var(--r-md);padding:var(--s-md);font-family:var(--f-mono);font-size:.78rem;color:var(--text-secondary);line-height:1.5;cursor:pointer;transition:border-color var(--t-fast)}
+.praxis-prompt:hover{border-color:var(--accent)}
+.praxis-copy-hint{position:absolute;top:var(--s-xs);right:var(--s-sm);font-size:.65rem;color:var(--text-muted);font-family:var(--f-sans);pointer-events:none}
+.praxis-prompt.copied{border-color:#22c55e}
+.praxis-prompt.copied .praxis-copy-hint{color:#22c55e}
 .tools-empty{display:none;text-align:center;color:var(--text-muted);font-size:.9rem;padding:var(--s-xl);border:1px dashed var(--border-glass);border-radius:var(--r-lg);margin-top:var(--s-lg)}
 .tools-empty.visible{display:block}
 
@@ -394,6 +410,7 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
       <a href="#trends" class="nav-link" data-section="trends">Trends</a>
       <a href="#zukunft" class="nav-link" data-section="zukunft">Zukunft</a>
       <a href="#ressourcen" class="nav-link" data-section="ressourcen">Ressourcen</a>
+      <a href="#praxis" class="nav-link" data-section="praxis">Praxis</a>
       <a href="#lernpfad" class="nav-link" data-section="lernpfad">Lernpfad</a>
     </div>
   </div>
@@ -597,7 +614,7 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
   <div class="section-header fade-in">
     <span class="section-tag">Werkzeuge</span>
     <h2 class="section-title">Das Tool-Universum</h2>
-    <p class="section-subtitle">70+ KI-Tools im ehrlichen Vergleich — mit Bewertungen, Preisen und konkreten Empfehlungen fuer verschiedene Erfahrungslevel.</p>
+    <p class="section-subtitle">75+ KI-Tools im ehrlichen Vergleich — mit Bewertungen, Preisen und konkreten Empfehlungen fuer verschiedene Erfahrungslevel.</p>
   </div>
   <div class="search-wrap fade-in"><span class="search-icon">🔍</span><input type="text" class="search-input" id="tool-search" placeholder="Tool suchen... (z.B. Cursor, Midjourney, Ollama)"></div>
   <div class="filter-bar fade-in" id="filter-bar">
@@ -751,6 +768,16 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
   <div class="section-divider"></div>
 </section>
 
+<section id="praxis" class="section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Sofort loslegen</span>
+    <h2 class="section-title">5 Minuten mit KI</h2>
+    <p class="section-subtitle">Konkrete Copy-Paste-Prompts fuer haeufige Aufgaben. Klicke zum Kopieren.</p>
+  </div>
+  <div class="praxis-grid fade-in" id="praxis-grid"></div>
+  <div class="section-divider"></div>
+</section>
+
 <section id="lernpfad" class="section">
   <div class="section-header fade-in">
     <span class="section-tag">Lernpfad</span>
@@ -812,6 +839,22 @@ const LEVEL_HINTS = {
   experte: 'Technisches Setup, Architektur- oder Produktionswissen sinnvoll.'
 };
 const LEVEL_COLORS = { einsteiger: '#22c55e', fortgeschritten: '#4f8cff', experte: '#f97316' };
+
+// Tools released or majorly updated in last 3 months (Dec 2025 – Feb 2026)
+const NEW_TOOLS = new Set([
+  'nanobanana',  // Nano Banana 2 — Feb 26, 2026
+  'flux2',       // Flux 2.0 — Nov 2025
+  'qwen3',       // Qwen 3 — Jan 2026
+  'ltx2',        // LTX-2 — Jan 2026
+  'veo3',        // Veo 3 / 3.1 — Dec 2025
+  'lumaray3',    // Ray3.14 — Jan 2026
+  'windsurf',    // Windsurf update — Dec 2025
+  'claudecode',  // Claude Code major updates — Feb 2026
+  'ideogram',    // Ideogram 3.0 — Dec 2025
+  'geminicli',   // Gemini CLI — Jun 2025, major updates ongoing
+  'codex',       // OpenAI Codex macOS App — Feb 2026
+]);
+
 const TOOL_LEVELS = {
   chatgpt: 'einsteiger',
   claude: 'fortgeschritten',
@@ -819,6 +862,8 @@ const TOOL_LEVELS = {
   copilot: 'fortgeschritten',
   cursor: 'fortgeschritten',
   claudecode: 'experte',
+  geminicli: 'fortgeschritten',
+  codex: 'fortgeschritten',
   cline: 'experte',
   continue: 'experte',
   aider: 'experte',
@@ -860,6 +905,7 @@ const TOOL_LEVELS = {
   notebooklm: 'einsteiger',
   n8n: 'fortgeschritten',
   gamma: 'einsteiger',
+  canvaai: 'einsteiger',
   poe: 'einsteiger',
   heygen: 'fortgeschritten',
   synthesia: 'fortgeschritten',
@@ -1028,6 +1074,22 @@ const TOOLS = [
    prices:[['Free','Limitiert'],['Replit Core','ab $25/Mo'],['Teams','ab $40/Mo']],
    bestFor:'Komplette App-Entwicklung, Einsteiger, autonomes Coding',
    links:[['Website','https://replit.com/ai'],['Docs','https://docs.replit.com']]},
+  {id:'geminicli',name:'Gemini CLI (Google)',icon:'💎',cat:'coding',stars:5,
+   desc:'Googles Open-Source Terminal-Agent. Gemini 3 Pro mit 1M Context, kostenlos, Auto-Review von generiertem Code.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Voellig kostenlos (60 Requests/Min, 1.000/Tag)','1M Token Context — groesstes Fenster aller CLI-Tools','Conductor Auto-Review: KI prueft eigenen Code auf Bugs & Security','Agent Skills: modulare Erweiterungen fuer Spezialaufgaben','Google Search Grounding im Terminal','MCP-Support fuer eigene Integrationen','Open Source auf GitHub'],
+   weaknesses:['Juenger als Claude Code — kleineres Oekosystem','Google-Account fuer Free Tier erforderlich','Weniger bewiesene Track-Record bei grossen Refactorings'],
+   prices:[['Free','60 Req/Min, 1.000/Tag'],['Gemini Code Assist','$19/User/Mo']],
+   bestFor:'Budget-bewusste Entwickler, Google-Cloud-Teams, Open-Source-Projekte',
+   links:[['GitHub','https://github.com/google-gemini/gemini-cli'],['Docs','https://developers.google.com/gemini-code-assist/docs/gemini-cli'],['Blog','https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-cli-open-source-ai-agent/']]},
+  {id:'codex',name:'OpenAI Codex',icon:'🧬',cat:'coding',stars:5,
+   desc:'OpenAIs Cloud-Coding-Agent. Parallele Tasks in Sandbox-Umgebungen, GPT-5-Codex, macOS App seit Feb. 2026.',
+   price:'ab $20/Mo',priceLabel:'$20/Mo',
+   strengths:['Cloud-Sandboxes: mehrere Tasks gleichzeitig in isolierten Umgebungen','GPT-5-Codex: optimiert fuer langfristige, komplexe Engineering-Tasks','Worktrees: paralleles Arbeiten an mehreren Branches','Skills-System: Code-Verstaendnis, Prototyping, Doku-Generierung','macOS Desktop-App mit Multi-Agent-Management (Feb. 2026)','In ChatGPT Plus integriert — kein separates Abo noetig'],
+   weaknesses:['Cloud-only — kein lokales Ausfuehren moeglich','$200/Mo Pro-Tier fuer Vollzeit-Nutzung empfohlen','Weniger Transparenz ueber Code-Ausfuehrung als CLI-Tools'],
+   prices:[['ChatGPT Plus','$20/Mo (inkl. Codex)'],['ChatGPT Pro','$200/Mo (6x mehr Limits)'],['API','$1.25/MTok In, $10/MTok Out']],
+   bestFor:'Teams mit vielen parallelen Tasks, Cloud-native Workflows, OpenAI-Oekosystem',
+   links:[['Website','https://openai.com/codex/'],['Docs','https://developers.openai.com/codex/']]},
 
   // --- BILD ---
   {id:'nanobanana',name:'Nano Banana 2 (Gemini 3.1 Flash Image)',icon:'🍌',cat:'bild',stars:5,
@@ -1261,6 +1323,14 @@ const TOOLS = [
    prices:[['Free','Mit Wasserzeichen'],['Plus','$10/Mo'],['Pro','$20/Mo']],
    bestFor:'Schnelle Praesentationen, Pitch Decks, Content Creation',
    links:[['Website','https://gamma.app']]},
+  {id:'canvaai',name:'Canva AI (Magic Studio)',icon:'🎨',cat:'produktivitaet',stars:5,
+   desc:'Design-Demokratisierer mit 200M+ Nutzern. 20+ KI-Tools in einer Plattform: Magic Design, Write, Edit, Expand.',
+   price:'ab $0',priceLabel:'Freemium',
+   strengths:['200M+ Nutzer — groesste Design-Plattform weltweit','Magic Design: Komplette Templates aus einem Prompt','Magic Edit: Bild-Bearbeitung per Textbeschreibung','Magic Switch: Formate und Sprachen instant konvertieren','Agentic Scheduling: Kampagnen planen und posten','20+ KI-Features integriert, kein Tool-Wechsel noetig'],
+   weaknesses:['Weniger Kontrolle als Photoshop/Figma','KI-Features teils nur in Pro/Teams verfuegbar','Nicht fuer komplexe Design-Systeme geeignet'],
+   prices:[['Free','Basis-KI-Features'],['Pro','$12.99/Mo'],['Teams','$14.99/User/Mo']],
+   bestFor:'Social Media, Praesentationen, Marketing-Material, Nicht-Designer',
+   links:[['Website','https://www.canva.com'],['Magic Studio','https://www.canva.com/magic/']]},
   {id:'poe',name:'Poe (Quora)',icon:'💬',cat:'aggregator',stars:4,
    desc:'Multi-Model Aggregator. 200+ KI-Modelle (Text, Bild, Video, Audio) in einer Oberflaeche.',
    price:'$0-20/Mo',priceLabel:'ab $0',
@@ -2373,12 +2443,13 @@ function renderToolCard(tool) {
   const level = getToolLevel(tool);
   const levelLabel = LEVEL_LABELS[level];
   const levelColor = LEVEL_COLORS[level];
+  const isNew = NEW_TOOLS.has(tool.id);
   return `<div class="tool-card" style="--card-accent:${color}" data-cat="${tool.cat}" data-level="${level}" data-name="${tool.name.toLowerCase()}" onclick="openModal('${tool.id}')">
     <input type="checkbox" class="compare-check" data-id="${tool.id}" onclick="event.stopPropagation();handleCompareChange()" title="Zum Vergleich hinzufuegen">
     <div class="tool-card-header">
       <div class="tool-card-title-area">
         <span class="tool-card-icon">${tool.icon}</span>
-        <span class="tool-card-name">${tool.name}</span>
+        <span class="tool-card-name">${tool.name}</span>${isNew ? '<span class="new-badge">Neu</span>' : ''}
       </div>
       <span class="tool-card-badge" style="background:${color}22;color:${color}">${CAT_LABELS[tool.cat]}</span>
     </div>
@@ -2555,6 +2626,68 @@ function renderLimits() {
 // ============================================================
 // RENDER ALL SECTIONS
 // ============================================================
+// PRAXIS-WORKFLOWS — Copy-Paste Prompts
+// ============================================================
+const PRAXIS_DATA = [
+  {icon:'📧',title:'E-Mail professionell umschreiben',tag:'Alltag',
+   desc:'Verwandle eine grobe Notiz in eine professionelle E-Mail.',
+   prompt:'Schreibe diese Notiz als professionelle, freundliche E-Mail um. Halte den Ton hoeflich aber direkt. Maximal 5 Saetze.\n\nNotiz: [DEINE NOTIZ HIER]'},
+  {icon:'📝',title:'Meeting-Notizen zusammenfassen',tag:'Produktivitaet',
+   desc:'Extrahiere Entscheidungen und Action Items aus Notizen.',
+   prompt:'Fasse diese Meeting-Notizen zusammen. Struktur:\n1. Wichtigste Entscheidungen (Bullet Points)\n2. Action Items (Wer macht was bis wann)\n3. Offene Fragen\n\nNotizen: [MEETING-NOTIZEN HIER]'},
+  {icon:'💻',title:'Code erklaeren lassen',tag:'Coding',
+   desc:'Lass dir unbekannten Code Schritt fuer Schritt erklaeren.',
+   prompt:'Erklaere diesen Code Schritt fuer Schritt. Fuer jede Zeile/Block:\n- Was passiert hier?\n- Warum ist das so geloest?\n- Gibt es Verbesserungspotential?\n\n```\n[CODE HIER]\n```'},
+  {icon:'🔍',title:'Recherche strukturieren',tag:'Alltag',
+   desc:'Bekomme eine ausgewogene Uebersicht zu jedem Thema.',
+   prompt:'Gib mir eine strukturierte Uebersicht zu: [THEMA]\n\nStruktur:\n- Was es ist (2-3 Saetze)\n- Pro (3 Punkte)\n- Contra (3 Punkte)\n- Fazit mit Empfehlung\n\nQuellen-Hinweis: Nenne relevante Suchbegriffe fuer eigene Recherche.'},
+  {icon:'📊',title:'Daten in Tabelle umwandeln',tag:'Produktivitaet',
+   desc:'Unstrukturierte Daten in eine saubere Markdown-Tabelle.',
+   prompt:'Wandle diese unstrukturierten Daten in eine saubere Markdown-Tabelle um. Waehle sinnvolle Spalten und sortiere logisch.\n\nDaten: [ROHDATEN HIER]'},
+  {icon:'🐛',title:'Fehlermeldung debuggen',tag:'Coding',
+   desc:'Lass dir Fehlermeldungen erklaeren und loesen.',
+   prompt:'Ich bekomme diesen Fehler:\n\n```\n[FEHLERMELDUNG HIER]\n```\n\nKontext: [Sprache/Framework]\n\nBitte:\n1. Erklaere was der Fehler bedeutet\n2. Nenne die wahrscheinlichste Ursache\n3. Zeige die Loesung mit Code-Beispiel'},
+  {icon:'🌍',title:'Text uebersetzen mit Kontext',tag:'Alltag',
+   desc:'Uebersetze mit kulturellem Kontext, nicht woertlich.',
+   prompt:'Uebersetze diesen Text von [SPRACHE] nach [ZIELSPRACHE].\n\nWichtig: Nicht woertlich uebersetzen, sondern sinngemaess. Passe Redewendungen und kulturelle Referenzen an. Markiere Stellen wo du eine bewusste Anpassung gemacht hast.\n\nText: [TEXT HIER]'},
+  {icon:'🎯',title:'LinkedIn-Post erstellen',tag:'Business',
+   desc:'Professioneller Social-Media-Post aus einer Idee.',
+   prompt:'Erstelle einen LinkedIn-Post zu: [THEMA/IDEE]\n\nAnforderungen:\n- Hook in der ersten Zeile (Aufmerksamkeit)\n- 3-5 kurze Absaetze, leicht scannbar\n- Persoenliche Perspektive einbauen\n- Call-to-Action am Ende\n- 3-5 relevante Hashtags\n- Ton: professionell aber authentisch, nicht verkaeuflich'}
+];
+
+function renderPraxis() {
+  const el = document.getElementById('praxis-grid');
+  if (!el) return;
+  el.innerHTML = PRAXIS_DATA.map(p =>
+    `<div class="praxis-card">
+      <div class="praxis-card-header">
+        <span class="praxis-card-icon">${p.icon}</span>
+        <span class="praxis-card-title">${p.title}</span>
+        <span class="praxis-card-tag">${p.tag}</span>
+      </div>
+      <div class="praxis-card-desc">${p.desc}</div>
+      <div class="praxis-prompt" onclick="copyPrompt(this)" data-prompt="${p.prompt.replace(/"/g, '&quot;')}">
+        <span class="praxis-copy-hint">Klick = Kopieren</span>
+        ${p.prompt.replace(/\n/g, '<br>')}
+      </div>
+    </div>`
+  ).join('');
+}
+
+function copyPrompt(el) {
+  const text = el.dataset.prompt;
+  navigator.clipboard.writeText(text).then(() => {
+    el.classList.add('copied');
+    const hint = el.querySelector('.praxis-copy-hint');
+    if (hint) hint.textContent = '✓ Kopiert!';
+    setTimeout(() => {
+      el.classList.remove('copied');
+      if (hint) hint.textContent = 'Klick = Kopieren';
+    }, 2000);
+  });
+}
+
+// ============================================================
 function renderAll() {
   // New sections: Grundlagen, Capabilities, Limits
   renderPillars();
@@ -2591,6 +2724,9 @@ function renderAll() {
       <ul class="resource-links">${r.links.map(l => `<li><a href="${l[1]}" target="_blank" rel="noopener">↗ ${l[0]}</a></li>`).join('')}</ul>
     </div>`
   ).join('');
+
+  // Praxis-Workflows
+  renderPraxis();
 
   // Learning Path
   const saved = JSON.parse(localStorage.getItem('ki-kompass-progress') || '{}');
