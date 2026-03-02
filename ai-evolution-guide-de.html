@@ -211,6 +211,12 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 .tool-meta-item{display:flex;align-items:center;gap:4px;padding:2px 8px;background:var(--bg-glass);border-radius:var(--r-full)}
 .tool-card-stars{color:#fbbf24;font-size:.85rem;letter-spacing:1px}
 .tool-card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:var(--s-md);padding-top:var(--s-md);border-top:1px solid var(--border-glass)}
+.persona-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.persona-chip{font-size:.65rem;padding:2px 8px;border-radius:var(--r-full);font-weight:600;letter-spacing:0.02em}
+.persona-chip.einsteiger{background:rgba(163,230,53,0.15);color:#a3e635}
+.persona-chip.entwickler{background:rgba(168,85,247,0.15);color:#a855f7}
+.persona-chip.kreative{background:rgba(236,72,153,0.15);color:#ec4899}
+.persona-chip.business{background:rgba(34,197,94,0.15);color:#22c55e}
 .tool-detail-btn{font-size:.78rem;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:4px;transition:gap var(--t-fast)}
 .tool-card:hover .tool-detail-btn{gap:8px}
 
@@ -459,9 +465,9 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
   </div>
   <div class="stats-grid fade-in">
     <div class="stat-card"><div class="stat-number" data-target="85" data-suffix="%">0%</div><div class="stat-label">der Entwickler nutzen KI-Tools</div></div>
-    <div class="stat-card"><div class="stat-number" data-target="41" data-suffix="%">0%</div><div class="stat-label">des neuen Codes ist KI-generiert</div></div>
+    <div class="stat-card"><div class="stat-number" data-target="46" data-suffix="%">0%</div><div class="stat-label">des Codes bei Copilot-Nutzern KI-generiert</div></div>
     <div class="stat-card"><div class="stat-number" data-target="800" data-suffix="M">0</div><div class="stat-label">woechentliche ChatGPT-Nutzer</div></div>
-    <div class="stat-card"><div class="stat-number" data-target="3.5" data-suffix="x" data-decimals="1">0</div><div class="stat-label">Produktivitaetssteigerung mit KI</div></div>
+    <div class="stat-card"><div class="stat-number" data-target="254" data-suffix=" Mrd.">0</div><div class="stat-label">USD globaler KI-Markt 2025</div></div>
   </div>
   <div class="industrie-quote fade-in">
     <blockquote>"Wir stehen am Anfang einer neuen Industrialisierung. Die KI-Revolution ist nicht Zukunft — sie passiert jetzt. Gute Orientierung hilft, Chancen frueh zu erkennen. Dieser Guide ist dein Kompass."</blockquote>
@@ -2812,8 +2818,8 @@ function renderToolCard(tool) {
       <span class="tool-meta-item">${tool.priceLabel}</span>
       <span class="tool-meta-item" style="background:${levelColor}1a;color:${levelColor};border:1px solid ${levelColor}44">${levelLabel}</span>
     </div>
+    ${tool.bestFor ? `<div class="persona-chips">${tool.bestFor.map(p => `<span class="persona-chip ${p.toLowerCase()}">${p}</span>`).join('')}</div>` : ''}
     <div class="tool-card-footer">
-      <span style="font-size:.78rem;color:var(--text-muted)">${tool.bestFor.split(',')[0]}</span>
       <span class="tool-detail-btn">Details →</span>
     </div>
   </div>`;
@@ -2850,6 +2856,7 @@ function renderModal(tool) {
       <div class="modal-section-title">Einstiegslevel</div>
       <p style="font-size:.9rem;color:var(--text-secondary)"><span style="display:inline-block;margin-right:6px;padding:2px 10px;border-radius:999px;background:${levelColor}1a;color:${levelColor};border:1px solid ${levelColor}44">${levelLabel}</span>${levelHint}</p>
     </div>
+    ${tool.bestFor ? `<div style="margin:var(--s-md) 0"><strong>Ideal fuer:</strong> <span class="persona-chips" style="display:inline-flex">${tool.bestFor.map(p => `<span class="persona-chip ${p.toLowerCase()}">${p}</span>`).join('')}</span></div>` : ''}
     <div class="modal-section">
       <div class="modal-section-title">Staerken</div>
       <ul class="modal-list">${tool.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
@@ -2861,10 +2868,6 @@ function renderModal(tool) {
     <div class="modal-section">
       <div class="modal-section-title">Preise</div>
       <table class="modal-price-table"><thead><tr><th>Tier</th><th>Preis</th></tr></thead><tbody>${priceRows}</tbody></table>
-    </div>
-    <div class="modal-section">
-      <div class="modal-section-title">Best For</div>
-      <p style="font-size:.9rem;color:var(--text-secondary)">${tool.bestFor}</p>
     </div>
     ${expertDeepDive}
     <div class="modal-section">
