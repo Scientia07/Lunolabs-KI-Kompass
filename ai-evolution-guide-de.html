@@ -1813,9 +1813,9 @@ const KI_LIMITS = [
   const camera = new THREE.PerspectiveCamera(60, cW / cH, 0.1, 1000);
   const heroZ = isMobile ? 50 : 35;
   const dockZ = isMobile ? 60 : 45;
-  const cameraHome = new THREE.Vector3(0, 0, heroZ);
+  const cameraHome = new THREE.Vector3(0, isMobile ? 8 : 10, heroZ);
   const cameraTargetPos = cameraHome.clone();
-  const lookHome = new THREE.Vector3(0, 0, 0);
+  const lookHome = new THREE.Vector3(0, -2, 0);
   const lookTarget = lookHome.clone();
   const cameraLookAt = lookHome.clone();
   camera.position.copy(cameraHome);
