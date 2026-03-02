@@ -9,10 +9,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Post-processing pipeline (order matters: base → shaders → passes → composer) -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/Pass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/BokehShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/BokehPass.js"></script>
 <style>
 :root {
   --c-assistenten:#4f8cff;--c-coding:#a855f7;--c-bild:#ec4899;--c-video:#f97316;
   --c-audio:#fbbf24;--c-produktivitaet:#22c55e;--c-lokal:#06b6d4;--c-trends:#ef4444;--c-frameworks:#8b5cf6;--c-aggregator:#e879f9;
+  --c-dreid:#14b8a6;--c-design:#f472b6;--c-schreiben:#fb923c;--c-daten:#38bdf8;--c-bildung:#a3e635;--c-wissenschaft:#c084fc;
   --bg-primary:#0a0e1a;--bg-secondary:#111827;--bg-card:rgba(17,24,39,0.7);
   --bg-glass:rgba(255,255,255,0.04);--bg-glass-hover:rgba(255,255,255,0.08);
   --border-glass:rgba(255,255,255,0.08);--border-glass-hover:rgba(255,255,255,0.15);
@@ -169,6 +180,12 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 .filter-btn[data-cat="frameworks"].active{background:var(--c-frameworks)}
 .filter-btn[data-cat="aggregator"].active{background:var(--c-aggregator)}
 .filter-btn[data-cat="assistenten"].active{background:var(--c-assistenten)}
+.filter-btn[data-cat="dreid"].active{background:var(--c-dreid)}
+.filter-btn[data-cat="design"].active{background:var(--c-design)}
+.filter-btn[data-cat="schreiben"].active{background:var(--c-schreiben)}
+.filter-btn[data-cat="daten"].active{background:var(--c-daten)}
+.filter-btn[data-cat="bildung"].active{background:var(--c-bildung)}
+.filter-btn[data-cat="wissenschaft"].active{background:var(--c-wissenschaft)}
 .level-filter-bar{display:flex;flex-wrap:wrap;gap:var(--s-sm);justify-content:center;margin:-.75rem auto var(--s-2xl);max-width:900px}
 .level-filter-btn{padding:var(--s-xs) var(--s-md);border-radius:var(--r-full);font-size:.76rem;font-weight:600;color:var(--text-secondary);border:1px solid var(--border-glass);transition:all var(--t-fast)}
 .level-filter-btn:hover{background:var(--bg-glass-hover);color:var(--text-primary)}
@@ -628,6 +645,12 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
     <button class="filter-btn" data-cat="lokal">🏠 Lokal/OSS</button>
     <button class="filter-btn" data-cat="frameworks">🔧 Frameworks</button>
     <button class="filter-btn" data-cat="aggregator">🔀 All-in-One</button>
+    <button class="filter-btn" data-cat="dreid">🧊 3D-KI</button>
+    <button class="filter-btn" data-cat="design">🎨 Design-KI</button>
+    <button class="filter-btn" data-cat="schreiben">✍️ Schreiben</button>
+    <button class="filter-btn" data-cat="daten">📊 Daten-KI</button>
+    <button class="filter-btn" data-cat="bildung">🎓 Bildung</button>
+    <button class="filter-btn" data-cat="wissenschaft">🔬 Wissenschaft</button>
   </div>
   <div class="level-filter-bar fade-in" id="level-filter-bar">
     <button class="level-filter-btn active" data-level="alle">Alle Levels</button>
@@ -826,11 +849,13 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 // ============================================================
 const CAT_COLORS = {
   assistenten:'#4f8cff',coding:'#a855f7',bild:'#ec4899',video:'#f97316',
-  audio:'#fbbf24',produktivitaet:'#22c55e',lokal:'#06b6d4',trends:'#ef4444',frameworks:'#8b5cf6',aggregator:'#e879f9'
+  audio:'#fbbf24',produktivitaet:'#22c55e',lokal:'#06b6d4',trends:'#ef4444',frameworks:'#8b5cf6',aggregator:'#e879f9',
+  dreid:'#14b8a6',design:'#f472b6',schreiben:'#fb923c',daten:'#38bdf8',bildung:'#a3e635',wissenschaft:'#c084fc'
 };
 const CAT_LABELS = {
   assistenten:'Assistenten',coding:'Coding',bild:'Bild-KI',video:'Video-KI',
-  audio:'Audio/Musik',produktivitaet:'Produktivitaet',lokal:'Lokal/OSS',trends:'Trends',frameworks:'Frameworks',aggregator:'All-in-One'
+  audio:'Audio/Musik',produktivitaet:'Produktivitaet',lokal:'Lokal/OSS',trends:'Trends',frameworks:'Frameworks',aggregator:'All-in-One',
+  dreid:'3D-KI',design:'Design-KI',schreiben:'Schreiben',daten:'Daten-KI',bildung:'Bildung',wissenschaft:'Wissenschaft'
 };
 const LEVEL_LABELS = { einsteiger: 'Einsteiger', fortgeschritten: 'Fortgeschritten', experte: 'Experte' };
 const LEVEL_HINTS = {
@@ -1682,32 +1707,32 @@ const KI_MILESTONES = [
 // ============================================================
 const KI_CAPABILITIES = [
   {icon:'💻',title:'Code & Software',color:'#a855f7',
-   stats:['85% der Devs nutzen KI','46% des Codes KI-generiert','55% schneller'],
+   stats:['85% der Devs nutzen KI','46% bei Copilot-Nutzern','bis 56% schneller'],
    examples:[
-     'GitHub Copilot: 20 Mio. Nutzer, 90% der Fortune-100',
-     'Pull-Request-Zeiten von 9,6 auf 2,4 Tage (75% Reduktion)',
-     'Claude Code: 1 Mrd. USD Umsatz in 6 Monaten',
+     'GitHub Copilot: 20 Mio. Nutzer kumulativ, 90% der Fortune-100',
+     'Pull-Request-Zeiten laut Opsera-Studie um bis zu 75% reduziert',
+     'Claude Code: 1 Mrd. USD ARR nach 6 Monaten',
      'Bolt.new / Lovable: Full-Stack-Apps aus Textbeschreibung'
    ],
-   detail:'SWE-bench 80,9%: KI loest echte GitHub-Issues in realen Repos. Lovable erreichte 100 Mio. USD ARR in 8 Monaten. Der Trend "Vibe Coding" — natuerlichsprachliche Programmierung — waechst, 72% der Profis nutzen es aber noch nicht produktiv.'},
+   detail:'SWE-bench 80,9%: KI loest echte GitHub-Issues in realen Repos. Lovable erreichte 100 Mio. USD ARR in 8 Monaten. Der Trend "Vibe Coding" — natuerlichsprachliche Programmierung — waechst, 72% der Profis nutzen es aber noch nicht produktiv. Hinweis: Produktivitaetsstudien stammen haeufig von Anbietern selbst — unabhaengige Messungen zeigen gemischtere Ergebnisse.'},
   {icon:'✍️',title:'Text & Sprache',color:'#4f8cff',
-   stats:['100+ Sprachen','Profi-Niveau','3.5x produktiver'],
+   stats:['100+ Sprachen','Profi-Niveau','20-45% produktiver'],
    examples:[
      'Texterstellung: Artikel, E-Mails, Berichte auf professionellem Niveau',
      'Uebersetzung: Kontextbewusst, uebertrifft klassische Machine Translation',
      'Analyse: Sentiment, Themen-Extraktion, Klassifikation skalierbar',
-     '65% aller Support-Anfragen werden ohne Mensch geloest'
+     '65% der Support-Anfragen bei Firmen mit KI-Support ohne Mensch geloest'
    ],
-   detail:'Modelle wie GPT-5.2 und Claude Opus 4.6 erzeugen Text, der kaum von menschlichem zu unterscheiden ist. Die Antwortzeiten im Kundendienst sanken von 6 Stunden auf unter 4 Minuten. 74% der Fuehrungskraefte berichten von ROI im ersten Jahr.'},
+   detail:'Modelle wie GPT-5.2 und Claude Opus 4.6 erzeugen Text, der kaum von menschlichem zu unterscheiden ist. McKinsey beziffert die Produktivitaetssteigerung auf 20-45% je nach Branche. Die Antwortzeiten im Kundendienst sanken von 6 Stunden auf unter 4 Minuten.'},
   {icon:'🎨',title:'Bild-Generierung',color:'#ec4899',
-   stats:['Fotorealistisch','4.5 Sek. Generation','Kaum unterscheidbar'],
+   stats:['Fotorealistisch','3-6 Sek. (je Modell)','Kaum unterscheidbar'],
    examples:[
      'Midjourney v7: Kompletter Architektur-Neuaufbau, fotorealistische Ergebnisse',
      'Stable Diffusion 3: Open Source, lokal ausfuehrbar, riesige Community',
      'Zaha Hadid Architects: Skizzen werden in Stunden zu Renderings',
-     'Boris Eldagsen lehnte Sony-Fotopreis ab — Debatte "Promptography vs Photography"'
+     'Boris Eldagsen lehnte Sony-Fotopreis ab (2023) — Debatte "Promptography vs Photography"'
    ],
-   detail:'Flux 1.1 Pro generiert fotorealistische Bilder in 4,5 Sekunden. Midjourney v7 (April 2025) hat eine "totally different architecture" — die Ergebnisse sind kaum von echten Fotos unterscheidbar. 50%+ der Spieleentwickler nutzen generative KI.'},
+   detail:'Flux 1.1 Pro generiert in ca. 3-5 Sekunden, Gemini Flash Image in 4-6 Sekunden. Midjourney v7 (April 2025) hat eine "totally different architecture" — die Ergebnisse sind kaum von echten Fotos unterscheidbar. 50%+ der Spieleentwickler nutzen generative KI.'},
   {icon:'🎬',title:'Video & Film',color:'#f97316',
    stats:['25 Sek. Videos','Kino-Qualitaet','Disney-Partnerschaft'],
    examples:[
@@ -1828,6 +1853,21 @@ const KI_LIMITS = [
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = isMobile ? 1.0 : 1.05;
 
+  // Post-processing pipeline (desktop only)
+  let composer = null;
+  let bloomPass = null;
+  let bokehPass = null;
+  const usePostProcessing = !isMobile && typeof THREE.EffectComposer !== 'undefined';
+
+  if (usePostProcessing) {
+    composer = new THREE.EffectComposer(renderer);
+    composer.addPass(new THREE.RenderPass(scene, camera));
+    bloomPass = new THREE.UnrealBloomPass(
+      new THREE.Vector2(cW, cH), 0.35, 0.6, 0.85
+    );
+    composer.addPass(bloomPass);
+  }
+
   // Lighting for a less flat look.
   scene.add(new THREE.AmbientLight(0xa5b4fc, 0.45));
   const keyLight = new THREE.PointLight(0x4f8cff, 1.2, 140);
@@ -1836,6 +1876,50 @@ const KI_LIMITS = [
   const rimLight = new THREE.PointLight(0xa855f7, 0.8, 140);
   rimLight.position.set(-18, -8, -22);
   scene.add(rimLight);
+
+  // Procedural nebula texture generator (no external files)
+  function createNebulaTexture(baseColor, size) {
+    const c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    const ctx = c.getContext('2d');
+    for (let i = 0; i < 8; i++) {
+      const cx = size * (0.2 + Math.random() * 0.6);
+      const cy = size * (0.2 + Math.random() * 0.6);
+      const r = size * (0.15 + Math.random() * 0.3);
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      const alpha = 0.03 + Math.random() * 0.06;
+      grad.addColorStop(0, 'rgba(' + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ',' + alpha + ')');
+      grad.addColorStop(0.5, 'rgba(' + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ',' + (alpha * 0.3) + ')');
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+    }
+    return new THREE.CanvasTexture(c);
+  }
+
+  // Nebula background planes (desktop only)
+  let nebulaPlanes = null;
+  if (!isMobile) {
+    const nebulaConfigs = [
+      { color: [79, 140, 255], z: -50, scale: 80, opacity: 0.12 },
+      { color: [168, 85, 247], z: -40, scale: 60, opacity: 0.08 },
+      { color: [236, 72, 153], z: -55, scale: 90, opacity: 0.06 }
+    ];
+    nebulaPlanes = [];
+    nebulaConfigs.forEach(cfg => {
+      const tex = createNebulaTexture(cfg.color, 512);
+      const geo = new THREE.PlaneGeometry(cfg.scale, cfg.scale);
+      const mat = new THREE.MeshBasicMaterial({
+        map: tex, transparent: true, opacity: cfg.opacity,
+        blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide
+      });
+      const plane = new THREE.Mesh(geo, mat);
+      plane.position.set((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 10, cfg.z);
+      plane.rotation.z = Math.random() * Math.PI;
+      scene.add(plane);
+      nebulaPlanes.push(plane);
+    });
+  }
 
   // Category nodes configuration
   const categories = [
@@ -2057,6 +2141,17 @@ const KI_LIMITS = [
     const centerLine = new THREE.Line(lineGeo, lineMat);
     nodeGroup.add(centerLine);
 
+    // Orbit path (hidden by default, shown on hover)
+    const orbitGeo = new THREE.RingGeometry(toolRadius - 0.05, toolRadius + 0.05, 64);
+    const orbitMat = new THREE.MeshBasicMaterial({
+      color: cat.color, transparent: true, opacity: 0,
+      side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false
+    });
+    const orbitPath = new THREE.Mesh(orbitGeo, orbitMat);
+    orbitPath.position.copy(mesh.position);
+    orbitPath.rotation.x = Math.PI * 0.5;
+    nodeGroup.add(orbitPath);
+
     categoryVisuals.push({
       mesh,
       glow: gMesh,
@@ -2064,6 +2159,7 @@ const KI_LIMITS = [
       ring,
       label,
       line: centerLine,
+      orbitPath,
       toolMeshes: [],
       toolLines: []
     });
@@ -2108,6 +2204,55 @@ const KI_LIMITS = [
     categoryVisuals[tool.cat].toolLines.push(toolLine);
   });
 
+  // Energy particles flowing along connection lines
+  const ENERGY_COUNT = isMobile ? 30 : 80;
+  const energyGeo = new THREE.BufferGeometry();
+  const energyPositions = new Float32Array(ENERGY_COUNT * 3);
+  const energyColors = new Float32Array(ENERGY_COUNT * 3);
+  const energyData = [];
+  const allConnectionLines = [];
+
+  categoryVisuals.forEach((visual, idx) => {
+    allConnectionLines.push({
+      start: new THREE.Vector3(0, 0, 0),
+      end: visual.mesh.position.clone(),
+      color: new THREE.Color(categories[idx].color),
+      type: 'center'
+    });
+    visual.toolMeshes.forEach(toolMesh => {
+      allConnectionLines.push({
+        start: visual.mesh.position.clone(),
+        end: toolMesh.position.clone(),
+        color: new THREE.Color(categories[idx].color),
+        type: 'tool'
+      });
+    });
+  });
+
+  for (let i = 0; i < ENERGY_COUNT; i++) {
+    const lineIdx = Math.floor(Math.random() * allConnectionLines.length);
+    energyData.push({
+      lineIdx,
+      progress: Math.random(),
+      speed: 0.002 + Math.random() * 0.004,
+      direction: Math.random() > 0.5 ? 1 : -1
+    });
+    const c = allConnectionLines[lineIdx].color;
+    energyColors[i * 3] = c.r;
+    energyColors[i * 3 + 1] = c.g;
+    energyColors[i * 3 + 2] = c.b;
+  }
+
+  energyGeo.setAttribute('position', new THREE.BufferAttribute(energyPositions, 3));
+  energyGeo.setAttribute('color', new THREE.BufferAttribute(energyColors, 3));
+  const energyMat = new THREE.PointsMaterial({
+    map: particleTexture, vertexColors: true, size: 0.15,
+    transparent: true, opacity: 0.6,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  });
+  const energyPoints = new THREE.Points(energyGeo, energyMat);
+  nodeGroup.add(energyPoints);
+
   // Particles
   const particleCount = isMobile ? 150 : 400;
   const pGeo = new THREE.BufferGeometry();
@@ -2128,6 +2273,94 @@ const KI_LIMITS = [
   });
   const particles = new THREE.Points(pGeo, pMat);
   scene.add(particles);
+
+  // Comet / shooting star system
+  const COMET_COUNT = isMobile ? 2 : 5;
+  const COMET_TRAIL = 12;
+  const cometTotal = COMET_COUNT * COMET_TRAIL;
+  const cometGeo = new THREE.BufferGeometry();
+  const cometPositions = new Float32Array(cometTotal * 3);
+  const cometSizes = new Float32Array(cometTotal);
+  const comets = [];
+
+  for (let c = 0; c < COMET_COUNT; c++) {
+    comets.push({
+      position: new THREE.Vector3(
+        40 + Math.random() * 30,
+        10 + Math.random() * 25,
+        (Math.random() - 0.5) * 60 - 20
+      ),
+      velocity: new THREE.Vector3(
+        -0.08 - Math.random() * 0.12,
+        -0.02 - Math.random() * 0.04,
+        (Math.random() - 0.5) * 0.02
+      ),
+      history: []
+    });
+    for (let tr = 0; tr < COMET_TRAIL; tr++) {
+      cometSizes[c * COMET_TRAIL + tr] = 0.3 * (1 - tr / COMET_TRAIL);
+    }
+  }
+
+  cometGeo.setAttribute('position', new THREE.BufferAttribute(cometPositions, 3));
+  cometGeo.setAttribute('size', new THREE.BufferAttribute(cometSizes, 1));
+  const cometMat = new THREE.PointsMaterial({
+    map: particleTexture, color: 0xaaccff, size: 0.3,
+    transparent: true, opacity: 0.5,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  });
+  const cometPoints = new THREE.Points(cometGeo, cometMat);
+  scene.add(cometPoints);
+
+  // Pulsing energy waves from center
+  const WAVE_POOL = isMobile ? 2 : 3;
+  const WAVE_INTERVAL = 4;
+  const WAVE_DURATION = 3;
+  const waveRings = [];
+  let lastWaveTime = 0;
+
+  for (let w = 0; w < WAVE_POOL; w++) {
+    const wGeo = new THREE.RingGeometry(0.5, 0.6, 64);
+    const wMat = new THREE.MeshBasicMaterial({
+      color: 0x4f8cff, transparent: true, opacity: 0,
+      side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false
+    });
+    const wMesh = new THREE.Mesh(wGeo, wMat);
+    wMesh.rotation.x = Math.PI * 0.42;
+    nodeGroup.add(wMesh);
+    waveRings.push({ mesh: wMesh, active: false, startTime: 0, maxRadius: 15 + w * 3 });
+  }
+
+  // Node spawn animation setup
+  const spawnDuration = 0.8;
+  const spawnStartTime = performance.now() * 0.001;
+  let spawnComplete = false;
+  const spawnData = [];
+
+  // Center node spawn
+  [centerMesh, centerGlowMesh, centerGlow2].forEach(m => {
+    spawnData.push({ mesh: m, delay: 0 });
+  });
+  spawnData.push({ mesh: centerRing, delay: 0.1 });
+
+  // Category + tool node spawn (staggered)
+  categoryVisuals.forEach((visual, idx) => {
+    const delay = 0.3 + idx * 0.1;
+    spawnData.push({ mesh: visual.mesh, delay });
+    spawnData.push({ mesh: visual.glow, delay });
+    spawnData.push({ mesh: visual.ring, delay: delay + 0.05 });
+    visual.toolMeshes.forEach((tm, ti) => {
+      spawnData.push({ mesh: tm, delay: delay + 0.3 + ti * 0.03 });
+    });
+  });
+
+  // Set initial scale to near-zero
+  spawnData.forEach(item => { item.mesh.scale.setScalar(0.001); });
+
+  // FPS monitoring for performance guard
+  let frameCount = 0;
+  let lastFPSCheck = performance.now();
+  let currentFPS = 60;
 
   // Interaction state
   let isDragging = false;
@@ -2156,6 +2389,7 @@ const KI_LIMITS = [
   }
 
   function setClusterFocus(catIndex) {
+    if (!spawnComplete) return;
     if (hoveredCatIndex === catIndex) return;
     hoveredCatIndex = catIndex;
     categoryVisuals.forEach((visual, idx) => {
@@ -2177,6 +2411,9 @@ const KI_LIMITS = [
       visual.toolLines.forEach((toolLine) => {
         toolLine.material.opacity = isDimmed ? 0.015 : (isFocused ? 0.24 : 0.08);
       });
+      if (visual.orbitPath) {
+        visual.orbitPath.material.opacity = isFocused ? 0.15 : 0;
+      }
     });
     centerMat.opacity = catIndex === null ? 0.95 : 0.98;
     glowMat.opacity = catIndex === null ? 0.08 : 0.12;
@@ -2340,6 +2577,7 @@ const KI_LIMITS = [
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    if (composer) composer.setSize(w, h);
   });
 
   // Scroll-driven canvas transition (hero → docked)
@@ -2375,6 +2613,14 @@ const KI_LIMITS = [
 
     // Enable interaction when mostly docked (no CSS scaling — z-index layering handles visibility)
     container.classList.toggle('interactive', t > 0.85);
+  }
+
+  // Add BokehPass after scene is fully built (desktop only)
+  if (usePostProcessing && typeof THREE.BokehPass !== 'undefined') {
+    bokehPass = new THREE.BokehPass(scene, camera, {
+      focus: 35.0, aperture: 0.00015, maxblur: 0.004
+    });
+    composer.addPass(bokehPass);
   }
 
   // Animate
@@ -2421,10 +2667,117 @@ const KI_LIMITS = [
     });
     particles.rotation.y += 0.0002;
 
+    // Spawn animation (ease-out cubic scale-up)
+    if (!spawnComplete) {
+      const elapsed = t - spawnStartTime;
+      let allDone = true;
+      spawnData.forEach(item => {
+        const localT = Math.max(0, elapsed - item.delay);
+        if (localT < spawnDuration) {
+          allDone = false;
+          const p = Math.min(localT / spawnDuration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          item.mesh.scale.setScalar(eased);
+        } else {
+          item.mesh.scale.setScalar(1);
+        }
+      });
+      if (allDone) spawnComplete = true;
+    }
+
+    // Energy flow particles along connections
+    const ePos = energyPoints.geometry.attributes.position.array;
+    for (let i = 0; i < ENERGY_COUNT; i++) {
+      const ep = energyData[i];
+      ep.progress += ep.speed * ep.direction;
+      if (ep.progress > 1) ep.progress = 0;
+      if (ep.progress < 0) ep.progress = 1;
+      const ln = allConnectionLines[ep.lineIdx];
+      ePos[i * 3]     = ln.start.x + (ln.end.x - ln.start.x) * ep.progress;
+      ePos[i * 3 + 1] = ln.start.y + (ln.end.y - ln.start.y) * ep.progress;
+      ePos[i * 3 + 2] = ln.start.z + (ln.end.z - ln.start.z) * ep.progress;
+    }
+    energyPoints.geometry.attributes.position.needsUpdate = true;
+
+    // Comet trails
+    comets.forEach((comet, c) => {
+      comet.position.add(comet.velocity);
+      comet.history.unshift(comet.position.clone());
+      if (comet.history.length > COMET_TRAIL) comet.history.pop();
+      for (let tr = 0; tr < COMET_TRAIL; tr++) {
+        const idx = c * COMET_TRAIL + tr;
+        if (tr < comet.history.length) {
+          cometPositions[idx * 3]     = comet.history[tr].x;
+          cometPositions[idx * 3 + 1] = comet.history[tr].y;
+          cometPositions[idx * 3 + 2] = comet.history[tr].z;
+        }
+      }
+      if (comet.position.x < -60 || comet.position.y < -30) {
+        comet.position.set(40 + Math.random() * 30, 10 + Math.random() * 25, (Math.random() - 0.5) * 60 - 20);
+        comet.history = [];
+        comet.velocity.set(-0.08 - Math.random() * 0.12, -0.02 - Math.random() * 0.04, (Math.random() - 0.5) * 0.02);
+      }
+    });
+    cometPoints.geometry.attributes.position.needsUpdate = true;
+
+    // Nebula drift (desktop only)
+    if (nebulaPlanes) {
+      nebulaPlanes.forEach((plane, i) => {
+        plane.rotation.z += 0.00008 * (i + 1);
+        plane.position.x += Math.sin(t * 0.1 + i) * 0.002;
+      });
+    }
+
+    // Pulsing energy waves from center
+    if (t - lastWaveTime > WAVE_INTERVAL) {
+      const freeWave = waveRings.find(w => !w.active);
+      if (freeWave) {
+        freeWave.active = true;
+        freeWave.startTime = t;
+        freeWave.mesh.scale.setScalar(1);
+        freeWave.mesh.material.opacity = 0.2;
+      }
+      lastWaveTime = t;
+    }
+    waveRings.forEach(wave => {
+      if (!wave.active) return;
+      const progress = (t - wave.startTime) / WAVE_DURATION;
+      if (progress >= 1) {
+        wave.active = false;
+        wave.mesh.material.opacity = 0;
+        return;
+      }
+      wave.mesh.scale.setScalar(1 + progress * wave.maxRadius);
+      wave.mesh.material.opacity = 0.2 * (1 - progress * progress);
+    });
+
+    // Update DoF focus distance
+    if (bokehPass) {
+      bokehPass.uniforms['focus'].value = camera.position.length() * 0.95;
+    }
+
+    // FPS performance guard
+    frameCount++;
+    const now = performance.now();
+    if (now - lastFPSCheck > 2000) {
+      currentFPS = frameCount / ((now - lastFPSCheck) / 1000);
+      frameCount = 0;
+      lastFPSCheck = now;
+      if (currentFPS < 24) {
+        if (bokehPass) bokehPass.enabled = false;
+        if (bloomPass) bloomPass.strength = Math.max(0.1, bloomPass.strength - 0.05);
+      }
+    }
+
     // Scroll-driven canvas position transition
     updateCanvasTransition();
 
-    renderer.render(scene, camera);
+    // Render with post-processing or fallback to direct render
+    if (composer) {
+      composer.render();
+    } else {
+      renderer.render(scene, camera);
+    }
   }
   animate();
 
