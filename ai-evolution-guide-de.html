@@ -441,7 +441,7 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
 
 <section id="hero">
   <div class="hero-overlay">
-    <div class="hero-badge">🚀 Stand: Februar 2026</div>
+    <div class="hero-badge">🚀 Stand: Maerz 2026</div>
     <h1 class="hero-title">Die neue Industrialisierung<br>hat begonnen</h1>
     <p class="hero-subtitle">Jeden Tag erscheinen neue KI-Tools, Modelle und Begriffe. Dieser interaktive Leitfaden gibt dir Orientierung — ehrlich, aktuell und fuer jedes Level.</p>
     <a href="#was-ist-ki" class="hero-cta">Kompass starten ↓</a>
@@ -637,7 +637,7 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
   <div class="section-header fade-in">
     <span class="section-tag">Werkzeuge</span>
     <h2 class="section-title">Das Tool-Universum</h2>
-    <p class="section-subtitle">80+ KI-Tools im ehrlichen Vergleich — Stand: Maerz 2026 — mit Bewertungen, Preisen und konkreten Empfehlungen fuer verschiedene Erfahrungslevel.</p>
+    <p class="section-subtitle">100+ KI-Tools im ehrlichen Vergleich — Stand: Maerz 2026 — mit Bewertungen, Preisen und konkreten Empfehlungen fuer verschiedene Erfahrungslevel.</p>
   </div>
   <div class="search-wrap fade-in"><span class="search-icon">🔍</span><input type="text" class="search-input" id="tool-search" placeholder="Tool suchen... (z.B. Cursor, Midjourney, Ollama)"></div>
   <div class="filter-bar fade-in" id="filter-bar">
@@ -729,7 +729,7 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
         <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #4f8cff">
           <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">Hagendorff et al. (2026) — "Large Reasoning Models Are Autonomous Jailbreak Agents"</div>
           <p style="font-size:.8rem;color:var(--text-secondary);margin:.4rem 0;line-height:1.5">Nature Communications: Zeigt, dass Reasoning-Modelle selbststaendig Jailbreaks gegen andere Modelle durchfuehren koennen.</p>
-          <a href="https://www.nature.com/articles/s41467-026-12345-6" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">Nature Communications →</a>
+          <a href="https://www.nature.com/articles/s41467-026-69010-1" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--accent)">Nature Communications →</a>
         </div>
         <div style="padding:var(--s-md);background:rgba(255,255,255,0.03);border-radius:var(--r-md);border-left:3px solid #22c55e">
           <div style="font-weight:600;color:var(--text-primary);font-size:.9rem">ADL (2025) — "The Safety Divide"</div>
@@ -829,6 +829,9 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
       <div style="color:var(--text-secondary);font-size:.9rem;line-height:1.6;margin-bottom:var(--s-lg)">Wir entwickeln KI-Agenten, Automatisierungen, Websites &amp; Apps — massgeschneidert fuer dein Business. Strategie, Umsetzung und Betrieb aus einer Hand.</div>
       <a href="https://lunolabs.ch" target="_blank" rel="noopener" style="display:inline-block;padding:var(--s-sm) var(--s-xl);background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff;font-weight:600;border-radius:var(--r-full);font-size:.88rem;text-decoration:none;transition:0.2s;box-shadow:0 4px 16px rgba(79,140,255,0.3)">Projekt starten &rarr;</a>
       <a href="https://lunolabs.ch" target="_blank" rel="noopener" style="display:inline-block;padding:var(--s-sm) var(--s-xl);color:var(--text-secondary);font-size:.85rem;text-decoration:none;margin-left:var(--s-sm)">lunolabs.ch</a>
+      <div style="margin-top:var(--s-lg);padding-top:var(--s-md);border-top:1px solid rgba(79,140,255,0.1);color:var(--text-muted);font-size:.8rem;line-height:1.5">
+        <span style="color:var(--accent);font-weight:600">Coming soon:</span> Dieser KI-Kompass wird bald als interaktives Tool auf <a href="https://lunolabs.ch" target="_blank" rel="noopener" style="color:var(--accent);font-weight:500">lunolabs.ch</a> verfuegbar sein — mit Live-Updates, persoenlichen Empfehlungen und DSGVO-Compliance-Check.
+      </div>
     </div>
     <div style="margin:var(--s-lg) 0"><img src="Lunolabs-logo.png" alt="Lunolabs" style="height:36px;opacity:.85"></div>
     <div class="footer-copy">Letzte Aktualisierung: Maerz 2026 · Quellen in den jeweiligen Sektionen verlinkt<br>Erstellt als interaktives Bildungsprojekt · Keine Gewaehr fuer Vollstaendigkeit</div>
@@ -892,6 +895,9 @@ const NEW_TOOLS = new Set([
   'claudecode',    // Claude Code major updates — Feb 2026
   'geminicli',     // Gemini CLI updates ongoing
   'codex',         // OpenAI Codex macOS App — Feb 2026
+  'perplexity',    // Perplexity Computer — Feb 2026
+  'manus',         // Manus AI — Meta acquisition 2025/2026
+  'deepl',         // DeepL Write + Translate updates 2026
 ]);
 
 const TOOL_LEVELS = {
@@ -973,7 +979,25 @@ const TOOL_LEVELS = {
   kiro: 'fortgeschritten',
   firefly3: 'einsteiger',
   appleintel: 'einsteiger',
-  seedance: 'fortgeschritten'
+  seedance: 'fortgeschritten',
+  deepl: 'einsteiger',
+  jasper: 'fortgeschritten',
+  grammarly: 'einsteiger',
+  copyai: 'fortgeschritten',
+  writesonic: 'fortgeschritten',
+  meshy: 'fortgeschritten',
+  tripo: 'fortgeschritten',
+  rodin: 'experte',
+  figmaai: 'fortgeschritten',
+  framer: 'einsteiger',
+  julius: 'einsteiger',
+  tableauai: 'fortgeschritten',
+  khanmigo: 'einsteiger',
+  duolingomax: 'einsteiger',
+  elicit: 'fortgeschritten',
+  semanticscholar: 'fortgeschritten',
+  manus: 'fortgeschritten',
+  operaaria: 'einsteiger'
 };
 
 function getToolLevel(tool) {
@@ -1375,14 +1399,14 @@ const TOOLS = [
    prices:[['Free','100 Tasks/Mo'],['Starter','$19.99/Mo'],['Professional','$49/Mo']],
    bestFor:['Business','Entwickler'],
    links:[['Website','https://zapier.com']]},
-  {id:'perplexity',name:'Perplexity AI',icon:'🔎',cat:'produktivitaet',stars:5,
-   desc:'KI-Suchmaschine #1. Echtzeit-Websuche + LLM-Reasoning, Antworten mit Quellenangaben statt Linklisten.',
-   price:'$0-20/Mo',priceLabel:'ab $0',
-   strengths:['Echtzeit-Websuche + KI-Zusammenfassung','Antworten mit zitierten Quellen','Pro Search fuer tiefe Recherche','Zugang zu GPT-5, Claude, Gemini Pro in einem Tool','WhatsApp-Integration & Comet Browser'],
-   weaknesses:['Pro-Features hinter Paywall','Antworten manchmal zu oberflaechlich','Weniger kreativ als dedizierte LLMs'],
-   prices:[['Free','Unbegrenzte Schnellsuchen'],['Pro','$20/Mo (GPT-5, Claude, Gemini)']],
+  {id:'perplexity',name:'Perplexity AI + Computer',icon:'🔎',cat:'produktivitaet',stars:5,
+   desc:'KI-Suchmaschine #1 + NEU: Perplexity Computer — Multi-Agent-System mit 19 Modellen, 400+ App-Integrationen.',
+   price:'$0-200/Mo',priceLabel:'ab $0',
+   strengths:['Echtzeit-Websuche + KI-Zusammenfassung mit zitierten Quellen','NEU: Perplexity Computer (Feb. 2026) — erster Multi-Model Agent','Computer orchestriert 19 Frontier-Modelle fuer komplexe Tasks autonom','400+ App-Integrationen (Gmail, GitHub, Slack, Notion, Salesforce)','Pro Search fuer tiefe Recherche mit GPT-5, Claude, Gemini'],
+   weaknesses:['Computer nur im Max-Tier ($200/Mo) verfuegbar','Credit-System: komplexe Tasks verbrauchen schnell 10K Credits/Mo','Antworten in Basissuche manchmal zu oberflaechlich'],
+   prices:[['Free','Unbegrenzte Schnellsuchen'],['Pro','$20/Mo (GPT-5, Claude, Gemini)'],['Max','$200/Mo (Computer, 10K Credits)']],
    bestFor:['Einsteiger','Business'],
-   links:[['Website','https://www.perplexity.ai']]},
+   links:[['Website','https://www.perplexity.ai'],['Computer','https://www.perplexity.ai/computer']]},
   {id:'notebooklm',name:'NotebookLM (Google)',icon:'📓',cat:'produktivitaet',stars:5,
    desc:'KI-Forschungsassistent. Antwortet NUR aus deinen Dokumenten, Audio Overviews, NEU: Cinematic Video Overviews.',
    price:'Gratis',priceLabel:'Gratis',
@@ -1637,7 +1661,167 @@ const TOOLS = [
    weaknesses:['Lokale Inferenz nur mit GGUF-Format','Lifetime-Preis gestiegen ($349)','Kleinere Community als Ollama/LM Studio'],
    prices:[['Free','Kernfunktionen kostenlos'],['Aurum Yearly','$149/Jahr'],['Aurum Lifetime','$349 (einmalig)']],
    bestFor:['Einsteiger','Entwickler'],
-   links:[['Website','https://msty.ai']]}
+   links:[['Website','https://msty.ai']]},
+
+  // --- SCHREIBEN ---
+  {id:'deepl',name:'DeepL',icon:'🌍',cat:'schreiben',stars:5,
+   desc:'Beste KI-Uebersetzung weltweit. Deutsche Firma (Koeln), uebertrifft Google Translate deutlich, 30+ Sprachen.',
+   price:'$0-50/Mo',priceLabel:'ab $0',
+   strengths:['Uebersetzungsqualitaet uebertrifft Google Translate signifikant','DeepL Write: KI-Schreibassistent fuer Stil, Ton und Grammatik','Glossar-Funktion fuer konsistente Fachbegriffe','Deutsche Firma — Server in der EU, DSGVO-konform','API fuer Entwickler mit 500K Zeichen/Mo kostenlos'],
+   weaknesses:['Nur Uebersetzung + Schreibhilfe, kein Allzweck-LLM','Free Tier auf 1.500 Zeichen pro Uebersetzung limitiert','Weniger Sprachen als Google Translate (33 vs. 130+)'],
+   prices:[['Free','1.500 Zeichen/Uebersetzung'],['Starter','$11/Mo (5 Nutzer)'],['Advanced','$29/Mo (20 Nutzer)'],['Ultimate','$50/Mo (Unbegrenzt)'],['API Free','500K Zeichen/Mo']],
+   bestFor:['Einsteiger','Business','Kreative'],
+   links:[['Website','https://www.deepl.com'],['API','https://www.deepl.com/pro-api']]},
+  {id:'jasper',name:'Jasper AI',icon:'✍️',cat:'schreiben',stars:4,
+   desc:'#1 KI-Marketing-Schreibassistent. SEO-Blog-Posts, Ads, E-Mails — mit Brand Voice und 50+ Templates.',
+   price:'$39-125/Mo',priceLabel:'$39/Mo',
+   strengths:['50+ Templates fuer Marketing-Content (Blogs, Ads, Emails, Social)','Brand Voice: lernt deinen Markenstil und haelt ihn konsistent','SEO-Mode fuer suchmaschinenoptimierten Content','25+ Sprachen inkl. Deutsch','Jasper Art fuer Bild-Generierung inklusive'],
+   weaknesses:['Teuer fuer Einzelnutzer ($39/Mo Minimum)','Qualitaet bei Fachtexten hinter ChatGPT/Claude','Stark Marketing-fokussiert — weniger vielseitig'],
+   prices:[['Creator','$39/Mo (1 Nutzer)'],['Pro','$69/Mo (3 Nutzer)'],['Business','$125/Mo+ (10+ Nutzer)']],
+   bestFor:['Business','Kreative'],
+   links:[['Website','https://www.jasper.ai']]},
+  {id:'grammarly',name:'Grammarly',icon:'📝',cat:'schreiben',stars:5,
+   desc:'30M+ taegliche Nutzer. Grammatik, Stil, Ton — mit KI-Schreibassistent und Plagiatserkennung.',
+   price:'$0-25/Mo',priceLabel:'ab $0',
+   strengths:['30M+ taegliche Nutzer — bewaehtester Schreibassistent','GrammarlyGO: KI generiert, ueberarbeitet und kuerzt Texte','Tone Detection: analysiert und passt Tonalitaet an','Browser-Extension + alle gaengigen Apps (Docs, Mail, Slack)','Plagiatserkennung inklusive (Pro)'],
+   weaknesses:['Deutsch-Unterstuetzung schwaecher als Englisch','Premium noetig fuer erweiterte Features','Datenschutz: Cloud-basierte Textverarbeitung'],
+   prices:[['Free','Basis-Grammatik + Rechtschreibung'],['Premium','$12/Mo'],['Business','$25/User/Mo']],
+   bestFor:['Einsteiger','Kreative','Business'],
+   links:[['Website','https://www.grammarly.com']]},
+  {id:'copyai',name:'Copy.ai',icon:'📋',cat:'schreiben',stars:4,
+   desc:'KI-Marketing-Copy und Workflow-Automatisierung. Guenstiger als Jasper, ideal fuer kurze Texte und Ads.',
+   price:'$0-49/Mo',priceLabel:'ab $0',
+   strengths:['Workflow-Automatisierung fuer Sales und Marketing','90+ Templates fuer Kurzform-Content (Ads, Headlines, Emails)','GTM AI Workflows: automatisierte Go-to-Market Pipelines','Free Tier mit 2.000 Woertern/Mo'],
+   weaknesses:['Langform-Content schwaecher als Jasper','Weniger Brand-Voice-Kontrolle','UI kann bei komplexen Workflows unuebersichtlich werden'],
+   prices:[['Free','2.000 Woerter/Mo'],['Advanced','$49/Mo (5 Nutzer)'],['Enterprise','Individuell']],
+   bestFor:['Business','Kreative'],
+   links:[['Website','https://www.copy.ai']]},
+  {id:'writesonic',name:'Writesonic',icon:'🖊️',cat:'schreiben',stars:4,
+   desc:'SEO-Content + KI-Chatbot (Chatsonic). GPT-5- und Claude-Power fuer Blog-Posts, Landingpages, Ads.',
+   price:'$0-25/Mo',priceLabel:'ab $0',
+   strengths:['Chatsonic: ChatGPT-Alternative mit Echtzeit-Webzugang','SEO-optimierte Blog-Posts und Landingpages','GPT-5 + Claude Integration','Botsonic: No-Code KI-Chatbot-Builder','Free Tier mit 25 Credits/Tag'],
+   weaknesses:['Credit-System kann verwirrend sein','Qualitaet variiert je nach Template','Enterprise-Features teuer'],
+   prices:[['Free','25 Credits/Tag'],['Individual','$13/Mo'],['Standard','$25/Mo (3 Nutzer)']],
+   bestFor:['Business','Kreative'],
+   links:[['Website','https://writesonic.com']]},
+
+  // --- 3D-KI ---
+  {id:'meshy',name:'Meshy',icon:'🧊',cat:'dreid',stars:5,
+   desc:'Text/Image-to-3D in Sekunden. 97% Print-Ready, saubere Meshes, Textur-Kontrolle, $14.50/Mo.',
+   price:'$0-48/Mo',priceLabel:'ab $0',
+   strengths:['Text-to-3D und Image-to-3D in unter 60 Sekunden','97% Slicer-Pass-Rate — druckfertige 3D-Modelle','Saubere Meshes mit gutem Edge Flow','Textur-Painting und PBR-Material-Generierung','Ein-Klick Bambu Studio Integration + 3MF Export'],
+   weaknesses:['Komplexe organische Formen teils ungenau','Free Tier sehr limitiert (5 Credits/Tag)','Weniger fotorealistisch als Rodin'],
+   prices:[['Free','5 Credits/Tag'],['Pro','$14.50/Mo (200 Credits)'],['Max','$48/Mo (1.000 Credits)']],
+   bestFor:['Kreative','Entwickler'],
+   links:[['Website','https://www.meshy.ai']]},
+  {id:'tripo',name:'Tripo AI',icon:'🔺',cat:'dreid',stars:5,
+   desc:'Schnellstes Text/Image-to-3D. Game-ready Quad-Topology, Auto-Repair, riesige Asset-Library.',
+   price:'$0-79/Mo',priceLabel:'ab $0',
+   strengths:['Schnellste 3D-Generierung der Kategorie','Quad-basierte Topology — ideal fuer Games und Animation','Auto-Repair: behebt Non-Manifold-Geometrie automatisch','Grosse Asset-Library als Ausgangsbasis','Guenstigstes Paid-Tier ($12/Mo)'],
+   weaknesses:['Texturen weniger detailliert als Rodin','Free Tier auf wenige Generierungen limitiert','Export-Formate teils eingeschraenkt im Free Tier'],
+   prices:[['Free','Limitiert'],['Lite','$12/Mo'],['Pro','$37/Mo'],['Premium','$79/Mo']],
+   bestFor:['Kreative','Entwickler'],
+   links:[['Website','https://www.tripo3d.ai']]},
+  {id:'rodin',name:'Rodin (Hyper3D)',icon:'🗿',cat:'dreid',stars:4,
+   desc:'Fotorealistische 3D-Generierung. 10B Parameter Gen-2, beste Texturen der Kategorie, Production-Grade.',
+   price:'ab $10/Mo',priceLabel:'ab $10/Mo',
+   strengths:['10B Parameter Gen-2 Architektur — hoechste Qualitaet','Fotorealistischste Texturen aller 3D-KI-Tools','Production-ready Output fuer Film und Werbung','Controllable Generation mit Referenzbildern'],
+   weaknesses:['Business-Tier sehr teuer ($120/Mo)','Langsamere Generierung als Meshy/Tripo','Steilere Lernkurve fuer optimale Ergebnisse'],
+   prices:[['Starter','$10/Mo'],['Standard','$30/Mo'],['Business','$120/Mo']],
+   bestFor:['Kreative'],
+   links:[['Website','https://hyperhuman.deemos.com']]},
+
+  // --- DESIGN-KI ---
+  {id:'figmaai',name:'Figma AI',icon:'🎨',cat:'design',stars:5,
+   desc:'KI-Features im groessten Design-Tool. Auto-Layout, KI-generierte Prototypen, Make-Mode fuer Text-to-Design.',
+   price:'$0-75/Mo',priceLabel:'ab $0',
+   strengths:['Figma Make: Text-to-Design direkt in Figma','Auto-Layout Suggestions sparen Stunden','KI-Prototyping: Flows aus Beschreibungen generieren','Groesstes Design-Oekosystem (Plugins, Community, Dev Mode)','Bereits in den Workflows von Millionen Designern'],
+   weaknesses:['KI-Features noch im Aufbau (Beta-Status teils)','Erfordert Figma-Kenntnisse fuer volles Potenzial','Team-Pricing kann teuer werden'],
+   prices:[['Free','3 Projekte'],['Professional','$15/Editor/Mo'],['Organization','$45/Editor/Mo'],['Enterprise','$75/Editor/Mo']],
+   bestFor:['Kreative','Entwickler'],
+   links:[['Website','https://www.figma.com'],['AI Features','https://www.figma.com/ai']]},
+  {id:'framer',name:'Framer',icon:'🖌️',cat:'design',stars:4,
+   desc:'KI-Website-Builder. Komplette Websites aus Text-Prompts, kein Code noetig, professionelles Design.',
+   price:'$0-30/Mo',priceLabel:'ab $0',
+   strengths:['Text-to-Website: komplette Sites aus Prompts generieren','Professionelle Design-Qualitaet ohne Vorkenntnisse','CMS integriert fuer Blog und dynamische Inhalte','Schnelles Hosting mit globalem CDN','Responsive Design automatisch'],
+   weaknesses:['E-Commerce-Features limitiert','Weniger Anpassbarkeit als handcodierte Sites','Lock-in: Export zu reinem HTML nicht trivial'],
+   prices:[['Free','1 Seite, Framer-Subdomain'],['Mini','$5/Mo'],['Basic','$15/Mo (eigene Domain)'],['Pro','$30/Mo (CMS, Analytics)']],
+   bestFor:['Einsteiger','Kreative'],
+   links:[['Website','https://www.framer.com']]},
+
+  // --- DATEN-KI ---
+  {id:'julius',name:'Julius AI',icon:'📊',cat:'daten',stars:5,
+   desc:'CSV hochladen, Fragen stellen, Charts bekommen. Datenanalyse in natuerlicher Sprache, kein Code noetig.',
+   price:'$0-50/Mo',priceLabel:'ab $0',
+   strengths:['Datenanalyse in natuerlicher Sprache — kein SQL/Python noetig','CSV, Excel, Google Sheets direkt hochladen und analysieren','Automatische Chart- und Report-Generierung','Datenbank-Anbindung (Postgres, Snowflake, BigQuery)','Automatische Datenbereinigung und -vorbereitung'],
+   weaknesses:['250 Nachrichten/Mo im Basis-Tier','Komplexe statistische Analysen erfordern Nacharbeit','Weniger Enterprise-Features als Tableau/Power BI'],
+   prices:[['Free','Limitiert'],['Essential','$20/Mo (250 Nachrichten)'],['Pro','$50/Mo (1.000 Nachrichten)']],
+   bestFor:['Einsteiger','Business'],
+   links:[['Website','https://julius.ai']]},
+  {id:'tableauai',name:'Tableau AI',icon:'📈',cat:'daten',stars:4,
+   desc:'Enterprise BI mit Einstein AI. Praesentationsreife Dashboards, Salesforce-Integration, $75/User/Mo.',
+   price:'ab $15/Mo',priceLabel:'ab $15/Mo',
+   strengths:['Einstein AI: KI-gestuetzte Insights und Vorhersagen','Praesentationsreife Visualisierungen fuer Fuehrungskraefte','Salesforce Data Cloud Integration','Tableau Pulse: proaktive KI-Insights ohne Abfragen','Starke Community und Training-Ressourcen'],
+   weaknesses:['Teuer fuer kleine Teams ($75/User/Mo Creator)','Steile Lernkurve fuer fortgeschrittene Features','Erfordert saubere Datenquellen fuer gute Ergebnisse'],
+   prices:[['Viewer','$15/User/Mo'],['Explorer','$42/User/Mo'],['Creator','$75/User/Mo']],
+   bestFor:['Business'],
+   links:[['Website','https://www.tableau.com'],['AI Features','https://www.tableau.com/products/tableau-ai']]},
+
+  // --- BILDUNG ---
+  {id:'khanmigo',name:'Khanmigo (Khan Academy)',icon:'🎓',cat:'bildung',stars:5,
+   desc:'KI-Tutor der Khan Academy. Sokratische Methode — gibt keine Antworten, sondern fuehrt zum Verstehen.',
+   price:'$4-8/Mo',priceLabel:'ab $4/Mo',
+   strengths:['Sokratische Methode: fuehrt Lernende zur Antwort statt sie zu geben','Eingebettet in Khan Academys riesige Lern-Bibliothek (Mathe, Coding, Humanities)','Fuer Lehrer kostenlos (Unterrichtsplanung, Differenzierung)','Kindersicher: strenge Guardrails gegen unangemessene Inhalte','GPT-4-powered mit bildungsspezifischem Fine-Tuning'],
+   weaknesses:['Primaer englischsprachig — Deutsch-Support limitiert','Nicht fuer Erwachsenenbildung / Berufliches optimiert','Nur innerhalb Khan Academy nutzbar'],
+   prices:[['Learner','$4/Mo ($44/Jahr)'],['Family','$8/Mo ($88/Jahr, 6 Nutzer)'],['Teacher','Kostenlos (Kernfunktionen)']],
+   bestFor:['Einsteiger'],
+   links:[['Website','https://www.khanmigo.ai']]},
+  {id:'duolingomax',name:'Duolingo Max',icon:'🦉',cat:'bildung',stars:4,
+   desc:'KI-Sprachlernen. Roleplay-Gespraeche mit KI-Charakteren, Video-Konversationen, 40+ Sprachen.',
+   price:'ab $14/Mo',priceLabel:'ab $14/Mo',
+   strengths:['Roleplay: Gespraeche mit KI-Charakteren in der Zielsprache','Explain My Answer: KI erklaert Grammatik-Regeln individuell','Video-Konversationen fuer realistischeres Ueben','Gamification + Streaks halten Motivation hoch','40+ Sprachen verfuegbar'],
+   weaknesses:['Max-Abo deutlich teurer als Basis-Duolingo','KI-Features nur in ausgewaehlten Sprachen voll verfuegbar','Nicht fuer fortgeschrittene Sprachniveaus (C1+) geeignet'],
+   prices:[['Super','$14/Mo (ohne KI-Features)'],['Max','$30/Mo (alle KI-Features)']],
+   bestFor:['Einsteiger'],
+   links:[['Website','https://www.duolingo.com']]},
+
+  // --- WISSENSCHAFT ---
+  {id:'elicit',name:'Elicit',icon:'🔬',cat:'wissenschaft',stars:5,
+   desc:'KI-Forschungsassistent. Findet relevante Papers, extrahiert Kernergebnisse, erstellt Literaturuebersichten.',
+   price:'$0-49/Mo',priceLabel:'ab $0',
+   strengths:['Semantische Paper-Suche ueber 200M+ Publikationen','Automatische Extraktion von Kernergebnissen, Methoden, Stichproben','Literaturuebersichten mit strukturierten Tabellen','Claim-Checking gegen wissenschaftliche Evidenz','Spart Stunden bei systematischen Reviews'],
+   weaknesses:['Primaer englischsprachige Papers','Free Tier auf 5.000 Credits limitiert','Nicht fuer STEM-Formeln / Mathematik optimiert'],
+   prices:[['Free','5.000 Credits'],['Plus','$10/Mo (12.000 Credits)'],['Pro','$49/Mo (Unbegrenzt)']],
+   bestFor:['Fortgeschritten','Business'],
+   links:[['Website','https://elicit.com']]},
+  {id:'semanticscholar',name:'Semantic Scholar',icon:'📚',cat:'wissenschaft',stars:4,
+   desc:'KI-Suchmaschine fuer Forschung (Allen AI). 220M+ Papers, TLDR-Zusammenfassungen, Zitationsgraphen.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['220M+ wissenschaftliche Papers durchsuchbar','TLDR: KI-generierte Einzeiler-Zusammenfassungen','Zitationsgraphen zeigen Einfluss und Verbindungen','Semantic Reader: KI-unterstuetztes Paper-Lesen','Komplett kostenlos (non-profit, Allen Institute for AI)'],
+   weaknesses:['Weniger Analyse-Features als Elicit','Keine automatische Literaturuebersicht-Erstellung','Interface weniger modern als Konkurrenz'],
+   prices:[['Free','Komplett kostenlos']],
+   bestFor:['Fortgeschritten'],
+   links:[['Website','https://www.semanticscholar.org']]},
+
+  // --- ZUSAETZLICHE PRODUKTIVITAET ---
+  {id:'manus',name:'Manus AI',icon:'🤖',cat:'produktivitaet',stars:5,
+   desc:'Agentic AI Platform. Autonome Multi-Step-Workflows, Live-Dashboard, 400+ App-Integrationen. Meta-Uebernahme ($2-3B).',
+   price:'$0-199/Mo',priceLabel:'ab $0',
+   strengths:['Autonome Multi-Step-Workflows: Recherche → Analyse → Ausfuehrung','Live-Dashboard: siehst jeden Schritt des Agenten in Echtzeit','400+ App-Integrationen (Gmail, GitHub, Slack, Notion, Salesforce)','Mid-Task-Eingriff: jederzeit Richtung aendern','Meta-Uebernahme ($2-3B, Dez. 2025) bestaetigt Technologie'],
+   weaknesses:['Credit-System: komplexe Tasks verbrauchen Credits schnell','Pro-Tier ($199/Mo) noetig fuer Vollzeit-Nutzung','Relativ jung, Oekosystem waechst noch'],
+   prices:[['Free','Tages-Credits'],['Starter','$39/Mo'],['Pro','$199/Mo'],['Team','$39/Seat/Mo']],
+   bestFor:['Business','Entwickler'],
+   links:[['Website','https://manus.im']]},
+
+  // --- ZUSAETZLICHE ASSISTENTEN ---
+  {id:'operaaria',name:'Opera Aria',icon:'🌐',cat:'assistenten',stars:4,
+   desc:'KI direkt im Browser. Aria nutzt mehrere KI-Modelle (Gemini, Claude), Webseiten zusammenfassen, kostenlos.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Komplett kostenlos — keine Registrierung fuer Basis-KI noetig','Direkt im Browser integriert — kein Tab-Wechsel','Webseiten, PDFs und Videos zusammenfassen','Bild-Generierung mit Imagen 3 inklusive','Multi-Modell: nutzt Gemini und Claude im Hintergrund'],
+   weaknesses:['Nur in Opera-Browser verfuegbar','Qualitaet schwaecher als dedizierte ChatGPT/Claude Apps','Datenschutz: Opera gehoert chinesischem Konsortium'],
+   prices:[['Free','Komplett kostenlos']],
+   bestFor:['Einsteiger'],
+   links:[['Website','https://www.opera.com/features/aria']]}
 ];
 
 const TRENDS_DATA = [
@@ -3281,7 +3465,7 @@ function animateCounters() {
 
 // Sticky nav + scroll tracking
 const stickyNav = document.getElementById('sticky-nav');
-const sections = ['was-ist-ki', 'ki-grundlagen', 'ki-kann', 'ki-grenzen', 'persona', 'start-hier', 'big-three', 'tools', 'trends', 'zukunft', 'ressourcen', 'lernpfad'];
+const sections = ['was-ist-ki', 'ki-grundlagen', 'ki-kann', 'ki-grenzen', 'persona', 'start-hier', 'big-three', 'tools', 'trends', 'zukunft', 'ressourcen', 'praxis', 'lernpfad'];
 window.addEventListener('scroll', () => {
   // Show/hide nav
   stickyNav.classList.toggle('visible', window.scrollY > window.innerHeight * 0.5);
