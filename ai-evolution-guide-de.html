@@ -637,7 +637,7 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
   <div class="section-header fade-in">
     <span class="section-tag">Werkzeuge</span>
     <h2 class="section-title">Das Tool-Universum</h2>
-    <p class="section-subtitle">75+ KI-Tools im ehrlichen Vergleich — mit Bewertungen, Preisen und konkreten Empfehlungen fuer verschiedene Erfahrungslevel.</p>
+    <p class="section-subtitle">80+ KI-Tools im ehrlichen Vergleich — Stand: Maerz 2026 — mit Bewertungen, Preisen und konkreten Empfehlungen fuer verschiedene Erfahrungslevel.</p>
   </div>
   <div class="search-wrap fade-in"><span class="search-icon">🔍</span><input type="text" class="search-input" id="tool-search" placeholder="Tool suchen... (z.B. Cursor, Midjourney, Ollama)"></div>
   <div class="filter-bar fade-in" id="filter-bar">
@@ -823,8 +823,15 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
     <div class="footer-links">
       <a href="#hero">Nach oben</a><a href="#was-ist-ki">Was ist KI?</a><a href="#ki-grundlagen">Grundpfeiler</a><a href="#ki-kann">Was kann KI?</a><a href="#ki-grenzen">Grenzen</a><a href="#start-hier">Start hier</a><a href="#tools">Tools</a><a href="#trends">Trends</a><a href="#lernpfad">Lernpfad</a>
     </div>
+    <div style="margin:var(--s-xl) 0;padding:var(--s-xl) var(--s-2xl);background:linear-gradient(135deg,rgba(79,140,255,0.08),rgba(168,85,247,0.06));border:1px solid rgba(79,140,255,0.2);border-radius:var(--r-xl);max-width:620px;margin-left:auto;margin-right:auto">
+      <div style="font-weight:800;color:var(--text-primary);margin-bottom:var(--s-xs);font-size:1.1rem"><img src="Lunolabs-logo.png" alt="Lunolabs" style="height:22px;opacity:.9;vertical-align:middle;margin-right:8px">Von der Idee zum KI-Produkt.</div>
+      <div style="color:var(--accent);font-size:.82rem;font-weight:600;letter-spacing:0.03em;margin-bottom:var(--s-sm)">SCHWEIZER KI-AGENTUR</div>
+      <div style="color:var(--text-secondary);font-size:.9rem;line-height:1.6;margin-bottom:var(--s-lg)">Wir entwickeln KI-Agenten, Automatisierungen, Websites &amp; Apps — massgeschneidert fuer dein Business. Strategie, Umsetzung und Betrieb aus einer Hand.</div>
+      <a href="https://lunolabs.ch" target="_blank" rel="noopener" style="display:inline-block;padding:var(--s-sm) var(--s-xl);background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff;font-weight:600;border-radius:var(--r-full);font-size:.88rem;text-decoration:none;transition:0.2s;box-shadow:0 4px 16px rgba(79,140,255,0.3)">Projekt starten &rarr;</a>
+      <a href="https://lunolabs.ch" target="_blank" rel="noopener" style="display:inline-block;padding:var(--s-sm) var(--s-xl);color:var(--text-secondary);font-size:.85rem;text-decoration:none;margin-left:var(--s-sm)">lunolabs.ch</a>
+    </div>
     <div style="margin:var(--s-lg) 0"><img src="Lunolabs-logo.png" alt="Lunolabs" style="height:36px;opacity:.85"></div>
-    <div class="footer-copy">Letzte Aktualisierung: Februar 2026 · Quellen in den jeweiligen Sektionen verlinkt<br>Erstellt als interaktives Bildungsprojekt · Keine Gewaehr fuer Vollstaendigkeit</div>
+    <div class="footer-copy">Letzte Aktualisierung: Maerz 2026 · Quellen in den jeweiligen Sektionen verlinkt<br>Erstellt als interaktives Bildungsprojekt · Keine Gewaehr fuer Vollstaendigkeit</div>
   </div>
 </footer>
 </div>
@@ -871,19 +878,20 @@ const LEVEL_HINTS = {
 };
 const LEVEL_COLORS = { einsteiger: '#22c55e', fortgeschritten: '#4f8cff', experte: '#f97316' };
 
-// Tools released or majorly updated in last 3 months (Dec 2025 – Feb 2026)
+// Tools released or majorly updated in last 3 months (Jan – Maerz 2026)
 const NEW_TOOLS = new Set([
-  'nanobanana',  // Nano Banana 2 — Feb 26, 2026
-  'flux2',       // Flux 2.0 — Nov 2025
-  'qwen3',       // Qwen 3 — Jan 2026
-  'ltx2',        // LTX-2 — Jan 2026
-  'veo3',        // Veo 3 / 3.1 — Dec 2025
-  'lumaray3',    // Ray3.14 — Jan 2026
-  'windsurf',    // Windsurf update — Dec 2025
-  'claudecode',  // Claude Code major updates — Feb 2026
-  'ideogram',    // Ideogram 3.0 — Dec 2025
-  'geminicli',   // Gemini CLI — Jun 2025, major updates ongoing
-  'codex',       // OpenAI Codex macOS App — Feb 2026
+  'nanobanana',    // Nano Banana 2 — Feb 26, 2026
+  'antigravity',   // Google Antigravity IDE — Public Preview 2026
+  'kiro',          // Amazon Kiro — 2026
+  'seedance',      // Seedance 2.0 — Feb 2026
+  'firefly3',      // Adobe Firefly 3 — 2026
+  'appleintel',    // Apple Intelligence — 2026 rollout
+  'kling',         // Kling 3.0 — Feb 2026
+  'suno',          // Suno v5 — Maerz 2026
+  'ltx2',          // LTX-2.3 — Maerz 2026
+  'claudecode',    // Claude Code major updates — Feb 2026
+  'geminicli',     // Gemini CLI updates ongoing
+  'codex',         // OpenAI Codex macOS App — Feb 2026
 ]);
 
 const TOOL_LEVELS = {
@@ -960,7 +968,12 @@ const TOOL_LEVELS = {
   dify: 'einsteiger',
   autogen: 'experte',
   anythingllm: 'einsteiger',
-  litellm: 'fortgeschritten'
+  litellm: 'fortgeschritten',
+  antigravity: 'fortgeschritten',
+  kiro: 'fortgeschritten',
+  firefly3: 'einsteiger',
+  appleintel: 'einsteiger',
+  seedance: 'fortgeschritten'
 };
 
 function getToolLevel(tool) {
@@ -971,26 +984,26 @@ function getToolLevel(tool) {
 }
 
 const BIG_THREE = [
-  {id:'chatgpt',name:'ChatGPT (GPT-5.2)',icon:'🤖',cat:'assistenten',stars:5,
-   desc:'Der Marktfuehrer. 800M woechentliche Nutzer, staerkstes Reasoning (52.9% ARC-AGI-2), riesiges Plugin-Oekosystem.',
+  {id:'chatgpt',name:'ChatGPT (GPT-5.4)',icon:'🤖',cat:'assistenten',stars:5,
+   desc:'Der Marktfuehrer. 800M+ woechentliche Nutzer, GPT-5.4 mit 33% weniger Faktenfehlern, riesiges Plugin-Oekosystem.',
    price:'$20/Mo (Plus)',priceLabel:'$20/Mo',
-   strengths:['52.9% auf ARC-AGI-2 — Benchmark-Leader Reasoning','800 Mio. woechentlich aktive Nutzer, 68% Marktanteil','Etabliertes Oekosystem & Plugin-System','Starke Reasoning-Faehigkeiten ueber alle Domains'],
+   strengths:['GPT-5.4 (Maerz 2026): 33% weniger Faktenfehler als GPT-5.2','800 Mio.+ woechentlich aktive Nutzer, 68% Marktanteil','Etabliertes Oekosystem & Plugin-System','Starke Reasoning-Faehigkeiten ueber alle Domains','GPT Image 1.5 ersetzt DALL-E — bestes Prompt-Verstaendnis'],
    weaknesses:['Hoechste Preisstufe ($20/Monat Standard)','Context-Limit: 128K (vs. 1M bei Claude)','Fokus auf Reasoning statt Context Window'],
    prices:[['Plus','$20/Monat'],['Business','$19-$39/User/Mo'],['API Input','~$2.50/MTok'],['API Output','~$10/MTok']],
    bestFor:['Einsteiger','Kreative','Business'],
    links:[['Website','https://chat.openai.com'],['API Docs','https://platform.openai.com/docs/'],['Pricing','https://openai.com/pricing']]},
   {id:'claude',name:'Claude (Opus 4.6)',icon:'🧠',cat:'assistenten',stars:5,
-   desc:'Der Coding-Champion. 1M Token Context, 80.9% SWE-bench, staerkste Code-Generierung aller Modelle.',
+   desc:'Der Coding-Champion. 1M Token Context, Sonnet 5 mit 82.1% SWE-bench (erstes Modell ueber 80%), staerkste Code-Generierung.',
    price:'$20/Mo (Pro)',priceLabel:'$20/Mo',
-   strengths:['1M Token Context Window — 150.000 Woerter auf einmal','80.9% SWE-bench Verified — Coding-Benchmark-Leader','Adaptive Thinking mit 4 Effort-Levels','Context Compaction API fuer endlose Konversationen','Staerkste Code-Generierung aller Modelle'],
+   strengths:['1M Token Context Window — 150.000 Woerter auf einmal','Sonnet 5 \"Fennec\": 82.1% SWE-bench — erstes Modell ueber 80%','Adaptive Thinking mit 4 Effort-Levels','Context Compaction API fuer endlose Konversationen','Staerkste Code-Generierung aller Modelle'],
    weaknesses:['Hoechste API-Preise ($5-$37.50/MTok)','Premium-Aufschlag ueber 200K Tokens','Kleineres Plugin-Oekosystem als ChatGPT'],
    prices:[['Pro','$20/Monat'],['API Opus In','$5-$10/MTok'],['API Opus Out','$25-$37.50/MTok'],['API Sonnet In','$3/MTok']],
    bestFor:['Entwickler','Kreative','Business'],
    links:[['Website','https://claude.ai'],['API Docs','https://docs.anthropic.com'],['Claude Code','https://claude.ai/claude-code']]},
-  {id:'gemini',name:'Gemini (2.5/3 Pro)',icon:'💎',cat:'assistenten',stars:5,
-   desc:'Der Multimodal-King. Natives Multimodal, 2M Context (exp.), unschlagbar guenstig.',
+  {id:'gemini',name:'Gemini 3.1 Pro',icon:'💎',cat:'assistenten',stars:5,
+   desc:'Der Multimodal-King. Fuehrt auf 13/16 Benchmarks, 77.1% ARC-AGI-2, natives Multimodal, 2M Context.',
    price:'Gratis (limitiert)',priceLabel:'Gratis*',
-   strengths:['#1 auf LMArena Leaderboard (Gemini 2.5)','Natives Multimodal: Text, Bild, Audio, Video Generation','2M Token Context (Pro Experimental)','60% Kostenreduktion vs. Vorgaenger','Google AI Studio kostenlos nutzbar'],
+   strengths:['77.1% ARC-AGI-2 — fuehrt auf 13 von 16 Benchmarks (Feb. 2026)','Natives Multimodal: Text, Bild, Audio, Video Generation','2M Token Context (Pro)','60% Kostenreduktion vs. Vorgaenger','Google AI Studio kostenlos nutzbar'],
    weaknesses:['Juengeres API-Oekosystem','Weniger reifes Integrations-Oekosystem als OpenAI','Teils inkonsistente Qualitaet zwischen Modellvarianten'],
    prices:[['Flash Input','$0.10/MTok'],['Flash Output','$0.40/MTok'],['AI Studio','Kostenlos (limitiert)']],
    bestFor:['Einsteiger','Entwickler','Business'],
@@ -999,10 +1012,10 @@ const BIG_THREE = [
 
 const TOOLS = [
   // --- ASSISTENTEN (weitere, neben den Big Three) ---
-  {id:'grok',name:'Grok (xAI)',icon:'⚡',cat:'assistenten',stars:4,
-   desc:'Elon Musks KI-Chatbot. Echtzeit-Zugang zu X/Twitter-Daten, 2M Token Context, sehr guenstiges API-Pricing.',
+  {id:'grok',name:'Grok 4.20 (xAI)',icon:'⚡',cat:'assistenten',stars:4,
+   desc:'xAIs KI-Chatbot. Grok 4.20 Beta mit Rapid Learning, Echtzeit-X-Daten, 2M Context, jetzt auch in Microsoft Copilot.',
    price:'$0-30/Mo',priceLabel:'ab $0',
-   strengths:['Echtzeit-Daten von X/Twitter — einzigartig aktuelle Informationen','2M Token Context Window — eines der groessten','93.3% auf AIME 2025 — starkes Reasoning','Sehr guenstiges API-Pricing (~$0.20/MTok Input)','Bild-Generierung integriert'],
+   strengths:['Grok 4.20 Beta: woechentliches Fine-Tuning (\"Rapid Learning\")','Echtzeit-Daten von X/Twitter — einzigartig aktuelle Informationen','2M Token Context Window — eines der groessten','In Microsoft Copilot Studio integriert (Maerz 2026)','Grok Business & Enterprise Tiers fuer Unternehmen'],
    weaknesses:['Antworten koennen politische Bias zeigen (X-Oekosystem)','Coding-Faehigkeiten schwaecher als ChatGPT/Claude','Kleineres Oekosystem — weniger Plugins und Integrationen'],
    prices:[['Free','~10 Anfragen/2h (X-User)'],['SuperGrok','$30/Mo'],['SuperGrok Heavy','$300/Mo'],['API Input','ab $0.20/MTok']],
    bestFor:['Entwickler','Business'],
@@ -1015,6 +1028,14 @@ const TOOLS = [
    prices:[['Free','15 Boosts/Tag'],['M365 Personal','$10/Mo (inkl. Office)'],['Business','$21/User/Mo'],['Enterprise','$30/User/Mo']],
    bestFor:['Einsteiger','Business'],
    links:[['Website','https://copilot.microsoft.com'],['M365 Copilot','https://www.microsoft.com/microsoft-copilot']]},
+  {id:'appleintel',name:'Apple Intelligence',icon:'🍎',cat:'assistenten',stars:4,
+   desc:'Apples On-Device KI. Siri-Overhaul, Visual Intelligence, systemweite Zusammenfassungen — privat auf dem Geraet.',
+   price:'Gratis (in Apple-Geraeten)',priceLabel:'Gratis*',
+   strengths:['On-Device Processing — Daten verlassen das Geraet nicht','Systemweite Integration: Mail, Nachrichten, Fotos, Safari','Visual Intelligence: Kamera erkennt Objekte und liefert Infos','Siri-Overhaul mit LLM-Backend','Private Cloud Compute fuer komplexe Anfragen'],
+   weaknesses:['Nur auf neueren Apple-Geraeten (iPhone 16+, M-Chips)','Funktionsumfang schwaecher als ChatGPT/Claude','Deutschsprachige Features noch limitiert','Kein API-Zugang fuer Entwickler'],
+   prices:[['Integriert','Kostenlos (in Apple-Geraeten)']],
+   bestFor:['Einsteiger'],
+   links:[['Website','https://www.apple.com/apple-intelligence/']]},
 
   // --- CODING ---
   {id:'copilot',name:'GitHub Copilot',icon:'🛩️',cat:'coding',stars:4,
@@ -1121,6 +1142,22 @@ const TOOLS = [
    prices:[['ChatGPT Plus','$20/Mo (inkl. Codex)'],['ChatGPT Pro','$200/Mo (6x mehr Limits)'],['API','$1.25/MTok In, $10/MTok Out']],
    bestFor:['Entwickler'],
    links:[['Website','https://openai.com/codex/'],['Docs','https://developers.openai.com/codex/']]},
+  {id:'antigravity',name:'Google Antigravity',icon:'🚀',cat:'coding',stars:5,
+   desc:'Googles Agent-First IDE (Public Preview). Gemini 3 Pro, Multi-Agent-Orchestrierung, kostenloser Free Tier.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['Agent-First Architektur — KI plant und fuehrt autonom aus','Gemini 3 Pro integriert mit voller Context-Nutzung','Multi-Agent-Orchestrierung fuer komplexe Projekte','Kostenloser Free Tier mit grosszuegigen Limits','91/100 Rating in fruehen Reviews'],
+   weaknesses:['Public Preview — noch nicht produktionsreif','Erfordert Google-Account','Juengere IDE, weniger Extensions als VS Code'],
+   prices:[['Free','Grosszuegiges Kontingent'],['Pro','Pricing TBA']],
+   bestFor:['Entwickler'],
+   links:[['Website','https://idx.google.com']]},
+  {id:'kiro',name:'Amazon Kiro',icon:'📦',cat:'coding',stars:4,
+   desc:'AWS Agentic IDE. Spec-driven Development, Hooks & Steering Files, tiefe AWS-Integration.',
+   price:'Freemium',priceLabel:'Freemium',
+   strengths:['Spec-Driven Development — Anforderungen vor Code','Hooks & Steering Files fuer konsistente Agent-Ausgabe','Tiefe AWS-Integration (Lambda, S3, DynamoDB)','Enterprise-Sicherheit und Compliance','Agentic Workflows fuer Multi-Step Tasks'],
+   weaknesses:['Stark auf AWS-Oekosystem fokussiert','Weniger Community als VS Code-basierte Tools','Relativ neu, Feature-Set waechst noch'],
+   prices:[['Free','Limitiert'],['Pro','Pricing TBA']],
+   bestFor:['Entwickler','Business'],
+   links:[['Website','https://kiro.dev']]},
 
   // --- BILD ---
   {id:'nanobanana',name:'Nano Banana 2 (Gemini 3.1 Flash Image)',icon:'🍌',cat:'bild',stars:5,
@@ -1139,11 +1176,11 @@ const TOOLS = [
    prices:[['Basic','$10/Mo'],['Standard','$30/Mo'],['Pro','$60/Mo']],
    bestFor:['Kreative'],
    links:[['Website','https://midjourney.com']]},
-  {id:'dalle3',name:'DALL-E 3',icon:'🖼️',cat:'bild',stars:4,
-   desc:'Prompt-Genauigkeit (92% Textwiedergabe). Praezise kommerzielle Inhalte, direkt in ChatGPT.',
+  {id:'dalle3',name:'GPT Image 1.5 (ex DALL-E)',icon:'🖼️',cat:'bild',stars:4,
+   desc:'Nachfolger von DALL-E 3. Bestes Prompt-Verstaendnis, praezise kommerzielle Inhalte, direkt in ChatGPT.',
    price:'In ChatGPT Plus',priceLabel:'$20/Mo*',
-   strengths:['92% Textwiedergabe — Benchmark-Leader','Praezise kommerzielle Inhalte','Komplexe raeumliche Beziehungen','Benutzerfreundlich (direkt in ChatGPT)'],
-   weaknesses:['Weniger kuenstlerisch als Midjourney','Kreativitaet teils eingeschraenkt durch Genauigkeitsfokus'],
+   strengths:['GPT Image 1.5: bestes Prompt-Verstaendnis aller Bild-Modelle','Praezise kommerzielle Inhalte und Text-Rendering','Komplexe raeumliche Beziehungen','Benutzerfreundlich (direkt in ChatGPT integriert)'],
+   weaknesses:['Weniger kuenstlerisch als Midjourney','DALL-E API wird deprecated (Mai 2026)','Kreativitaet teils eingeschraenkt durch Genauigkeitsfokus'],
    prices:[['Via ChatGPT Plus','$20/Mo'],['API','Pay-per-Image']],
    bestFor:['Einsteiger','Kreative'],
    links:[['Via ChatGPT','https://chat.openai.com'],['API','https://platform.openai.com/docs/guides/images']]},
@@ -1171,6 +1208,14 @@ const TOOLS = [
    prices:[['Free','10 Credits/Woche'],['Basic','$7/Mo'],['Plus','$16/Mo'],['Pro','$48/Mo']],
    bestFor:['Kreative','Business'],
    links:[['Website','https://ideogram.ai'],['Features','https://ideogram.ai/features/3.0']]},
+  {id:'firefly3',name:'Adobe Firefly 3',icon:'🔥',cat:'bild',stars:4,
+   desc:'Einziger grosser Generator auf lizenzierten Inhalten trainiert. Kommerzielle Entschaedigung, ideal fuer Unternehmen.',
+   price:'ab $0',priceLabel:'Freemium',
+   strengths:['Trainiert nur auf lizenzierten Inhalten (Adobe Stock, Public Domain)','Kommerzielle Entschaedigung — rechtlich sicher fuer Unternehmen','Tiefe Integration in Photoshop, Illustrator, Express','Generative Fill, Expand, Text Effects','Content Credentials (C2PA) fuer Herkunftsnachweis'],
+   weaknesses:['Kreativ schwaecher als Midjourney/Flux','Generative Credits begrenzt (25/Mo Free)','Nicht Open Source, Adobe-Lock-in'],
+   prices:[['Free','25 Credits/Mo'],['Premium','$4.99/Mo (100 Credits)'],['In Creative Cloud','Inkl. bei CC-Abo']],
+   bestFor:['Kreative','Business'],
+   links:[['Website','https://firefly.adobe.com'],['Docs','https://www.adobe.com/products/firefly.html']]},
 
   // --- VIDEO ---
   {id:'sora',name:'OpenAI Sora 2',icon:'🎬',cat:'video',stars:5,
@@ -1189,12 +1234,12 @@ const TOOLS = [
    prices:[['Standard','ab $12/Mo'],['Pro','ab $28/Mo']],
    bestFor:['Kreative'],
    links:[['Website','https://runwayml.com']]},
-  {id:'kling',name:'Kling AI 2.1',icon:'🎭',cat:'video',stars:4,
-   desc:'Exzellente Lip-Sync. 1080p Videos, cinematische Tiefe, erweiterte Shot Extension.',
+  {id:'kling',name:'Kling AI 3.0',icon:'🎭',cat:'video',stars:5,
+   desc:'Kling 3.0 (Feb. 2026): Multi-Shot-Sequenzen, Multi-Character mit nativem Audio, cinematische Qualitaet.',
    price:'ab $12/Mo',priceLabel:'$12/Mo',
-   strengths:['Exzellente Lip-Sync','Erweiterte Shot Extension','10-Sekunden-Videos bei 1080p','Cinematische Tiefe'],
-   weaknesses:['Weniger bekannt als Sora/Runway','Qualitaet variiert bei komplexen Szenen'],
-   prices:[['Standard','ab $12/Mo']],
+   strengths:['Kling 3.0: Multi-Shot-Sequenzen — mehrere Szenen in einem Video','Multi-Character mit nativem Audio-Output','Exzellente Lip-Sync und cinematische Tiefe','Erweiterte Shot Extension bis 10+ Sekunden'],
+   weaknesses:['Credits-System kann teuer werden bei viel Output','Weniger bekannt als Sora/Runway im Westen'],
+   prices:[['Standard','ab $12/Mo'],['Pro','ab $28/Mo']],
    bestFor:['Kreative'],
    links:[['Website','https://klingai.com']]},
   {id:'pika',name:'Pika Labs 2.5',icon:'✨',cat:'video',stars:3,
@@ -1254,22 +1299,30 @@ const TOOLS = [
    bestFor:['Einsteiger','Kreative'],
    links:[['Website','https://viggle.ai']]},
 
-  {id:'ltx2',name:'LTX-2 (Lightricks)',icon:'🎞️',cat:'video',stars:4,
-   desc:'Erstes komplettes Open-Source Video-Modell. 4K bei 50fps, synchrones Audio+Video, lokal auf Consumer-GPUs.',
-   price:'Kostenlos',priceLabel:'Gratis',
-   strengths:['Open Source mit kommerziellem Lizenzmodell','4K-Video bei 50fps, bis 20 Sekunden','Synchrones Audio + Dialog + Musik in einem Pass','Multimodale Inputs: Text, Bild, Audio, Depth Maps, Referenzvideo','Keyframe-Conditioning, 3D-Kameralogik, LoRA Fine-Tuning','3x schneller mit 60% weniger VRAM via NVIDIA-Optimierung (NVFP4)'],
-   weaknesses:['Multi-GPU empfohlen fuer 4K','Junges Oekosystem, weniger Tutorials als Runway','Erfordert technisches Setup (ComfyUI / Python)'],
-   prices:[['Open Source','Kostenlos'],['ComfyUI','Kostenlos']],
+  {id:'seedance',name:'Seedance 2.0 (ByteDance)',icon:'🌱',cat:'video',stars:5,
+   desc:'ByteDances Video-KI (Feb. 2026). Cinematische Qualitaet, starke Physik-Simulation, TikTok-Integration.',
+   price:'Freemium',priceLabel:'Freemium',
+   strengths:['Seedance 2.0: cinematische Qualitaet auf Sora/Veo-Niveau','Exzellente Physik-Simulation und Bewegungsrealismus','Starke Prompt-Treue bei komplexen Szenen','Guenstiges Pricing im Vergleich zu US-Konkurrenz','TikTok-Oekosystem-Integration'],
+   weaknesses:['Chinesischer Anbieter — Datenschutz-Bedenken (DSGVO)','Verfuegbarkeit in der EU teils eingeschraenkt','Weniger bekannt im Westen als Runway/Sora'],
+   prices:[['Free','Limitierte Generierungen'],['Pro','ab $10/Mo']],
+   bestFor:['Kreative'],
+   links:[['Website','https://seedance.ai']]},
+  {id:'ltx2',name:'LTX-2.3 (Lightricks)',icon:'🎞️',cat:'video',stars:5,
+   desc:'LTX-2.3 (Maerz 2026): 22B DiT, native 4K/50fps, Portrait 9:16, HiFi-GAN Audio, Apache 2.0. LTX Studio als Pro-Plattform.',
+   price:'Kostenlos / ab $15/Mo',priceLabel:'Gratis*',
+   strengths:['22B Parameter DiT — komplett ueberarbeiteter VAE fuer schaerfere Details','Native 4K bei 50fps, synchrones Audio + Dialog via HiFi-GAN Vocoder','Portrait 9:16 nativ — ideal fuer TikTok, Reels, Shorts','4x groesserer Text-Connector fuer deutlich bessere Prompt-Treue','First+Last Frame Conditioning, LoRA (bis 3 Adapter), Depth Maps','Apache 2.0 Open Source — kommerziell nutzbar und feinabstimmbar','LTX Studio: Multi-Model-Plattform (Veo 3.1, Kling 3.0, Flux) mit Character Consistency'],
+   weaknesses:['Multi-GPU empfohlen fuer 4K','~12 Sek. pro Clip (laengere Videos per Clip-Chaining)','LTX Studio Pro ab $125/Mo fuer volle Features'],
+   prices:[['Open Source','Kostenlos (Apache 2.0)'],['LTX Studio Free','800 Credits (einmalig)'],['Studio Lite','$15/Mo'],['Studio Standard','$35/Mo (kommerziell)'],['Studio Pro','$125/Mo (Veo 3.1, Kling 3.0)']],
    bestFor:['Entwickler','Kreative'],
-   links:[['GitHub','https://github.com/Lightricks/LTX-Video'],['LTX Studio','https://ltx.studio'],['ComfyUI','https://blog.comfy.org/p/ltx-2-open-source-audio-video-ai']]},
+   links:[['GitHub','https://github.com/Lightricks/LTX-Video'],['LTX Studio','https://ltx.studio'],['ComfyUI','https://github.com/Lightricks/ComfyUI-LTXVideo']]},
 
   // --- AUDIO ---
-  {id:'suno',name:'Suno AI',icon:'🎵',cat:'audio',stars:5,
-   desc:'Schnellste Musik-Generierung. 4-Minuten-Songs in unter einer Minute, vielfaeltige Genres.',
+  {id:'suno',name:'Suno AI v5',icon:'🎵',cat:'audio',stars:5,
+   desc:'Suno v5: Neues Flaggschiff fuer zahlende Nutzer, v4.5 jetzt kostenlos. Schnellste Musik-Generierung.',
    price:'~$10/Mo',priceLabel:'$10/Mo',
-   strengths:['Schnellste Generierung: 4-Min-Songs in <1 Minute','Beste Gesamtqualitaet','Einfache Bedienung (Text-Prompt → Song)','Vielfaeltige Genres'],
+   strengths:['Suno v5: hoechste Qualitaet (Maerz 2026), v4.5 jetzt Free Tier','Schnellste Generierung: 4-Min-Songs in <1 Minute','Beste Gesamtqualitaet ueber alle Genres','Einfache Bedienung (Text-Prompt → Song)'],
    weaknesses:['Lizenz-Unsicherheit bei kommerzieller Nutzung','Qualitaet bei laengeren Stuecken teils inkonsistent'],
-   prices:[['Pro','~$10/Mo fuer 500 Songs']],
+   prices:[['Free','v4.5 (limitiert)'],['Pro','~$10/Mo (v5, 500 Songs)']],
    bestFor:['Einsteiger','Kreative'],
    links:[['Website','https://suno.com']]},
   {id:'elevenlabs',name:'ElevenLabs / Eleven Music',icon:'🎙️',cat:'audio',stars:5,
@@ -1280,12 +1333,12 @@ const TOOLS = [
    prices:[['Free','11 Min/Mo'],['Starter','$5/Mo'],['Creator','$22/Mo'],['Pro','$99/Mo + kommerz. Lizenz']],
    bestFor:['Kreative','Business'],
    links:[['Website','https://elevenlabs.io'],['Musik','https://elevenlabs.io/music']]},
-  {id:'udio',name:'Udio',icon:'🎶',cat:'audio',stars:4,
-   desc:'Professionelle Audio-Qualitaet (48kHz/32-bit). Ueberlegener Vocal-Realismus.',
+  {id:'udio',name:'Udio',icon:'🎶',cat:'audio',stars:3,
+   desc:'⚠️ Downloads suspendiert. Lizenzdeals mit UMG/WMG laufen, aktuell nur Listening-Plattform. Gute Audio-Qualitaet.',
    price:'Freemium',priceLabel:'Freemium',
-   strengths:['Professionelle Audio-Qualitaet (48kHz/32-bit)','Ueberlegener Vocal-Realismus','High-Fidelity Output'],
-   weaknesses:['Langsamere Generierung als Suno','Weniger intuitiv'],
-   prices:[['Free','Limitiert'],['Pro','~$10/Mo']],
+   strengths:['Professionelle Audio-Qualitaet (48kHz/32-bit)','Ueberlegener Vocal-Realismus','Lizenzdeals mit UMG/Warner Music Group'],
+   weaknesses:['⚠️ Downloads suspendiert — aktuell nur Anhoeren moeglich','Lizenz-Transition laeuft, Zukunft unklar','Nicht produktionsreif fuer kommerzielle Projekte'],
+   prices:[['Free','Limitiert (nur Anhoeren)'],['Pro','~$10/Mo']],
    bestFor:['Kreative'],
    links:[['Website','https://udio.com']]},
   {id:'descript',name:'Descript',icon:'✂️',cat:'audio',stars:4,
@@ -1331,10 +1384,10 @@ const TOOLS = [
    bestFor:['Einsteiger','Business'],
    links:[['Website','https://www.perplexity.ai']]},
   {id:'notebooklm',name:'NotebookLM (Google)',icon:'📓',cat:'produktivitaet',stars:5,
-   desc:'KI-Forschungsassistent. Antwortet NUR aus deinen Dokumenten (keine Halluzinationen), virale Audio Overviews.',
+   desc:'KI-Forschungsassistent. Antwortet NUR aus deinen Dokumenten, Audio Overviews, NEU: Cinematic Video Overviews.',
    price:'Gratis',priceLabel:'Gratis',
-   strengths:['Grounded Responses — null Halluzinationen','Audio Overviews: Dokumente als Podcast','Unterstuetzt PDFs, Google Docs, Websites, YouTube','Deep Research Integration','Lernt Nutzer-Praeferenzen (2026)'],
-   weaknesses:['Nur innerhalb hochgeladener Quellen nutzbar','Audio Overviews nur auf Englisch optimal','Limitierte Quellenanzahl pro Notebook'],
+   strengths:['Grounded Responses — null Halluzinationen','NEU: Cinematic Video Overviews — KI-Videos aus deinen Notizen (Maerz 2026)','Audio Overviews: Dokumente als Podcast','Unterstuetzt PDFs, Google Docs, Websites, YouTube','Deep Research Integration','Lernt Nutzer-Praeferenzen'],
+   weaknesses:['Nur innerhalb hochgeladener Quellen nutzbar','Video/Audio Overviews nur auf Englisch optimal','Limitierte Quellenanzahl pro Notebook'],
    prices:[['Free','Gratis'],['Plus','Teil von Google One AI Premium']],
    bestFor:['Einsteiger','Business'],
    links:[['Website','https://notebooklm.google.com']]},
@@ -1380,18 +1433,18 @@ const TOOLS = [
    prices:[['Open Source','Kostenlos']],
    bestFor:['Entwickler'],
    links:[['GitHub','https://github.com/ollama/ollama'],['Website','https://ollama.ai'],['Modelle','https://ollama.ai/library']]},
-  {id:'llama4',name:'Llama 4 (Meta)',icon:'🦙',cat:'lokal',stars:4,
-   desc:'Metas Open-Source-Flaggschiff. 128K Context, multimodal, kostenlos anpassbar.',
+  {id:'llama4',name:'Llama 4 Scout / Maverick (Meta)',icon:'🦙',cat:'lokal',stars:4,
+   desc:'Metas Open-Source-Flaggschiff. Scout (17B, 10M Context) und Maverick (17B aktiv, 128 Experten MoE).',
    price:'Kostenlos',priceLabel:'Gratis',
-   strengths:['128K Context Window','Multimodal (Text + Bild)','Verbesserter Multilingual Support','Uebertrifft Gemini bei Zusammenfassungen','Kostenlos nutzbar und anpassbar'],
-   weaknesses:['GPU-intensiv (Enterprise-Grade Hardware)','Leicht hinter GPT-4/Claude bei komplexem Reasoning','Community License (frei fuer <700M User)'],
+   strengths:['Scout: 10M Token Context — groesstes Open-Source-Fenster','Maverick: 17B aktive Parameter, 128 Experten MoE','128K Standard-Context, multimodal (Text + Bild)','Verbesserter Multilingual Support','Kostenlos nutzbar und anpassbar (Community License)'],
+   weaknesses:['GPU-intensiv (Enterprise-Grade Hardware fuer Maverick)','Community License (frei fuer <700M User)','Scout 10M Context nur experimentell verfuegbar'],
    prices:[['Open Source','Kostenlos']],
    bestFor:['Entwickler'],
    links:[['GitHub','https://github.com/meta-llama/llama'],['Hugging Face','https://huggingface.co/meta-llama']]},
-  {id:'mistral3',name:'Mistral 3 Family',icon:'🌬️',cat:'lokal',stars:4,
-   desc:'Apache 2.0 lizenziert. Von 3B bis 675B MoE, Edge-faehig, multilingual.',
+  {id:'mistral3',name:'Mistral Large 3 / Small 3.1',icon:'🌬️',cat:'lokal',stars:4,
+   desc:'Apache 2.0 lizenziert. Large 3 (675B MoE), Small 3.1 (24B) fuer Edge, multilingual.',
    price:'Kostenlos',priceLabel:'Gratis',
-   strengths:['#2 OSS non-reasoning auf LMArena','Apache 2.0 — volle kommerzielle Freiheit','Ministral-Serie fuer Edge (3B/8B/14B)','Multimodal + Multilingual','256K Context (Large 3)'],
+   strengths:['Large 3: 675B MoE, #2 OSS non-reasoning auf LMArena','Small 3.1: 24B Parameter, ideal fuer Edge/Laptop','Apache 2.0 — volle kommerzielle Freiheit','Ministral-Serie fuer Edge (3B/8B/14B)','256K Context (Large 3), multimodal + multilingual'],
    weaknesses:['MoE-Architektur erhoeht Komplexitaet','Juengeres Oekosystem als Llama'],
    prices:[['Open Source','Kostenlos (Apache 2.0)']],
    bestFor:['Entwickler'],
@@ -1615,8 +1668,8 @@ const TIMELINE_DATA = [
   {year:'Fruehling 2025',content:'<strong>Gemini 2.5 und Claude Opus 4</strong> erscheinen. Multimodale Faehigkeiten explodieren. MCP Protocol gewinnt Traktion. Agentic AI wird das dominierende Paradigma.'},
   {year:'Sommer 2025',content:'<strong>85% der Entwickler</strong> nutzen KI-Tools. 41% des neuen Codes ist KI-generiert. Sora 2, Runway Gen-4 revolutionieren Video. ElevenLabs klaert Musik-Lizenzen.'},
   {year:'Herbst 2025',content:'<strong>Claude Opus 4.6</strong> mit 1M Token Context. GPT-5.2 fuehrt bei Reasoning. Gemini 3 mit nativer Multimodalitaet. MCP wird an die Linux Foundation uebergeben.'},
-  {year:'Anfang 2026',content:'<strong>Die neue Industrialisierung</strong> ist in vollem Gang. Effiziente kleine Modelle (3B-14B) laufen auf Smartphones. Multi-Agenten-Systeme werden produktionsreif.'},
-  {year:'2026 Ausblick',content:'<strong>KI-Kompetenz wird zur Grundkompetenz</strong>, wie Computerkenntnisse in den 2000ern. EU AI Act wird voll anwendbar. 40% der Enterprise-Apps integrieren KI-Agenten. OpenAI plant erstes Hardware-Geraet (Jony Ive).'},
+  {year:'Anfang 2026',content:'<strong>Benchmark-Krieg eskaliert:</strong> Gemini 3.1 Pro fuehrt auf 13/16 Benchmarks (77.1% ARC-AGI-2). GPT-5.4 mit 33% weniger Faktenfehlern. Claude Sonnet 5 durchbricht 80% SWE-bench. Agent-First IDEs (Antigravity, Kiro) starten.'},
+  {year:'2026 Ausblick',content:'<strong>KI-Kompetenz wird zur Grundkompetenz</strong>, wie Computerkenntnisse in den 2000ern. EU AI Act wird voll anwendbar. 40% der Enterprise-Apps integrieren KI-Agenten. Video-KI generiert erstmals natives Audio. OpenAI plant erstes Hardware-Geraet (Jony Ive).'},
   {year:'2027 Prognose',content:'<strong>Agentic AI</strong> wird Mainstream — 80% der Enterprise-Workplace-Apps mit KI-Copiloten (IDC). Tesla Optimus Konsumentenverkauf geplant. KI-native Applikationen verdraengen "KI-als-Feature". Bis zu 90% der Entwicklung KI-getrieben.'},
   {year:'2028-2030',content:'<strong>170 Mio. neue Stellen, 92 Mio. verdraengt</strong> (WEF). Humanoide Roboter in Haushalten. AGI-Debatte: Median-Prognosen zwischen 2030 (Labs) und 2047 (Akademiker). Goldman Sachs: KI hebt globales BIP um 7%.'}
 ];
