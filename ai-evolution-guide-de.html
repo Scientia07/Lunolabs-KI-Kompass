@@ -794,6 +794,36 @@ button{font-family:var(--f-sans);cursor:pointer;border:none;background:none;colo
     <p class="section-subtitle">Direkte Links zu Tools, Dokumentation, GitHub-Repos und lehrreichen YouTube-Kanaelen.</p>
   </div>
   <div class="resources-grid fade-in" id="resources-grid"></div>
+  <div class="fade-in" style="max-width:800px;margin:var(--s-2xl) auto 0;padding:var(--s-xl) var(--s-2xl);background:linear-gradient(135deg,rgba(255,165,0,0.06),rgba(255,200,0,0.04));border:1px solid rgba(255,165,0,0.2);border-radius:var(--r-xl)">
+    <div style="display:flex;align-items:center;gap:var(--s-md);margin-bottom:var(--s-md)">
+      <span style="font-size:2rem">🤗</span>
+      <div>
+        <div style="font-weight:700;color:var(--text-primary);font-size:1.05rem">Tiefer einsteigen? Hugging Face ist dein Hub.</div>
+        <div style="color:rgba(255,165,0,0.9);font-size:.78rem;font-weight:600;letter-spacing:0.03em;margin-top:2px">FUER FORTGESCHRITTENE &amp; EXPERTEN</div>
+      </div>
+    </div>
+    <div style="color:var(--text-secondary);font-size:.9rem;line-height:1.7;margin-bottom:var(--s-md)">
+      <a href="https://huggingface.co" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Hugging Face</a> ist die groesste Open-Source-KI-Plattform der Welt: 1M+ Modelle, 300K+ Datasets, aktive Community. Hier findest du alles fuer den naechsten Schritt:
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--s-md)">
+      <a href="https://huggingface.co/models" target="_blank" rel="noopener" style="display:block;padding:var(--s-md);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-md);text-decoration:none;transition:0.2s">
+        <div style="font-weight:600;color:var(--text-primary);font-size:.88rem;margin-bottom:4px">🔍 Model Hub</div>
+        <div style="color:var(--text-muted);font-size:.78rem">1M+ Modelle durchsuchen, testen und herunterladen</div>
+      </a>
+      <a href="https://huggingface.co/spaces" target="_blank" rel="noopener" style="display:block;padding:var(--s-md);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-md);text-decoration:none;transition:0.2s">
+        <div style="font-weight:600;color:var(--text-primary);font-size:.88rem;margin-bottom:4px">🚀 Spaces</div>
+        <div style="color:var(--text-muted);font-size:.78rem">KI-Demos direkt im Browser ausprobieren</div>
+      </a>
+      <a href="https://huggingface.co/learn" target="_blank" rel="noopener" style="display:block;padding:var(--s-md);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-md);text-decoration:none;transition:0.2s">
+        <div style="font-weight:600;color:var(--text-primary);font-size:.88rem;margin-bottom:4px">📚 Learn</div>
+        <div style="color:var(--text-muted);font-size:.78rem">Kostenlose Kurse: NLP, Diffusion, Reinforcement Learning</div>
+      </a>
+      <a href="https://huggingface.co/docs/transformers/" target="_blank" rel="noopener" style="display:block;padding:var(--s-md);background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--r-md);text-decoration:none;transition:0.2s">
+        <div style="font-weight:600;color:var(--text-primary);font-size:.88rem;margin-bottom:4px">📖 Transformers Docs</div>
+        <div style="color:var(--text-muted);font-size:.78rem">Die offizielle Dokumentation fuer Fortgeschrittene</div>
+      </a>
+    </div>
+  </div>
   <div class="section-divider"></div>
 </section>
 
@@ -997,7 +1027,8 @@ const TOOL_LEVELS = {
   elicit: 'fortgeschritten',
   semanticscholar: 'fortgeschritten',
   manus: 'fortgeschritten',
-  operaaria: 'einsteiger'
+  operaaria: 'einsteiger',
+  nemotron: 'experte'
 };
 
 function getToolLevel(tool) {
@@ -1497,6 +1528,14 @@ const TOOLS = [
    prices:[['Desktop App','Kostenlos']],
    bestFor:['Einsteiger','Entwickler'],
    links:[['Website','https://lmstudio.ai']]},
+  {id:'nemotron',name:'Nemotron (NVIDIA)',icon:'🟢',cat:'lokal',stars:4,
+   desc:'NVIDIAs Open-Source-Modellfamilie. Llama-3.1-Nemotron-70B fuehrt bei Instruction Following, optimiert fuer NVIDIA-Hardware.',
+   price:'Kostenlos',priceLabel:'Gratis',
+   strengths:['#1 bei Instruction Following unter Open-Source-Modellen','NVIDIA-optimiert: maximale Performance auf RTX/A100/H100','Nemotron-70B auf Llama 3.1 Basis — vertraute Architektur','Kostenlos (Open Source, NVIDIA Open Model License)','TensorRT-LLM Integration fuer Inferenz-Beschleunigung','Starke Synthetic-Data-Generierung fuer eigene Fine-Tunes'],
+   weaknesses:['Am besten auf NVIDIA-GPUs — AMD/Apple-Support schwaecher','Weniger Community-Support als Llama/Qwen direkt','Groessere Modelle (70B+) brauchen Enterprise-GPU'],
+   prices:[['Open Source','Kostenlos (NVIDIA License)']],
+   bestFor:['Entwickler'],
+   links:[['Hugging Face','https://huggingface.co/nvidia'],['NVIDIA AI','https://build.nvidia.com']]},
 
   // --- FRAMEWORKS ---
   {id:'langchain',name:'LangChain',icon:'🔗',cat:'frameworks',stars:5,
